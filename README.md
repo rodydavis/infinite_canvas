@@ -1,5 +1,7 @@
 # Infinite Canvas
 
+[![infinite_canvas](https://img.shields.io/pub/v/infinite_canvas.svg)](https://pub.dev/packages/infinite_canvas)
+
 Flutter infinite canvas that can be zoomed and panned.
 
 > There is also a menu for common actions and marquee for multiple selection.
@@ -216,3 +218,4 @@ class InlineCustomPainter extends CustomPainter {
 
 - [Source Code](https://github.com/rodydavis/infinite_canvas)
 - [Online Demo](https://rodydavis.github.io/infinite_canvas/)
+- [Pub.dev](https://pub.dev/packages/infinite_canvas)
