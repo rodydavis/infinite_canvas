@@ -1,0 +1,273 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+
+import 'edge.dart';
+import 'node.dart';
+
+/// A controller for the [InfiniteCanvas].
+class InfiniteCanvasController extends ChangeNotifier {
+  InfiniteCanvasController({
+    this.nodes = const [],
+    this.edges = const [],
+  });
+
+  double scale = 1;
+  final focusNode = FocusNode();
+  final List<InfiniteCanvasNode> nodes;
+  final List<InfiniteCanvasEdge> edges;
+  final Set<Key> _selected = {};
+  List<InfiniteCanvasNode> get selection =>
+      nodes.where((e) => _selected.contains(e.key)).toList();
+  final Set<Key> _hovered = {};
+  List<InfiniteCanvasNode> get hovered =>
+      nodes.where((e) => _hovered.contains(e.key)).toList();
+
+  late final transform = TransformationController();
+  Matrix4 get matrix => transform.value;
+  Offset mousePosition = Offset.zero;
+  Offset? marqueeStart, marqueeEnd;
+
+  bool _mouseDown = false;
+  bool get mouseDown => _mouseDown;
+  set mouseDown(bool value) {
+    _mouseDown = value;
+    notifyListeners();
+  }
+
+  bool _shiftPressed = false;
+  bool get shiftPressed => _shiftPressed;
+  set shiftPressed(bool value) {
+    _shiftPressed = value;
+    notifyListeners();
+  }
+
+  Rect getMaxSize() {
+    Rect rect = Rect.zero;
+    for (final child in nodes) {
+      rect = Rect.fromLTRB(
+        min(rect.left, child.rect.left),
+        min(rect.top, child.rect.top),
+        max(rect.right, child.rect.right),
+        max(rect.bottom, child.rect.bottom),
+      );
+    }
+    return rect;
+  }
+
+  bool isSelected(Key key) => _selected.contains(key);
+  bool isHovered(Key key) => _hovered.contains(key);
+
+  bool get hasSelection => _selected.isNotEmpty;
+
+  bool get canvasMoveEnabled => !mouseDown;
+
+  Offset toLocal(Offset global) {
+    return transform.toScene(global);
+  }
+
+  void checkSelection(Offset localPosition, [bool hover = false]) {
+    final offset = toLocal(localPosition);
+    final selection = <Key>[];
+    for (final child in nodes) {
+      final rect = child.rect;
+      if (rect.contains(offset)) {
+        selection.add(child.key!);
+      }
+    }
+    if (selection.isNotEmpty) {
+      if (shiftPressed) {
+        setSelection({selection.last, ..._selected.toSet()}, hover);
+      } else {
+        setSelection({selection.last}, hover);
+      }
+    } else {
+      deselectAll(hover);
+    }
+  }
+
+  void checkMarqueeSelection([bool hover = false]) {
+    if (marqueeStart == null || marqueeEnd == null) return;
+    final selection = <Key>{};
+    final rect = Rect.fromPoints(
+      toLocal(marqueeStart!),
+      toLocal(marqueeEnd!),
+    );
+    for (final child in nodes) {
+      if (rect.overlaps(child.rect)) {
+        selection.add(child.key!);
+      }
+    }
+    if (selection.isNotEmpty) {
+      if (shiftPressed) {
+        setSelection(selection.union(_selected.toSet()), hover);
+      } else {
+        setSelection(selection, hover);
+      }
+    } else {
+      deselectAll(hover);
+    }
+  }
+
+  void moveSelection(Offset position) {
+    final delta = toLocal(position) - toLocal(mousePosition);
+    for (final key in _selected) {
+      final index = nodes.indexWhere((e) => e.key == key);
+      if (index == -1) continue;
+      final current = nodes[index];
+      nodes[index] = current.copyWith(
+        offset: current.offset + delta,
+      );
+    }
+    mousePosition = position;
+    notifyListeners();
+  }
+
+  void select(Key key, [bool hover = false]) {
+    if (hover) {
+      _hovered.add(key);
+    } else {
+      _selected.add(key);
+    }
+    notifyListeners();
+  }
+
+  void setSelection(Set<Key> keys, [bool hover = false]) {
+    if (hover) {
+      _hovered.clear();
+      _hovered.addAll(keys);
+    } else {
+      _selected.clear();
+      _selected.addAll(keys);
+    }
+    notifyListeners();
+  }
+
+  void deselect(Key key, [bool hover = false]) {
+    if (hover) {
+      _hovered.remove(key);
+    } else {
+      _selected.remove(key);
+    }
+    notifyListeners();
+  }
+
+  void deselectAll([bool hover = false]) {
+    if (hover) {
+      _hovered.clear();
+    } else {
+      _selected.clear();
+    }
+    notifyListeners();
+  }
+
+  void add(InfiniteCanvasNode child) {
+    nodes.add(child);
+    notifyListeners();
+  }
+
+  void edit(InfiniteCanvasNode child) {
+    if (_selected.length == 1) {
+      final idx = nodes.indexWhere((e) => e.key == _selected.first);
+      nodes[idx] = child;
+      notifyListeners();
+    }
+  }
+
+  void remove(Key key) {
+    nodes.removeWhere((e) => e.key == key);
+    notifyListeners();
+  }
+
+  void bringToFront() {
+    final selection = _selected.toList();
+    for (final key in selection) {
+      final index = nodes.indexWhere((e) => e.key == key);
+      if (index == -1) continue;
+      final current = nodes[index];
+      nodes.removeAt(index);
+      nodes.add(current);
+    }
+    notifyListeners();
+  }
+
+  void sendBackward() {
+    final selection = _selected.toList();
+    if (selection.length == 1) {
+      final key = selection.first;
+      final index = nodes.indexWhere((e) => e.key == key);
+      if (index == -1) return;
+      if (index == 0) return;
+      final current = nodes[index];
+      nodes.removeAt(index);
+      nodes.insert(index - 1, current);
+      notifyListeners();
+    }
+  }
+
+  void sendForward() {
+    final selection = _selected.toList();
+    if (selection.length == 1) {
+      final key = selection.first;
+      final index = nodes.indexWhere((e) => e.key == key);
+      if (index == -1) return;
+      if (index == nodes.length - 1) return;
+      final current = nodes[index];
+      nodes.removeAt(index);
+      nodes.insert(index + 1, current);
+      notifyListeners();
+    }
+  }
+
+  void sendToBack() {
+    final selection = _selected.toList();
+    for (final key in selection) {
+      final index = nodes.indexWhere((e) => e.key == key);
+      if (index == -1) continue;
+      final current = nodes[index];
+      nodes.removeAt(index);
+      nodes.insert(0, current);
+    }
+    notifyListeners();
+  }
+
+  void deleteSelection() {
+    final selection = _selected.toList();
+    for (final key in selection) {
+      final index = nodes.indexWhere((e) => e.key == key);
+      if (index == -1) continue;
+      nodes.removeAt(index);
+    }
+    notifyListeners();
+  }
+
+  void selectAll() {
+    _selected.clear();
+    _selected.addAll(nodes.map((e) => e.key!).toList());
+    notifyListeners();
+  }
+
+  void zoom(double delta) {
+    final matrix = transform.value.clone();
+    final local = toLocal(mousePosition);
+    matrix.translate(local.dx, local.dy);
+    matrix.scale(delta, delta);
+    matrix.translate(-local.dx, -local.dy);
+    transform.value = matrix;
+  }
+
+  void zoomIn() => zoom(1.1);
+  void zoomOut() => zoom(0.9);
+  void zoomReset() => transform.value = Matrix4.identity();
+
+  void pan(Offset delta) {
+    final matrix = transform.value.clone();
+    matrix.translate(delta.dx, delta.dy);
+    transform.value = matrix;
+  }
+
+  void panUp() => pan(const Offset(0, -10));
+  void panDown() => pan(const Offset(0, 10));
+  void panLeft() => pan(const Offset(-10, 0));
+  void panRight() => pan(const Offset(10, 0));
+}

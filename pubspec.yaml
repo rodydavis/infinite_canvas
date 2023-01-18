@@ -1,0 +1,25 @@
+name: infinite_canvas
+description: InteractiveViewer + CustomMultiChildLayout
+version: 0.0.1
+
+environment:
+  sdk: ">=3.0.0-76.0.dev <4.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  vector_math: ^2.1.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+
+scripts:
+  example:
+    - cd example && flutter build web && cd ..
+    - dart doc -o example/build/web/docs
+    - dhttpd --path example/build/web
