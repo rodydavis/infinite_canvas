@@ -6,6 +6,8 @@ Flutter infinite canvas that can be zoomed and panned.
 
 > There is also a menu for common actions and marquee for multiple selection.
 
+![](/screenshots/1.png)
+
 ## Example
 
 ```dart
