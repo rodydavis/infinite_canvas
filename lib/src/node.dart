@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'controller.dart';
+
 /// A node in the [InfiniteCanvas].
-class InfiniteCanvasNode extends StatelessWidget {
+class InfiniteCanvasNode {
   const InfiniteCanvasNode({
-    required Key key,
+    required this.key,
     required this.size,
     required this.offset,
     required this.builder,
     this.label,
-  }) : super(key: key);
+  });
 
+  final Key key;
   final Size size;
   final Offset offset;
   final WidgetBuilder builder;
@@ -22,7 +25,7 @@ class InfiniteCanvasNode extends StatelessWidget {
     String? label,
   }) {
     return InfiniteCanvasNode(
-      key: key!,
+      key: key,
       builder: builder,
       label: label ?? this.label,
       size: size ?? this.size,
@@ -40,11 +43,55 @@ class InfiniteCanvasNode extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, InfiniteCanvasController controller) {
+    final colors = Theme.of(context).colorScheme;
+    final fonts = Theme.of(context).textTheme;
+    const double borderInset = 2;
     return SizedBox.fromSize(
       size: size,
-      child: builder(context),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          if (label != null)
+            Positioned(
+              top: -25,
+              left: 0,
+              child: Text(
+                label!,
+                style: fonts.bodyMedium?.copyWith(
+                  color: colors.onSurface,
+                  shadows: [
+                    Shadow(
+                      offset: const Offset(0.8, 0.8),
+                      blurRadius: 3,
+                      color: colors.surface,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          if (controller.isSelected(key) || controller.isHovered(key))
+            Positioned(
+              top: -borderInset,
+              left: -borderInset,
+              right: -borderInset,
+              bottom: -borderInset,
+              child: IgnorePointer(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: controller.isSelected(key)
+                          ? colors.primary
+                          : colors.outline,
+                      width: 1,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          Positioned.fill(child: builder(context)),
+        ],
+      ),
     );
   }
 }

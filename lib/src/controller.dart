@@ -72,7 +72,7 @@ class InfiniteCanvasController extends ChangeNotifier {
     for (final child in nodes) {
       final rect = child.rect;
       if (rect.contains(offset)) {
-        selection.add(child.key!);
+        selection.add(child.key);
       }
     }
     if (selection.isNotEmpty) {
@@ -95,7 +95,7 @@ class InfiniteCanvasController extends ChangeNotifier {
     );
     for (final child in nodes) {
       if (rect.overlaps(child.rect)) {
-        selection.add(child.key!);
+        selection.add(child.key);
       }
     }
     if (selection.isNotEmpty) {
@@ -243,7 +243,7 @@ class InfiniteCanvasController extends ChangeNotifier {
 
   void selectAll() {
     _selected.clear();
-    _selected.addAll(nodes.map((e) => e.key!).toList());
+    _selected.addAll(nodes.map((e) => e.key).toList());
     notifyListeners();
   }
 

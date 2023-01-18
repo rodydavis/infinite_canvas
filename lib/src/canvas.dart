@@ -17,14 +17,12 @@ class InfiniteCanvas extends StatefulWidget {
     this.gridSize = const Size.square(50),
     this.minScale = 0.4,
     this.maxScale = 4,
-    this.borderInset = 2,
     this.menuVisible = true,
   });
 
   final InfiniteCanvasController controller;
   final Size gridSize;
   final double minScale, maxScale;
-  final double borderInset;
   final bool menuVisible;
 
   @override
@@ -81,8 +79,6 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    final fonts = Theme.of(context).textTheme;
     return InfiniteCanvasMenu(
       controller: widget.controller,
       visible: widget.menuVisible,
@@ -136,6 +132,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
           },
           child: LayoutBuilder(
             builder: (context, constraints) => InteractiveViewer.builder(
+              trackpadScrollCausesScale: true,
               transformationController: controller.transform,
               panEnabled: controller.canvasMoveEnabled,
               scaleEnabled: controller.canvasMoveEnabled,
@@ -176,53 +173,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                           delegate: InfiniteCanvasNodesDelegate(controller),
                           children: controller.nodes
                               .map((e) => LayoutId(
-                                  id: e,
-                                  child: Stack(
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      if (e.label != null)
-                                        Positioned(
-                                          top: -25,
-                                          left: 0,
-                                          child: Text(
-                                            e.label!,
-                                            style: fonts.bodyMedium?.copyWith(
-                                              color: colors.onSurface,
-                                              shadows: [
-                                                Shadow(
-                                                  offset:
-                                                      const Offset(0.8, 0.8),
-                                                  blurRadius: 3,
-                                                  color: colors.surface,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      if (controller.isSelected(e.key!) ||
-                                          controller.isHovered(e.key!))
-                                        Positioned(
-                                          top: -widget.borderInset,
-                                          left: -widget.borderInset,
-                                          right: -widget.borderInset,
-                                          bottom: -widget.borderInset,
-                                          child: IgnorePointer(
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: controller
-                                                          .isSelected(e.key!)
-                                                      ? colors.primary
-                                                      : colors.outline,
-                                                  width: 1,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      Positioned.fill(child: e),
-                                    ],
-                                  )))
+                                  id: e, child: e.build(context, controller)))
                               .toList(),
                         ),
                       ),

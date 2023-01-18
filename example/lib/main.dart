@@ -151,13 +151,13 @@ class _HomeState extends State<Home> {
     ];
     controller = InfiniteCanvasController(nodes: nodes, edges: [
       InfiniteCanvasEdge(
-        from: nodes[2].key!,
-        to: nodes[3].key!,
+        from: nodes[2].key,
+        to: nodes[3].key,
         label: 'Edge 1',
       ),
       InfiniteCanvasEdge(
-        from: nodes[2].key!,
-        to: nodes[4].key!,
+        from: nodes[2].key,
+        to: nodes[4].key,
         label: 'Edge 1',
       ),
     ]);
