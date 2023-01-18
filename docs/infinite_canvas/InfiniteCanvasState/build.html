@@ -173,8 +173,6 @@ prints green, as expected.</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
-  final colors = Theme.of(context).colorScheme;
-  final fonts = Theme.of(context).textTheme;
   return InfiniteCanvasMenu(
     controller: widget.controller,
     visible: widget.menuVisible,
@@ -228,6 +226,7 @@ Widget build(BuildContext context) {
         },
         child: LayoutBuilder(
           builder: (context, constraints) =&gt; InteractiveViewer.builder(
+            trackpadScrollCausesScale: true,
             transformationController: controller.transform,
             panEnabled: controller.canvasMoveEnabled,
             scaleEnabled: controller.canvasMoveEnabled,
@@ -268,53 +267,7 @@ Widget build(BuildContext context) {
                         delegate: InfiniteCanvasNodesDelegate(controller),
                         children: controller.nodes
                             .map((e) =&gt; LayoutId(
-                                id: e,
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    if (e.label != null)
-                                      Positioned(
-                                        top: -25,
-                                        left: 0,
-                                        child: Text(
-                                          e.label!,
-                                          style: fonts.bodyMedium?.copyWith(
-                                            color: colors.onSurface,
-                                            shadows: [
-                                              Shadow(
-                                                offset:
-                                                    const Offset(0.8, 0.8),
-                                                blurRadius: 3,
-                                                color: colors.surface,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    if (controller.isSelected(e.key!) ||
-                                        controller.isHovered(e.key!))
-                                      Positioned(
-                                        top: -widget.borderInset,
-                                        left: -widget.borderInset,
-                                        right: -widget.borderInset,
-                                        bottom: -widget.borderInset,
-                                        child: IgnorePointer(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: controller
-                                                        .isSelected(e.key!)
-                                                    ? colors.primary
-                                                    : colors.outline,
-                                                width: 1,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    Positioned.fill(child: e),
-                                  ],
-                                )))
+                                id: e, child: e.build(context, controller)))
                             .toList(),
                       ),
                     ),
@@ -409,7 +362,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.1
+      0.0.2
   </span>
 
   

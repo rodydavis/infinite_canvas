@@ -65,7 +65,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void selectAll() {
   _selected.clear();
-  _selected.addAll(nodes.map((e) =&gt; e.key!).toList());
+  _selected.addAll(nodes.map((e) =&gt; e.key).toList());
   notifyListeners();
 }</code></pre>
 </section>
@@ -172,7 +172,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.1
+      0.0.2
   </span>
 
   

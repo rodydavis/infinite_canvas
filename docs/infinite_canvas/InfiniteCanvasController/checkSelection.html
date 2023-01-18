@@ -71,7 +71,7 @@
   for (final child in nodes) {
     final rect = child.rect;
     if (rect.contains(offset)) {
-      selection.add(child.key!);
+      selection.add(child.key);
     }
   }
   if (selection.isNotEmpty) {
@@ -188,7 +188,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.1
+      0.0.2
   </span>
 
   
