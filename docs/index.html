@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 6.0.0">
+  <meta name="description" content="infinite_canvas API docs, for the Dart programming language.">
+  <title>infinite_canvas - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="" data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">infinite_canvas package</li>
+  </ol>
+  <div class="self-name">infinite_canvas</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="infinite-canvas">Infinite Canvas</h1>
+<p><a href="https://pub.dev/packages/infinite_canvas"><img src="https://img.shields.io/pub/v/infinite_canvas.svg" alt="infinite_canvas"></a></p>
+<p>Flutter infinite canvas that can be zoomed and panned.</p>
+<blockquote>
+<p>There is also a menu for common actions and marquee for multiple selection.</p>
+</blockquote>
+<p><img src="/screenshots/1.png" alt=""></p>
+<h2 id="example">Example</h2>
+<pre class="language-dart"><code class="language-dart">import 'package:flutter/material.dart';
+import 'package:infinite_canvas/infinite_canvas.dart';
+
+void main() =&gt; runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const Home(),
+      theme: ThemeData.light(useMaterial3: true),
+      darkTheme: ThemeData.dark(useMaterial3: true),
+      themeMode: ThemeMode.system,
+    );
+  }
+}
+
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State&lt;Home&gt; createState() =&gt; _HomeState();
+}
+
+class _HomeState extends State&lt;Home&gt; {
+  late InfiniteCanvasController controller;
+  int _counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    final nodes = [
+      InfiniteCanvasNode(
+        label: 'Flutter Counter',
+        key: UniqueKey(),
+        offset: Offset.zero,
+        size: const Size(400, 800),
+        builder: (context) =&gt; StatefulBuilder(
+          builder: (context, setState) =&gt; Scaffold(
+            appBar: AppBar(
+              title: const Text('Flutter Demo Home Page'),
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: &lt;Widget&gt;[
+                  const Text(
+                    'You have pushed the button this many times:',
+                  ),
+                  Text(
+                    '$_counter',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                ],
+              ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                if (mounted) {
+                  setState(() {
+                    _counter++;
+                  });
+                }
+              },
+              tooltip: 'Increment',
+              child: const Icon(Icons.add),
+            ),
+          ),
+        ),
+      ),
+      InfiniteCanvasNode(
+        key: UniqueKey(),
+        offset: const Offset(600, 100),
+        size: const Size(400, 800),
+        builder: (context) =&gt; Scaffold(
+          appBar: AppBar(
+            title: const Text('Gradient'),
+          ),
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).colorScheme.primary,
+                  Theme.of(context).colorScheme.secondary,
+                  Theme.of(context).colorScheme.tertiary,
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      InfiniteCanvasNode(
+        key: UniqueKey(),
+        label: 'Rectangle',
+        offset: const Offset(400, 300),
+        size: const Size(200, 200),
+        builder: (context) =&gt; CustomPaint(
+          isComplex: true,
+          willChange: true,
+          painter: InlineCustomPainter(
+            brush: Paint(),
+            builder: (brush, canvas, rect) {
+              // Draw rect
+              brush.color = Theme.of(context).colorScheme.secondary;
+              canvas.drawRect(rect, brush);
+            },
+          ),
+        ),
+      ),
+      InfiniteCanvasNode(
+        key: UniqueKey(),
+        label: 'Triangle',
+        offset: const Offset(550, 300),
+        size: const Size(200, 200),
+        builder: (context) =&gt; CustomPaint(
+          painter: InlineCustomPainter(
+            brush: Paint(),
+            builder: (brush, canvas, rect) {
+              // Draw triangle
+              brush.color = Theme.of(context).colorScheme.secondaryContainer;
+              final path = Path();
+              path.addPolygon([
+                rect.topCenter,
+                rect.bottomLeft,
+                rect.bottomRight,
+              ], true);
+              canvas.drawPath(path, brush);
+            },
+          ),
+        ),
+      ),
+      InfiniteCanvasNode(
+        key: UniqueKey(),
+        label: 'Circle',
+        offset: const Offset(500, 450),
+        size: const Size(200, 200),
+        builder: (context) =&gt; CustomPaint(
+          painter: InlineCustomPainter(
+            brush: Paint(),
+            builder: (brush, canvas, rect) {
+              // Draw circle
+              brush.color = Theme.of(context).colorScheme.tertiary;
+              canvas.drawCircle(rect.center, rect.width / 2, brush);
+            },
+          ),
+        ),
+      ),
+    ];
+    controller = InfiniteCanvasController(nodes: nodes, edges: [
+      InfiniteCanvasEdge(
+        from: nodes[2].key!,
+        to: nodes[3].key!,
+        label: 'Edge 1',
+      ),
+      InfiniteCanvasEdge(
+        from: nodes[2].key!,
+        to: nodes[4].key!,
+        label: 'Edge 1',
+      ),
+    ]);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Infinite Canvas Example'),
+        centerTitle: false,
+      ),
+      body: InfiniteCanvas(
+        controller: controller,
+      ),
+    );
+  }
+}
+
+class InlineCustomPainter extends CustomPainter {
+  const InlineCustomPainter({
+    required this.brush,
+    required this.builder,
+    this.isAntiAlias = true,
+  });
+  final Paint brush;
+  final bool isAntiAlias;
+  final void Function(Paint paint, Canvas canvas, Rect rect) builder;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero &amp; size;
+    brush.isAntiAlias = isAntiAlias;
+    canvas.save();
+    builder(brush, canvas, rect);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+}
+</code></pre>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="https://github.com/rodydavis/infinite_canvas">Source Code</a></li>
+<li><a href="https://rodydavis.github.io/infinite_canvas/">Online Demo</a></li>
+<li><a href="https://pub.dev/packages/infinite_canvas">Pub.dev</a></li>
+</ul>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="infinite_canvas">
+  <span class="name"><a href="infinite_canvas/infinite_canvas-library.html">infinite_canvas</a></span> 
+
+</dt>
+<dd>A Widget that renders a canvas that can be panned and zoomed.
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li class="self-crumb">infinite_canvas package</li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">infinite_canvas</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="infinite_canvas/infinite_canvas-library.html">infinite_canvas</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    infinite_canvas
+      0.0.1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
