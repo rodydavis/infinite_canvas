@@ -10,12 +10,14 @@ class InfiniteCanvasMenu extends StatefulWidget {
     super.key,
     required this.child,
     required this.controller,
-    this.visible = true,
+    required this.menus,
+    required this.visible,
   });
 
   final Widget child;
   final bool visible;
   final InfiniteCanvasController controller;
+  final List<MenuEntry> menus;
 
   @override
   State<InfiniteCanvasMenu> createState() => _InfiniteCanvasMenuState();
@@ -225,6 +227,7 @@ class _InfiniteCanvasMenuState extends State<InfiniteCanvasMenu> {
           ),
         ],
       ),
+      ...widget.menus,
     ];
     _shortcutsEntry?.dispose();
     final registry = ShortcutRegistry.of(context);

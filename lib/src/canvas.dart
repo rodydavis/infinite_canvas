@@ -18,6 +18,7 @@ class InfiniteCanvas extends StatefulWidget {
     this.minScale = 0.4,
     this.maxScale = 4,
     this.menuVisible = true,
+    this.menus = const <MenuEntry>[],
     this.backgroundBuilder,
   });
 
@@ -25,6 +26,7 @@ class InfiniteCanvas extends StatefulWidget {
   final Size gridSize;
   final double minScale, maxScale;
   final bool menuVisible;
+  final List<MenuEntry> menus;
   final Widget Function(BuildContext, Rect)? backgroundBuilder;
 
   @override
@@ -96,6 +98,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
     return InfiniteCanvasMenu(
       controller: widget.controller,
       visible: widget.menuVisible,
+      menus: widget.menus,
       child: KeyboardListener(
         focusNode: controller.focusNode,
         onKeyEvent: (event) {

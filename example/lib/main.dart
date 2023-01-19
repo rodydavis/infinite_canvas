@@ -76,6 +76,7 @@ class _HomeState extends State<Home> {
         label: 'Rectangle',
         offset: const Offset(400, 300),
         size: const Size(200, 200),
+        allowResize: true,
         child: Builder(
           builder: (context) {
             return CustomPaint(
@@ -98,6 +99,7 @@ class _HomeState extends State<Home> {
         label: 'Triangle',
         offset: const Offset(550, 300),
         size: const Size(200, 200),
+        allowResize: true,
         child: Builder(
           builder: (context) {
             return CustomPaint(
@@ -125,6 +127,7 @@ class _HomeState extends State<Home> {
         label: 'Circle',
         offset: const Offset(500, 450),
         size: const Size(200, 200),
+        allowResize: true,
         child: Builder(
           builder: (context) {
             return CustomPaint(

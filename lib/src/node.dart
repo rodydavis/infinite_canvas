@@ -10,6 +10,8 @@ class InfiniteCanvasNode {
     required this.offset,
     required this.child,
     this.label,
+    this.allowResize = false,
+    this.allowMove = true,
   });
 
   final Key key;
@@ -17,15 +19,18 @@ class InfiniteCanvasNode {
   late Offset offset;
   String? label;
   final Widget child;
+  final bool allowResize, allowMove;
   Rect get rect => offset & size;
+  static const double dragHandleSize = 10;
+  static const double borderInset = 2;
 
   void update({
     Size? size,
     Offset? offset,
     String? label,
   }) {
-    if (size != null) this.size = size;
-    if (offset != null) this.offset = offset;
+    if (offset != null && allowMove) this.offset = offset;
+    if (size != null && allowResize) this.size = size;
     if (label != null) this.label = label;
   }
 
@@ -35,7 +40,7 @@ class InfiniteCanvasNode {
   ) {
     final colors = Theme.of(context).colorScheme;
     final fonts = Theme.of(context).textTheme;
-    const double borderInset = 2;
+    final showHandles = allowResize && controller.isSelected(key);
     return SizedBox.fromSize(
       size: size,
       child: Stack(
@@ -82,7 +87,81 @@ class InfiniteCanvasNode {
             key: key,
             child: child,
           ),
+          if (showHandles) ...[
+            // bottom right
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: GestureDetector(
+                onPanUpdate: (details) {
+                  update(size: size + details.delta);
+                  controller.edit(this);
+                },
+                child: dragHandle(context),
+              ),
+            ),
+            // bottom left
+            Positioned(
+              left: 0,
+              bottom: 0,
+              child: GestureDetector(
+                onPanUpdate: (details) {
+                  update(
+                    size: size + Offset(-details.delta.dx, details.delta.dy),
+                    offset: offset + Offset(details.delta.dx, 0),
+                  );
+                  controller.edit(this);
+                },
+                child: dragHandle(context),
+              ),
+            ),
+            // top right
+            Positioned(
+              right: 0,
+              top: 0,
+              child: GestureDetector(
+                onPanUpdate: (details) {
+                  update(
+                    size: size + Offset(details.delta.dx, -details.delta.dy),
+                    offset: offset + Offset(0, details.delta.dy),
+                  );
+                  controller.edit(this);
+                },
+                child: dragHandle(context),
+              ),
+            ),
+            // top left
+            Positioned(
+              left: 0,
+              top: 0,
+              child: GestureDetector(
+                onPanUpdate: (details) {
+                  update(
+                    size: size + -details.delta,
+                    offset: offset + details.delta,
+                  );
+                  controller.edit(this);
+                },
+                child: dragHandle(context),
+              ),
+            ),
+          ],
         ],
+      ),
+    );
+  }
+
+  Widget dragHandle(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      height: dragHandleSize,
+      width: dragHandleSize,
+      decoration: BoxDecoration(
+        color: colors.surfaceVariant,
+        border: Border.all(
+          color: colors.onSurfaceVariant,
+          width: 1,
+        ),
       ),
     );
   }

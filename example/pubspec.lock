@@ -81,7 +81,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.10"
+    version: "0.0.4"
   js:
     dependency: transitive
     description:
@@ -130,6 +130,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  resizable_widget:
+    dependency: transitive
+    description:
+      name: resizable_widget
+      sha256: db2919754b93f386b9b3fb15e9f48f6c9d6d41f00a24397629133c99df86606a
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -179,10 +187,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "6182294da5abf431177fccc1ee02401f6df30f766bc6130a0852c6b6d7ee6b2d"
+      sha256: c9282698e2982b6c3817037554e52f99d4daba493e8028f8112a83d68ccd0b12
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.18"
+    version: "0.4.17"
   vector_math:
     dependency: transitive
     description:
@@ -193,3 +201,4 @@ packages:
     version: "2.1.4"
 sdks:
   dart: ">=2.19.0-345.0.dev <4.0.0"
+  flutter: ">=1.17.0"
