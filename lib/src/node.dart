@@ -4,46 +4,35 @@ import 'controller.dart';
 
 /// A node in the [InfiniteCanvas].
 class InfiniteCanvasNode {
-  const InfiniteCanvasNode({
+  InfiniteCanvasNode({
     required this.key,
     required this.size,
     required this.offset,
-    required this.builder,
+    required this.child,
     this.label,
   });
 
   final Key key;
-  final Size size;
-  final Offset offset;
-  final WidgetBuilder builder;
-  final String? label;
+  late Size size;
+  late Offset offset;
+  String? label;
+  final Widget child;
   Rect get rect => offset & size;
 
-  InfiniteCanvasNode copyWith({
+  void update({
     Size? size,
     Offset? offset,
     String? label,
   }) {
-    return InfiniteCanvasNode(
-      key: key,
-      builder: builder,
-      label: label ?? this.label,
-      size: size ?? this.size,
-      offset: offset ?? this.offset,
-    );
+    if (size != null) this.size = size;
+    if (offset != null) this.offset = offset;
+    if (label != null) this.label = label;
   }
 
-  InfiniteCanvasNode clone() {
-    return InfiniteCanvasNode(
-      key: UniqueKey(),
-      builder: builder,
-      label: label,
-      size: size,
-      offset: offset,
-    );
-  }
-
-  Widget build(BuildContext context, InfiniteCanvasController controller) {
+  Widget build(
+    BuildContext context,
+    InfiniteCanvasController controller,
+  ) {
     final colors = Theme.of(context).colorScheme;
     final fonts = Theme.of(context).textTheme;
     const double borderInset = 2;
@@ -89,7 +78,10 @@ class InfiniteCanvasNode {
                 ),
               ),
             ),
-          Positioned.fill(child: builder(context)),
+          Positioned.fill(
+            key: key,
+            child: child,
+          ),
         ],
       ),
     );

@@ -115,9 +115,7 @@ class InfiniteCanvasController extends ChangeNotifier {
       final index = nodes.indexWhere((e) => e.key == key);
       if (index == -1) continue;
       final current = nodes[index];
-      nodes[index] = current.copyWith(
-        offset: current.offset + delta,
-      );
+      current.update(offset: current.offset + delta);
     }
     mousePosition = position;
     notifyListeners();

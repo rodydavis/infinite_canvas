@@ -132,7 +132,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
           },
           child: LayoutBuilder(
             builder: (context, constraints) => InteractiveViewer.builder(
-              trackpadScrollCausesScale: true,
+              // trackpadScrollCausesScale: true,
               transformationController: controller.transform,
               panEnabled: controller.canvasMoveEnabled,
               scaleEnabled: controller.canvasMoveEnabled,
@@ -173,7 +173,10 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                           delegate: InfiniteCanvasNodesDelegate(controller),
                           children: controller.nodes
                               .map((e) => LayoutId(
-                                  id: e, child: e.build(context, controller)))
+                                    key: e.key,
+                                    id: e,
+                                    child: e.build(context, controller),
+                                  ))
                               .toList(),
                         ),
                       ),

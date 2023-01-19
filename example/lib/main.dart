@@ -27,69 +27,48 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late InfiniteCanvasController controller;
-  int _counter = 0;
 
   @override
   void initState() {
     super.initState();
     final nodes = [
       InfiniteCanvasNode(
-        label: 'Flutter Counter',
+        label: 'Counter Example',
         key: UniqueKey(),
         offset: Offset.zero,
         size: const Size(400, 800),
-        builder: (context) => StatefulBuilder(
-          builder: (context, setState) => Scaffold(
-            appBar: AppBar(
-              title: const Text('Flutter Demo Home Page'),
-            ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    'You have pushed the button this many times:',
-                  ),
-                  Text(
-                    '$_counter',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                ],
-              ),
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                if (mounted) {
-                  setState(() {
-                    _counter++;
-                  });
-                }
-              },
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
-            ),
-          ),
-        ),
+        child: const CounterExample(),
+      ),
+      InfiniteCanvasNode(
+        label: 'Draggable Example',
+        key: UniqueKey(),
+        offset: const Offset(600, 100),
+        size: const Size(400, 250),
+        child: const DraggableExample(),
       ),
       InfiniteCanvasNode(
         key: UniqueKey(),
-        offset: const Offset(600, 100),
+        offset: const Offset(800, 900),
         size: const Size(400, 800),
-        builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: const Text('Gradient'),
-          ),
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.primary,
-                  Theme.of(context).colorScheme.secondary,
-                  Theme.of(context).colorScheme.tertiary,
-                ],
+        child: Builder(
+          builder: (context) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('Gradient'),
               ),
-            ),
-          ),
+              body: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).colorScheme.secondary,
+                      Theme.of(context).colorScheme.tertiary,
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
       InfiniteCanvasNode(
@@ -97,17 +76,21 @@ class _HomeState extends State<Home> {
         label: 'Rectangle',
         offset: const Offset(400, 300),
         size: const Size(200, 200),
-        builder: (context) => CustomPaint(
-          isComplex: true,
-          willChange: true,
-          painter: InlineCustomPainter(
-            brush: Paint(),
-            builder: (brush, canvas, rect) {
-              // Draw rect
-              brush.color = Theme.of(context).colorScheme.secondary;
-              canvas.drawRect(rect, brush);
-            },
-          ),
+        child: Builder(
+          builder: (context) {
+            return CustomPaint(
+              isComplex: true,
+              willChange: true,
+              painter: InlineCustomPainter(
+                brush: Paint(),
+                builder: (brush, canvas, rect) {
+                  // Draw rect
+                  brush.color = Theme.of(context).colorScheme.secondary;
+                  canvas.drawRect(rect, brush);
+                },
+              ),
+            );
+          },
         ),
       ),
       InfiniteCanvasNode(
@@ -115,21 +98,26 @@ class _HomeState extends State<Home> {
         label: 'Triangle',
         offset: const Offset(550, 300),
         size: const Size(200, 200),
-        builder: (context) => CustomPaint(
-          painter: InlineCustomPainter(
-            brush: Paint(),
-            builder: (brush, canvas, rect) {
-              // Draw triangle
-              brush.color = Theme.of(context).colorScheme.secondaryContainer;
-              final path = Path();
-              path.addPolygon([
-                rect.topCenter,
-                rect.bottomLeft,
-                rect.bottomRight,
-              ], true);
-              canvas.drawPath(path, brush);
-            },
-          ),
+        child: Builder(
+          builder: (context) {
+            return CustomPaint(
+              painter: InlineCustomPainter(
+                brush: Paint(),
+                builder: (brush, canvas, rect) {
+                  // Draw triangle
+                  brush.color =
+                      Theme.of(context).colorScheme.secondaryContainer;
+                  final path = Path();
+                  path.addPolygon([
+                    rect.topCenter,
+                    rect.bottomLeft,
+                    rect.bottomRight,
+                  ], true);
+                  canvas.drawPath(path, brush);
+                },
+              ),
+            );
+          },
         ),
       ),
       InfiniteCanvasNode(
@@ -137,15 +125,19 @@ class _HomeState extends State<Home> {
         label: 'Circle',
         offset: const Offset(500, 450),
         size: const Size(200, 200),
-        builder: (context) => CustomPaint(
-          painter: InlineCustomPainter(
-            brush: Paint(),
-            builder: (brush, canvas, rect) {
-              // Draw circle
-              brush.color = Theme.of(context).colorScheme.tertiary;
-              canvas.drawCircle(rect.center, rect.width / 2, brush);
-            },
-          ),
+        child: Builder(
+          builder: (context) {
+            return CustomPaint(
+              painter: InlineCustomPainter(
+                brush: Paint(),
+                builder: (brush, canvas, rect) {
+                  // Draw circle
+                  brush.color = Theme.of(context).colorScheme.tertiary;
+                  canvas.drawCircle(rect.center, rect.width / 2, brush);
+                },
+              ),
+            );
+          },
         ),
       ),
     ];
@@ -199,5 +191,87 @@ class InlineCustomPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
+  }
+}
+
+class CounterExample extends StatefulWidget {
+  const CounterExample({super.key});
+
+  @override
+  State<CounterExample> createState() => _CounterExampleState();
+}
+
+class _CounterExampleState extends State<CounterExample> {
+  int _counter = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter Demo Home Page'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (mounted) {
+            setState(() {
+              _counter++;
+            });
+          }
+        },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class DraggableExample extends StatefulWidget {
+  const DraggableExample({super.key});
+
+  @override
+  State<DraggableExample> createState() => _DraggableExampleState();
+}
+
+class _DraggableExampleState extends State<DraggableExample> {
+  double _amount = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Draggable Example')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Slider(
+              value: _amount,
+              onChanged: (value) {
+                if (mounted) {
+                  setState(() {
+                    _amount = value;
+                  });
+                }
+              },
+            ),
+            Text('Value: $_amount'),
+          ],
+        ),
+      ),
+    );
   }
 }

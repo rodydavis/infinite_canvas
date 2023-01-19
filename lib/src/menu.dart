@@ -194,8 +194,8 @@ class _InfiniteCanvasMenuState extends State<InfiniteCanvasMenu> {
                     ).then((value) {
                       widget.controller.focusNode.requestFocus();
                       if (value == null) return;
-                      final newItem = item.copyWith(label: value);
-                      widget.controller.edit(newItem);
+                      item.update(label: value);
+                      widget.controller.edit(item);
                     });
                   }
                 : null,
