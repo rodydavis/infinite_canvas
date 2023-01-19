@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the initState method from the InfiniteCanvasState class, for the Dart programming language.">
-  <title>initState method - InfiniteCanvasState class - infinite_canvas library - Dart API</title>
+  <meta name="description" content="API docs for the buildBackground method from the InfiniteCanvasState class, for the Dart programming language.">
+  <title>buildBackground method - InfiniteCanvasState class - infinite_canvas library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">infinite_canvas</a></li>
     <li><a href="../../infinite_canvas/infinite_canvas-library.html">infinite_canvas</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState-class.html">InfiniteCanvasState</a></li>
-    <li class="self-crumb">initState method</li>
+    <li class="self-crumb">buildBackground method</li>
   </ol>
-  <div class="self-name">initState</div>
+  <div class="self-name">buildBackground</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -44,61 +44,37 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-<h1><span class="kind-method">initState</span> method 
+<h1><span class="kind-method">buildBackground</span> method 
     <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
-<div>
-  <ol class="annotation-list">
-    <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
-  </ol>
-</div>
 
-<span class="returntype">void</span>
-<span class="name ">initState</span>(<wbr>)
+<span class="returntype"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>
+<span class="name ">buildBackground</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="buildBackground-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span></li>
+<li><span class="parameter" id="buildBackground-param-quad"><span class="type-annotation">Quad</span> <span class="parameter-name">quad</span></span></li>
+</ol>)
 
-      <div class="features">override</div>
+      
 
     </section>
     
-<section class="desc markdown">
-  <p>Called when this object is inserted into the tree.</p>
-<p>The framework will call this method exactly once for each <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object
-it creates.</p>
-<p>Override this method to perform initialization that depends on the
-location at which this object was inserted into the tree (i.e., <a href="https://api.flutter.dev/flutter/widgets/State/context.html">context</a>)
-or on the widget used to configure this object (i.e., <a href="https://api.flutter.dev/flutter/widgets/State/widget.html">widget</a>).</p>
-<p>If a <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a>'s <a href="../../infinite_canvas/InfiniteCanvasState/build.html">build</a> method depends on an object that can itself
-change state, for example a <a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier-class.html">ChangeNotifier</a> or <a href="https://api.flutter.dev/flutter/dart-async/Stream-class.html">Stream</a>, or some
-other object to which one can subscribe to receive notifications, then
-be sure to subscribe and unsubscribe properly in <a href="../../infinite_canvas/InfiniteCanvasState/initState.html">initState</a>,
-<a href="https://api.flutter.dev/flutter/widgets/State/didUpdateWidget.html">didUpdateWidget</a>, and <a href="../../infinite_canvas/InfiniteCanvasState/dispose.html">dispose</a>:</p>
-<ul>
-<li>In <a href="../../infinite_canvas/InfiniteCanvasState/initState.html">initState</a>, subscribe to the object.</li>
-<li>In <a href="https://api.flutter.dev/flutter/widgets/State/didUpdateWidget.html">didUpdateWidget</a> unsubscribe from the old object and subscribe
-to the new one if the updated widget configuration requires
-replacing the object.</li>
-<li>In <a href="../../infinite_canvas/InfiniteCanvasState/dispose.html">dispose</a>, unsubscribe from the object.</li>
-</ul>
-<p>You cannot use <a href="https://api.flutter.dev/flutter/widgets/BuildContext/dependOnInheritedWidgetOfExactType.html">BuildContext.dependOnInheritedWidgetOfExactType</a> from this
-method. However, <a href="https://api.flutter.dev/flutter/widgets/State/didChangeDependencies.html">didChangeDependencies</a> will be called immediately
-following this method, and <a href="https://api.flutter.dev/flutter/widgets/BuildContext/dependOnInheritedWidgetOfExactType.html">BuildContext.dependOnInheritedWidgetOfExactType</a> can
-be used there.</p>
-<p>Implementations of this method should start with a call to the inherited
-method, as in <code>super.initState()</code>.</p>
-</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@override
-void initState() {
-  super.initState();
-  controller.addListener(onUpdate);
-  controller.focusNode.requestFocus();
+  <pre class="language-dart"><code class="language-dart">Widget buildBackground(BuildContext context, Quad quad) {
+  final viewport = axisAlignedBoundingBox(quad);
+  if (widget.backgroundBuilder != null) {
+    return widget.backgroundBuilder!(context, viewport);
+  }
+  return GridBackgroundBuilder(
+    cellWidth: widget.gridSize.width,
+    cellHeight: widget.gridSize.height,
+    viewport: viewport,
+  );
 }</code></pre>
 </section>
 
@@ -116,7 +92,7 @@ void initState() {
   <li><a href="../../index.html">infinite_canvas</a></li>
   <li><a href="../../infinite_canvas/infinite_canvas-library.html">infinite_canvas</a></li>
   <li><a href="../../infinite_canvas/InfiniteCanvasState-class.html">InfiniteCanvasState</a></li>
-  <li class="self-crumb">initState method</li>
+  <li class="self-crumb">buildBackground method</li>
 </ol>
 
 

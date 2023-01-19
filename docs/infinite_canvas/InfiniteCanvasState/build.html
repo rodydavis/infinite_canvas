@@ -244,18 +244,14 @@ Widget build(BuildContext context) {
             minScale: widget.minScale,
             maxScale: widget.maxScale,
             boundaryMargin: const EdgeInsets.all(double.infinity),
-            builder: (context, viewport) {
+            builder: (context, quad) {
               return SizedBox.fromSize(
                 size: controller.getMaxSize().size,
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
                     Positioned.fill(
-                      child: GridBackgroundBuilder(
-                        cellWidth: widget.gridSize.width,
-                        cellHeight: widget.gridSize.height,
-                        viewport: axisAlignedBoundingBox(viewport),
-                      ),
+                      child: buildBackground(context, quad),
                     ),
                     Positioned.fill(
                       child: InfiniteCanvasEdgeRenderer(
@@ -333,6 +329,7 @@ Widget build(BuildContext context) {
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/activate.html">activate</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState/axisAlignedBoundingBox.html">axisAlignedBoundingBox</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState/build.html">build</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasState/buildBackground.html">buildBackground</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/deactivate.html">deactivate</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/debugFillProperties.html">debugFillProperties</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/didChangeDependencies.html">didChangeDependencies</a></li>
@@ -365,7 +362,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.8
+      0.0.9
   </span>
 
   
