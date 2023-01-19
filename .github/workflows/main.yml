@@ -1,4 +1,4 @@
-name: Publish example
+name: Publish example and package
 
 on:
   push:
@@ -33,3 +33,33 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./example/build/web
+  publish:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'master'
+
+      - name: Install
+        run: flutter pub get
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1.3
+
+      - name: Bump version
+        run: |
+          dart pub global activate cider
+          dart pub run cider bump patch
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'Bumping version'
+        
+      - uses: jacopocarlini/action-autotag@stable
+        with:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          tag_prefix: "v"
