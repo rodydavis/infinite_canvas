@@ -75,4 +75,27 @@ jobs:
           github_token: ${{ secrets.COMMIT_TOKEN }}
   release:
     needs: publish
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    # uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'master'
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1.3
+        with:
+          sdk: dev
+
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          dart pub get
+          
+      - name: Publish
+        run: dart pub publish --force
