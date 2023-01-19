@@ -69,11 +69,6 @@ jobs:
         with:
           file-path: pubspec.yaml
         
-      - uses: jacopocarlini/action-autotag@stable
-        with:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          tag_prefix: "v"
-
       - uses: rickstaa/action-create-tag@v1
         with:
           tag: "${{ steps.read-version.outputs.version-number }}"
