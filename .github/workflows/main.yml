@@ -43,15 +43,20 @@ jobs:
         with:
           channel: 'master'
 
-      - name: Install
-        run: flutter pub get
-
       - name: Setup Dart
         uses: dart-lang/setup-dart@v1.3
+        with:
+          sdk: dev
+
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          dart pub get
 
       - name: Bump version
         run: |
           dart pub global activate cider
+          dart pub get
           dart pub run cider bump patch
 
       - name: Commit changes
