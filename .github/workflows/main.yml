@@ -34,6 +34,11 @@ jobs:
         run: |
           pub global activate cider
           cider bump patch
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'Bumping version'
         
       - uses: jacopocarlini/action-autotag@stable
         with:
