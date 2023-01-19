@@ -6,5 +6,5 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+*"
 
 jobs:
-  publish:
+  deploy:
     uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
