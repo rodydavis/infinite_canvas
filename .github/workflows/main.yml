@@ -72,3 +72,4 @@ jobs:
       - uses: rickstaa/action-create-tag@v1
         with:
           tag: "v${{ steps.read-version.outputs.version-number }}"
+          github_token: ${{ secrets.COMMIT_TOKEN }}
