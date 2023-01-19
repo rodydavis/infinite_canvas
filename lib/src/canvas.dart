@@ -104,11 +104,17 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                 event.logicalKey == LogicalKeyboardKey.shiftRight) {
               controller.shiftPressed = true;
             }
+            if (event.logicalKey == LogicalKeyboardKey.space) {
+              controller.spacePressed = true;
+            }
           }
           if (event is KeyUpEvent) {
             if (event.logicalKey == LogicalKeyboardKey.shiftLeft ||
                 event.logicalKey == LogicalKeyboardKey.shiftRight) {
               controller.shiftPressed = false;
+            }
+            if (event.logicalKey == LogicalKeyboardKey.space) {
+              controller.spacePressed = false;
             }
           }
         },
@@ -116,7 +122,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
           onPointerDown: (details) {
             controller.mouseDown = true;
             controller.checkSelection(details.localPosition);
-            if (controller.selection.isEmpty) {
+            if (controller.selection.isEmpty && !controller.spacePressed) {
               controller.marqueeStart = details.localPosition;
               controller.marqueeEnd = details.localPosition;
             }
@@ -156,6 +162,8 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
               onInteractionUpdate: (details) {
                 if (!controller.mouseDown) {
                   controller.scale = details.scale;
+                } else if (controller.spacePressed) {
+                  controller.pan(details.focalPointDelta);
                 } else {
                   controller.moveSelection(details.focalPoint);
                 }

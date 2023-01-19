@@ -89,6 +89,8 @@ jobs:
 
       - name: Setup Dart
         uses: dart-lang/setup-dart@v1
+        with:
+          sdk: dev
 
       - name: Install dependencies
         run: |

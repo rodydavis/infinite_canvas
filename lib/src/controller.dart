@@ -42,6 +42,13 @@ class InfiniteCanvasController extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _spacePressed = false;
+  bool get spacePressed => _spacePressed;
+  set spacePressed(bool value) {
+    _spacePressed = value;
+    notifyListeners();
+  }
+
   Rect getMaxSize() {
     Rect rect = Rect.zero;
     for (final child in nodes) {
