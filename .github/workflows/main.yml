@@ -1,4 +1,4 @@
-name: github pages
+name: Publish example
 
 on:
   push:
@@ -17,9 +17,7 @@ jobs:
           channel: 'master'
 
       - name: Install
-        run: |
-          flutter config --enable-web
-          flutter pub get
+        run: flutter pub get
 
       - name: Build Example
         run: cd example && flutter build web --base-href=/infinite_canvas/ && cd ..
@@ -29,21 +27,6 @@ jobs:
 
       - name: Build Docs
         run: dart doc -o example/build/web/docs
-
-      - name: Bump version
-        run: |
-          pub global activate cider
-          cider bump patch
-
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: 'Bumping version'
-        
-      - uses: jacopocarlini/action-autotag@stable
-        with:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          tag_prefix: "v"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
