@@ -226,7 +226,7 @@ Widget build(BuildContext context) {
         },
         child: LayoutBuilder(
           builder: (context, constraints) =&gt; InteractiveViewer.builder(
-            trackpadScrollCausesScale: true,
+            &#47;&#47; trackpadScrollCausesScale: true,
             transformationController: controller.transform,
             panEnabled: controller.canvasMoveEnabled,
             scaleEnabled: controller.canvasMoveEnabled,
@@ -267,7 +267,10 @@ Widget build(BuildContext context) {
                         delegate: InfiniteCanvasNodesDelegate(controller),
                         children: controller.nodes
                             .map((e) =&gt; LayoutId(
-                                id: e, child: e.build(context, controller)))
+                                  key: e.key,
+                                  id: e,
+                                  child: e.build(context, controller),
+                                ))
                             .toList(),
                       ),
                     ),

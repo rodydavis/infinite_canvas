@@ -65,7 +65,10 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Widget build(BuildContext context, InfiniteCanvasController controller) {
+  <pre class="language-dart"><code class="language-dart">Widget build(
+  BuildContext context,
+  InfiniteCanvasController controller,
+) {
   final colors = Theme.of(context).colorScheme;
   final fonts = Theme.of(context).textTheme;
   const double borderInset = 2;
@@ -111,7 +114,10 @@
               ),
             ),
           ),
-        Positioned.fill(child: builder(context)),
+        Positioned.fill(
+          key: key,
+          child: child,
+        ),
       ],
     ),
   );
@@ -146,7 +152,7 @@
     <li class="section-title">
       <a href="../../infinite_canvas/InfiniteCanvasNode-class.html#instance-properties">Properties</a>
     </li>
-    <li><a href="../../infinite_canvas/InfiniteCanvasNode/builder.html">builder</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasNode/child.html">child</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/key.html">key</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/label.html">label</a></li>
@@ -157,10 +163,9 @@
 
     <li class="section-title"><a href="../../infinite_canvas/InfiniteCanvasNode-class.html#instance-methods">Methods</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/build.html">build</a></li>
-    <li><a href="../../infinite_canvas/InfiniteCanvasNode/clone.html">clone</a></li>
-    <li><a href="../../infinite_canvas/InfiniteCanvasNode/copyWith.html">copyWith</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasNode/update.html">update</a></li>
 
     <li class="section-title inherited"><a href="../../infinite_canvas/InfiniteCanvasNode-class.html#operators">Operators</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
