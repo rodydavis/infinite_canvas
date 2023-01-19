@@ -73,3 +73,6 @@ jobs:
         with:
           tag: "v${{ steps.read-version.outputs.version-number }}"
           github_token: ${{ secrets.COMMIT_TOKEN }}
+  release:
+    needs: publish
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
