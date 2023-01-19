@@ -57,7 +57,7 @@ jobs:
         run: |
           dart pub global activate cider
           dart pub get
-          dart pub run cider bump patch
+          cider bump patch
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
