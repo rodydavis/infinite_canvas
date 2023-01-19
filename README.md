@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const Home(),
+      home: const Example(),
       theme: ThemeData.light(useMaterial3: true),
       darkTheme: ThemeData.dark(useMaterial3: true),
       themeMode: ThemeMode.system,
@@ -31,147 +31,106 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Example extends StatefulWidget {
+  const Example({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Example> createState() => _ExampleState();
 }
 
-class _HomeState extends State<Home> {
+class _ExampleState extends State<Example> {
   late InfiniteCanvasController controller;
-  int _counter = 0;
 
   @override
   void initState() {
     super.initState();
-    final nodes = [
-      InfiniteCanvasNode(
-        label: 'Flutter Counter',
-        key: UniqueKey(),
-        offset: Offset.zero,
-        size: const Size(400, 800),
-        builder: (context) => StatefulBuilder(
-          builder: (context, setState) => Scaffold(
-            appBar: AppBar(
-              title: const Text('Flutter Demo Home Page'),
-            ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    'You have pushed the button this many times:',
-                  ),
-                  Text(
-                    '$_counter',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                ],
-              ),
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                if (mounted) {
-                  setState(() {
-                    _counter++;
-                  });
-                }
+    final rectangleNode = InfiniteCanvasNode(
+      key: UniqueKey(),
+      label: 'Rectangle',
+      offset: const Offset(400, 300),
+      size: const Size(200, 200),
+      child: Builder(
+        builder: (context) {
+          return CustomPaint(
+            isComplex: true,
+            willChange: true,
+            painter: InlineCustomPainter(
+              brush: Paint(),
+              builder: (brush, canvas, rect) {
+                // Draw rect
+                brush.color = Theme.of(context).colorScheme.secondary;
+                canvas.drawRect(rect, brush);
               },
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
             ),
-          ),
-        ),
+          );
+        },
       ),
-      InfiniteCanvasNode(
-        key: UniqueKey(),
-        offset: const Offset(600, 100),
-        size: const Size(400, 800),
-        builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: const Text('Gradient'),
-          ),
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.primary,
-                  Theme.of(context).colorScheme.secondary,
-                  Theme.of(context).colorScheme.tertiary,
-                ],
-              ),
+    );
+    final triangleNode = InfiniteCanvasNode(
+      key: UniqueKey(),
+      label: 'Triangle',
+      offset: const Offset(550, 300),
+      size: const Size(200, 200),
+      child: Builder(
+        builder: (context) {
+          return CustomPaint(
+            painter: InlineCustomPainter(
+              brush: Paint(),
+              builder: (brush, canvas, rect) {
+                // Draw triangle
+                brush.color = Theme.of(context).colorScheme.secondaryContainer;
+                final path = Path();
+                path.addPolygon([
+                  rect.topCenter,
+                  rect.bottomLeft,
+                  rect.bottomRight,
+                ], true);
+                canvas.drawPath(path, brush);
+              },
             ),
-          ),
-        ),
+          );
+        },
       ),
-      InfiniteCanvasNode(
-        key: UniqueKey(),
-        label: 'Rectangle',
-        offset: const Offset(400, 300),
-        size: const Size(200, 200),
-        builder: (context) => CustomPaint(
-          isComplex: true,
-          willChange: true,
-          painter: InlineCustomPainter(
-            brush: Paint(),
-            builder: (brush, canvas, rect) {
-              // Draw rect
-              brush.color = Theme.of(context).colorScheme.secondary;
-              canvas.drawRect(rect, brush);
-            },
-          ),
-        ),
+    );
+    final circleNode = InfiniteCanvasNode(
+      key: UniqueKey(),
+      label: 'Circle',
+      offset: const Offset(500, 450),
+      size: const Size(200, 200),
+      child: Builder(
+        builder: (context) {
+          return CustomPaint(
+            painter: InlineCustomPainter(
+              brush: Paint(),
+              builder: (brush, canvas, rect) {
+                // Draw circle
+                brush.color = Theme.of(context).colorScheme.tertiary;
+                canvas.drawCircle(rect.center, rect.width / 2, brush);
+              },
+            ),
+          );
+        },
       ),
-      InfiniteCanvasNode(
-        key: UniqueKey(),
-        label: 'Triangle',
-        offset: const Offset(550, 300),
-        size: const Size(200, 200),
-        builder: (context) => CustomPaint(
-          painter: InlineCustomPainter(
-            brush: Paint(),
-            builder: (brush, canvas, rect) {
-              // Draw triangle
-              brush.color = Theme.of(context).colorScheme.secondaryContainer;
-              final path = Path();
-              path.addPolygon([
-                rect.topCenter,
-                rect.bottomLeft,
-                rect.bottomRight,
-              ], true);
-              canvas.drawPath(path, brush);
-            },
-          ),
-        ),
-      ),
-      InfiniteCanvasNode(
-        key: UniqueKey(),
-        label: 'Circle',
-        offset: const Offset(500, 450),
-        size: const Size(200, 200),
-        builder: (context) => CustomPaint(
-          painter: InlineCustomPainter(
-            brush: Paint(),
-            builder: (brush, canvas, rect) {
-              // Draw circle
-              brush.color = Theme.of(context).colorScheme.tertiary;
-              canvas.drawCircle(rect.center, rect.width / 2, brush);
-            },
-          ),
-        ),
-      ),
+    );
+    final nodes = [
+      rectangleNode,
+      triangleNode,
+      circleNode,
     ];
     controller = InfiniteCanvasController(nodes: nodes, edges: [
       InfiniteCanvasEdge(
-        from: nodes[2].key!,
-        to: nodes[3].key!,
-        label: 'Edge 1',
+        from: rectangleNode.key,
+        to: triangleNode.key,
+        label: '4 -> 3',
       ),
       InfiniteCanvasEdge(
-        from: nodes[2].key!,
-        to: nodes[4].key!,
-        label: 'Edge 1',
+        from: rectangleNode.key,
+        to: circleNode.key,
+        label: '[] -> ()',
+      ),
+      InfiniteCanvasEdge(
+        from: triangleNode.key,
+        to: circleNode.key,
       ),
     ]);
   }
