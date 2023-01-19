@@ -18,12 +18,14 @@ class InfiniteCanvas extends StatefulWidget {
     this.minScale = 0.4,
     this.maxScale = 4,
     this.menuVisible = true,
+    this.backgroundBuilder,
   });
 
   final InfiniteCanvasController controller;
   final Size gridSize;
   final double minScale, maxScale;
   final bool menuVisible;
+  final Widget Function(BuildContext, Rect)? backgroundBuilder;
 
   @override
   State<InfiniteCanvas> createState() => InfiniteCanvasState();
@@ -75,6 +77,18 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
     }
 
     return Rect.fromLTRB(xMin, yMin, xMax, yMax);
+  }
+
+  Widget buildBackground(BuildContext context, Quad quad) {
+    final viewport = axisAlignedBoundingBox(quad);
+    if (widget.backgroundBuilder != null) {
+      return widget.backgroundBuilder!(context, viewport);
+    }
+    return GridBackgroundBuilder(
+      cellWidth: widget.gridSize.width,
+      cellHeight: widget.gridSize.height,
+      viewport: viewport,
+    );
   }
 
   @override
@@ -150,18 +164,14 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
               minScale: widget.minScale,
               maxScale: widget.maxScale,
               boundaryMargin: const EdgeInsets.all(double.infinity),
-              builder: (context, viewport) {
+              builder: (context, quad) {
                 return SizedBox.fromSize(
                   size: controller.getMaxSize().size,
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
                       Positioned.fill(
-                        child: GridBackgroundBuilder(
-                          cellWidth: widget.gridSize.width,
-                          cellHeight: widget.gridSize.height,
-                          viewport: axisAlignedBoundingBox(viewport),
-                        ),
+                        child: buildBackground(context, quad),
                       ),
                       Positioned.fill(
                         child: InfiniteCanvasEdgeRenderer(

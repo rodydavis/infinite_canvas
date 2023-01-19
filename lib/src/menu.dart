@@ -220,22 +220,11 @@ class _InfiniteCanvasMenuState extends State<InfiniteCanvasMenu> {
             },
             shortcut: const SingleActivator(
               LogicalKeyboardKey.keyD,
-              meta: true,
+              // meta: true,
             ),
           ),
         ],
       ),
-      // MenuEntry(
-      //   label: 'Help',
-      //   menuChildren: [
-      //     MenuEntry(
-      //       label: 'View License',
-      //       onPressed: () {
-      //         showLicensePage(context: context);
-      //       },
-      //     ),
-      //   ],
-      // ),
     ];
     _shortcutsEntry?.dispose();
     final registry = ShortcutRegistry.of(context);
