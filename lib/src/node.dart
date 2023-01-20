@@ -110,6 +110,7 @@ class InfiniteCanvasNode {
               bottom: 0,
               child: GestureDetector(
                 onPanUpdate: (details) {
+                  if (!controller.mouseDown) return;
                   update(size: size + details.delta);
                   controller.edit(this);
                 },
@@ -122,6 +123,7 @@ class InfiniteCanvasNode {
               bottom: 0,
               child: GestureDetector(
                 onPanUpdate: (details) {
+                  if (!controller.mouseDown) return;
                   update(
                     size: size + Offset(-details.delta.dx, details.delta.dy),
                     offset: offset + Offset(details.delta.dx, 0),
@@ -137,6 +139,7 @@ class InfiniteCanvasNode {
               top: 0,
               child: GestureDetector(
                 onPanUpdate: (details) {
+                  if (!controller.mouseDown) return;
                   update(
                     size: size + Offset(details.delta.dx, -details.delta.dy),
                     offset: offset + Offset(0, details.delta.dy),
@@ -152,6 +155,7 @@ class InfiniteCanvasNode {
               top: 0,
               child: GestureDetector(
                 onPanUpdate: (details) {
+                  if (!controller.mouseDown) return;
                   update(
                     size: size + -details.delta,
                     offset: offset + details.delta,

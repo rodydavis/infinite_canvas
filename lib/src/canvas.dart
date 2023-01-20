@@ -119,7 +119,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
       final nodeKeys = nodes.map((e) => e.key).toSet();
       final edges = <InfiniteCanvasEdge>[];
       for (final edge in controller.edges) {
-        if (nodeKeys.contains(edge.from) && nodeKeys.contains(edge.to)) {
+        if (nodeKeys.contains(edge.from) || nodeKeys.contains(edge.to)) {
           edges.add(edge);
         }
       }
