@@ -146,6 +146,10 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                 event.logicalKey == LogicalKeyboardKey.controlRight) {
               controller.controlPressed = true;
             }
+            if (event.logicalKey == LogicalKeyboardKey.metaLeft ||
+                event.logicalKey == LogicalKeyboardKey.metaRight) {
+              controller.metaPressed = true;
+            }
             if (event.logicalKey == LogicalKeyboardKey.space) {
               controller.spacePressed = true;
             }
@@ -154,6 +158,10 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
             if (event.logicalKey == LogicalKeyboardKey.shiftLeft ||
                 event.logicalKey == LogicalKeyboardKey.shiftRight) {
               controller.shiftPressed = false;
+            }
+            if (event.logicalKey == LogicalKeyboardKey.metaLeft ||
+                event.logicalKey == LogicalKeyboardKey.metaRight) {
+              controller.metaPressed = false;
             }
             if (event.logicalKey == LogicalKeyboardKey.controlLeft ||
                 event.logicalKey == LogicalKeyboardKey.controlRight) {

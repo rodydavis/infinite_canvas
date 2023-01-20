@@ -72,6 +72,13 @@ class InfiniteCanvasController extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _metaPressed = false;
+  bool get metaPressed => _metaPressed;
+  set metaPressed(bool value) {
+    _metaPressed = value;
+    notifyListeners();
+  }
+
   Rect getMaxSize() {
     Rect rect = Rect.zero;
     for (final child in nodes) {
