@@ -176,6 +176,7 @@ Widget build(BuildContext context) {
   return InfiniteCanvasMenu(
     controller: widget.controller,
     visible: widget.menuVisible,
+    menus: widget.menus,
     child: KeyboardListener(
       focusNode: controller.focusNode,
       onKeyEvent: (event) {
@@ -370,7 +371,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.3
+      0.0.4
   </span>
 
   

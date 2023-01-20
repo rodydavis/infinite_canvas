@@ -71,8 +71,8 @@
   Offset? offset,
   String? label,
 }) {
-  if (size != null) this.size = size;
-  if (offset != null) this.offset = offset;
+  if (offset != null &amp;&amp; allowMove) this.offset = offset;
+  if (size != null &amp;&amp; allowResize) this.size = size;
   if (label != null) this.label = label;
 }</code></pre>
 </section>
@@ -105,6 +105,8 @@
     <li class="section-title">
       <a href="../../infinite_canvas/InfiniteCanvasNode-class.html#instance-properties">Properties</a>
     </li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasNode/allowMove.html">allowMove</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasNode/allowResize.html">allowResize</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/child.html">child</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/key.html">key</a></li>
@@ -116,6 +118,7 @@
 
     <li class="section-title"><a href="../../infinite_canvas/InfiniteCanvasNode-class.html#instance-methods">Methods</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/build.html">build</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasNode/dragHandle.html">dragHandle</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/update.html">update</a></li>
@@ -126,6 +129,9 @@
 
 
 
+        <li class="section-title"><a href="../../infinite_canvas/InfiniteCanvasNode-class.html#constants">Constants</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvasNode/borderInset-constant.html">borderInset</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvasNode/dragHandleSize-constant.html">dragHandleSize</a></li>
 </ol>
 
   </div><!--/.sidebar-offcanvas-->
@@ -138,7 +144,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.3
+      0.0.4
   </span>
 
   

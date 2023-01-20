@@ -71,7 +71,7 @@
 ) {
   final colors = Theme.of(context).colorScheme;
   final fonts = Theme.of(context).textTheme;
-  const double borderInset = 2;
+  final showHandles = allowResize &amp;&amp; controller.isSelected(key);
   return SizedBox.fromSize(
     size: size,
     child: Stack(
@@ -118,6 +118,65 @@
           key: key,
           child: child,
         ),
+        if (showHandles) ...[
+          &#47;&#47; bottom right
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: GestureDetector(
+              onPanUpdate: (details) {
+                update(size: size + details.delta);
+                controller.edit(this);
+              },
+              child: dragHandle(context),
+            ),
+          ),
+          &#47;&#47; bottom left
+          Positioned(
+            left: 0,
+            bottom: 0,
+            child: GestureDetector(
+              onPanUpdate: (details) {
+                update(
+                  size: size + Offset(-details.delta.dx, details.delta.dy),
+                  offset: offset + Offset(details.delta.dx, 0),
+                );
+                controller.edit(this);
+              },
+              child: dragHandle(context),
+            ),
+          ),
+          &#47;&#47; top right
+          Positioned(
+            right: 0,
+            top: 0,
+            child: GestureDetector(
+              onPanUpdate: (details) {
+                update(
+                  size: size + Offset(details.delta.dx, -details.delta.dy),
+                  offset: offset + Offset(0, details.delta.dy),
+                );
+                controller.edit(this);
+              },
+              child: dragHandle(context),
+            ),
+          ),
+          &#47;&#47; top left
+          Positioned(
+            left: 0,
+            top: 0,
+            child: GestureDetector(
+              onPanUpdate: (details) {
+                update(
+                  size: size + -details.delta,
+                  offset: offset + details.delta,
+                );
+                controller.edit(this);
+              },
+              child: dragHandle(context),
+            ),
+          ),
+        ],
       ],
     ),
   );
@@ -152,6 +211,8 @@
     <li class="section-title">
       <a href="../../infinite_canvas/InfiniteCanvasNode-class.html#instance-properties">Properties</a>
     </li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasNode/allowMove.html">allowMove</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasNode/allowResize.html">allowResize</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/child.html">child</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/key.html">key</a></li>
@@ -163,6 +224,7 @@
 
     <li class="section-title"><a href="../../infinite_canvas/InfiniteCanvasNode-class.html#instance-methods">Methods</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/build.html">build</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasNode/dragHandle.html">dragHandle</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/update.html">update</a></li>
@@ -173,6 +235,9 @@
 
 
 
+        <li class="section-title"><a href="../../infinite_canvas/InfiniteCanvasNode-class.html#constants">Constants</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvasNode/borderInset-constant.html">borderInset</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvasNode/dragHandleSize-constant.html">dragHandleSize</a></li>
 </ol>
 
   </div><!--/.sidebar-offcanvas-->
@@ -185,7 +250,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.3
+      0.0.4
   </span>
 
   
