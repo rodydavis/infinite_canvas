@@ -72,7 +72,15 @@
   String? label,
 }) {
   if (offset != null &amp;&amp; allowMove) this.offset = offset;
-  if (size != null &amp;&amp; allowResize) this.size = size;
+  if (size != null &amp;&amp; allowResize) {
+    if (size.width &lt; dragHandleSize * 2) {
+      size = Size(dragHandleSize * 2, size.height);
+    }
+    if (size.height &lt; dragHandleSize * 2) {
+      size = Size(size.width, dragHandleSize * 2);
+    }
+    this.size = size;
+  }
   if (label != null) this.label = label;
 }</code></pre>
 </section>
@@ -145,7 +153,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.6+1
+      0.0.6+2
   </span>
 
   
