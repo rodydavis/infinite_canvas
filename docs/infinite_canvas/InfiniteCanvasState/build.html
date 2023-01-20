@@ -185,6 +185,10 @@ Widget build(BuildContext context) {
               event.logicalKey == LogicalKeyboardKey.shiftRight) {
             controller.shiftPressed = true;
           }
+          if (event.logicalKey == LogicalKeyboardKey.controlLeft ||
+              event.logicalKey == LogicalKeyboardKey.controlRight) {
+            controller.controlPressed = true;
+          }
           if (event.logicalKey == LogicalKeyboardKey.space) {
             controller.spacePressed = true;
           }
@@ -194,8 +198,20 @@ Widget build(BuildContext context) {
               event.logicalKey == LogicalKeyboardKey.shiftRight) {
             controller.shiftPressed = false;
           }
+          if (event.logicalKey == LogicalKeyboardKey.controlLeft ||
+              event.logicalKey == LogicalKeyboardKey.controlRight) {
+            controller.controlPressed = false;
+            controller.linkStart = null;
+            controller.linkEnd = null;
+          }
           if (event.logicalKey == LogicalKeyboardKey.space) {
             controller.spacePressed = false;
+          }
+          if (event.logicalKey == LogicalKeyboardKey.delete ||
+              event.logicalKey == LogicalKeyboardKey.backspace) {
+            if (controller.focusNode.hasFocus) {
+              controller.deleteSelection();
+            }
           }
         }
       },
@@ -203,9 +219,17 @@ Widget build(BuildContext context) {
         onPointerDown: (details) {
           controller.mouseDown = true;
           controller.checkSelection(details.localPosition);
-          if (controller.selection.isEmpty &amp;&amp; !controller.spacePressed) {
-            controller.marqueeStart = details.localPosition;
-            controller.marqueeEnd = details.localPosition;
+          if (controller.selection.isEmpty) {
+            if (!controller.spacePressed) {
+              controller.marqueeStart = details.localPosition;
+              controller.marqueeEnd = details.localPosition;
+            }
+          } else {
+            if (controller.controlPressed &amp;&amp; widget.canAddEdges) {
+              final selected = controller.selection.last;
+              controller.linkStart = selected.key;
+              controller.linkEnd = null;
+            }
           }
         },
         onPointerUp: (details) {
@@ -214,8 +238,17 @@ Widget build(BuildContext context) {
               controller.marqueeEnd != null) {
             controller.checkMarqueeSelection();
           }
+          if (controller.linkStart != null &amp;&amp; controller.linkEnd != null) {
+            controller.checkSelection(controller.linkEnd!);
+            if (controller.selection.isNotEmpty) {
+              final selected = controller.selection.last;
+              controller.addLink(controller.linkStart!, selected.key);
+            }
+          }
           controller.marqueeStart = null;
           controller.marqueeEnd = null;
+          controller.linkStart = null;
+          controller.linkEnd = null;
         },
         onPointerCancel: (details) {
           controller.mouseDown = false;
@@ -230,10 +263,13 @@ Widget build(BuildContext context) {
               controller.marqueeEnd != null) {
             controller.checkMarqueeSelection(true);
           }
+          if (controller.linkStart != null) {
+            controller.linkEnd = details.localPosition;
+            controller.checkSelection(controller.linkEnd!, true);
+          }
         },
         child: LayoutBuilder(
           builder: (context, constraints) =&gt; InteractiveViewer.builder(
-            &#47;&#47; trackpadScrollCausesScale: true,
             transformationController: controller.transform,
             panEnabled: controller.canvasMoveEnabled,
             scaleEnabled: controller.canvasMoveEnabled,
@@ -245,6 +281,7 @@ Widget build(BuildContext context) {
                 controller.scale = details.scale;
               } else if (controller.spacePressed) {
                 controller.pan(details.focalPointDelta);
+              } else if (controller.controlPressed) {
               } else {
                 controller.moveSelection(details.focalPoint);
               }
@@ -254,6 +291,8 @@ Widget build(BuildContext context) {
             maxScale: widget.maxScale,
             boundaryMargin: const EdgeInsets.all(double.infinity),
             builder: (context, quad) {
+              final nodes = getNodes(constraints);
+              final edges = getEdges(constraints);
               return SizedBox.fromSize(
                 size: controller.getMaxSize().size,
                 child: Stack(
@@ -265,12 +304,18 @@ Widget build(BuildContext context) {
                     Positioned.fill(
                       child: InfiniteCanvasEdgeRenderer(
                         controller: controller,
+                        edges: edges,
+                        linkStart: controller
+                            .getNode(controller.linkStart)
+                            ?.rect
+                            .center,
+                        linkEnd: controller.linkEnd,
                       ),
                     ),
                     Positioned.fill(
                       child: CustomMultiChildLayout(
-                        delegate: InfiniteCanvasNodesDelegate(controller),
-                        children: controller.nodes
+                        delegate: InfiniteCanvasNodesDelegate(nodes),
+                        children: nodes
                             .map((e) =&gt; LayoutId(
                                   key: e.key,
                                   id: e,
@@ -280,13 +325,14 @@ Widget build(BuildContext context) {
                       ),
                     ),
                     if (controller.marqueeStart != null &amp;&amp;
-                        controller.marqueeEnd != null)
+                        controller.marqueeEnd != null) ...[
                       Positioned.fill(
                         child: Marquee(
                           start: controller.toLocal(controller.marqueeStart!),
                           end: controller.toLocal(controller.marqueeEnd!),
                         ),
                       ),
+                    ],
                   ],
                 ),
               );
@@ -344,6 +390,8 @@ Widget build(BuildContext context) {
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/didChangeDependencies.html">didChangeDependencies</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/didUpdateWidget.html">didUpdateWidget</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState/dispose.html">dispose</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasState/getEdges.html">getEdges</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasState/getNodes.html">getNodes</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState/initState.html">initState</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState/onUpdate.html">onUpdate</a></li>
@@ -371,7 +419,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.4+1
+      0.0.6+1
   </span>
 
   

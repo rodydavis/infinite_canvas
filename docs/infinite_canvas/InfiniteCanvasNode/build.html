@@ -116,7 +116,13 @@
           ),
         Positioned.fill(
           key: key,
-          child: child,
+          child: clipBehavior != Clip.none
+              ? ClipRect(
+                  clipper: _Clipper(rect),
+                  clipBehavior: clipBehavior,
+                  child: child,
+                )
+              : child,
         ),
         if (showHandles) ...[
           &#47;&#47; bottom right
@@ -214,6 +220,7 @@
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/allowMove.html">allowMove</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/allowResize.html">allowResize</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/child.html">child</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasNode/clipBehavior.html">clipBehavior</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/key.html">key</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasNode/label.html">label</a></li>
@@ -250,7 +257,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.4+1
+      0.0.6+1
   </span>
 
   

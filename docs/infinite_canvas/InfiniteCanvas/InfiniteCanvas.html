@@ -59,7 +59,9 @@
 <li><span class="parameter" id="-param-backgroundBuilder"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span> <span class="parameter-name">backgroundBuilder</span>(<ol class="parameter-list"><li><span class="parameter" id="param-"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span>, </span></li>
 <li><span class="parameter" id="param-"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Rect-class.html">Rect</a></span></span></li>
 </ol>
-)?}</span></li>
+)?, </span></li>
+<li><span class="parameter" id="-param-drawVisibleOnly"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">drawVisibleOnly</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-canAddEdges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">canAddEdges</span> = <span class="default-value">false</span>}</span></li>
 </ol>)
     </section>
 
@@ -78,6 +80,8 @@
   this.menuVisible = true,
   this.menus = const &lt;MenuEntry&gt;[],
   this.backgroundBuilder,
+  this.drawVisibleOnly = false,
+  this.canAddEdges = false,
 });</code></pre>
 </section>
 
@@ -110,7 +114,9 @@
       <a href="../../infinite_canvas/InfiniteCanvas-class.html#instance-properties">Properties</a>
     </li>
     <li><a href="../../infinite_canvas/InfiniteCanvas/backgroundBuilder.html">backgroundBuilder</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvas/canAddEdges.html">canAddEdges</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvas/controller.html">controller</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvas/drawVisibleOnly.html">drawVisibleOnly</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvas/gridSize.html">gridSize</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
@@ -150,7 +156,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.4+1
+      0.0.6+1
   </span>
 
   

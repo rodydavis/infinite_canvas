@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the getOffset method from the InfiniteCanvasController class, for the Dart programming language.">
+  <title>getOffset method - InfiniteCanvasController class - infinite_canvas library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">infinite_canvas</a></li>
+    <li><a href="../../infinite_canvas/infinite_canvas-library.html">infinite_canvas</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController-class.html">InfiniteCanvasController</a></li>
+    <li class="self-crumb">getOffset method</li>
+  </ol>
+  <div class="self-name">getOffset</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">getOffset</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-ui/Offset-class.html">Offset</a></span>
+<span class="name ">getOffset</span>(<wbr>)
+
+      
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Offset getOffset() {
+  final matrix = transform.value.clone();
+  matrix.invert();
+  final result = matrix.getTranslation();
+  return Offset(result.x, result.y);
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">infinite_canvas</a></li>
+  <li><a href="../../infinite_canvas/infinite_canvas-library.html">infinite_canvas</a></li>
+  <li><a href="../../infinite_canvas/InfiniteCanvasController-class.html">InfiniteCanvasController</a></li>
+  <li class="self-crumb">getOffset method</li>
+</ol>
+
+
+    <h5>InfiniteCanvasController class</h5>
+    <ol>
+
+        <li class="section-title"><a href="../../infinite_canvas/InfiniteCanvasController-class.html#constructors">Constructors</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvasController/InfiniteCanvasController.html">InfiniteCanvasController</a></li>
+
+
+    <li class="section-title">
+      <a href="../../infinite_canvas/InfiniteCanvasController-class.html#instance-properties">Properties</a>
+    </li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/canvasMoveEnabled.html">canvasMoveEnabled</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/controlPressed.html">controlPressed</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/edges.html">edges</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/focusNode.html">focusNode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/hasListeners.html">hasListeners</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/hasSelection.html">hasSelection</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/hovered.html">hovered</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/linkEnd.html">linkEnd</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/linkStart.html">linkStart</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/marqueeEnd.html">marqueeEnd</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/marqueeStart.html">marqueeStart</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/matrix.html">matrix</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/mouseDown.html">mouseDown</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/mousePosition.html">mousePosition</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/nodes.html">nodes</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/scale.html">scale</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/selection.html">selection</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/shiftPressed.html">shiftPressed</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/spacePressed.html">spacePressed</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/transform.html">transform</a></li>
+
+    <li class="section-title"><a href="../../infinite_canvas/InfiniteCanvasController-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/add.html">add</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/addLink.html">addLink</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/addListener.html">addListener</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/bringToFront.html">bringToFront</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/checkMarqueeSelection.html">checkMarqueeSelection</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/checkSelection.html">checkSelection</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/deleteSelection.html">deleteSelection</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/deselect.html">deselect</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/deselectAll.html">deselectAll</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/dispose.html">dispose</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/edit.html">edit</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/getMaxSize.html">getMaxSize</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/getNode.html">getNode</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/getOffset.html">getOffset</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/getRect.html">getRect</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/isHovered.html">isHovered</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/isSelected.html">isSelected</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/moveSelection.html">moveSelection</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/notifyListeners.html">notifyListeners</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/pan.html">pan</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/panDown.html">panDown</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/panLeft.html">panLeft</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/panRight.html">panRight</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/panUp.html">panUp</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/remove.html">remove</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/removeListener.html">removeListener</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/select.html">select</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/selectAll.html">selectAll</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/sendBackward.html">sendBackward</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/sendForward.html">sendForward</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/sendToBack.html">sendToBack</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/setSelection.html">setSelection</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/toLocal.html">toLocal</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/zoom.html">zoom</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/zoomIn.html">zoomIn</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/zoomOut.html">zoomOut</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasController/zoomReset.html">zoomReset</a></li>
+
+    <li class="section-title inherited"><a href="../../infinite_canvas/InfiniteCanvasController-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    infinite_canvas
+      0.0.6+1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
