@@ -40,11 +40,15 @@ class _HomeState extends State<Home> {
       return InfiniteCanvasNode(
         key: UniqueKey(),
         label: 'Node $index',
+        allowResize: true,
         offset: Offset(
           Random().nextDouble() * 5000,
           Random().nextDouble() * 5000,
         ),
-        size: const Size(200, 200),
+        size: Size(
+          Random().nextDouble() * 200 + 100,
+          Random().nextDouble() * 200 + 100,
+        ),
         child: Builder(
           builder: (context) {
             return CustomPaint(

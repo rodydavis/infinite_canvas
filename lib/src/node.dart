@@ -32,7 +32,15 @@ class InfiniteCanvasNode {
     String? label,
   }) {
     if (offset != null && allowMove) this.offset = offset;
-    if (size != null && allowResize) this.size = size;
+    if (size != null && allowResize) {
+      if (size.width < dragHandleSize * 2) {
+        size = Size(dragHandleSize * 2, size.height);
+      }
+      if (size.height < dragHandleSize * 2) {
+        size = Size(size.width, dragHandleSize * 2);
+      }
+      this.size = size;
+    }
     if (label != null) this.label = label;
   }
 

@@ -331,4 +331,8 @@ class InfiniteCanvasController extends ChangeNotifier {
     final size = constraints.biggest;
     return offset & size / scale;
   }
+
+  void format() {
+    // TODO: Layout graph like a force-directed, tree, flowchart or grid
+  }
 }
