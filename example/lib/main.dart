@@ -37,6 +37,7 @@ class _HomeState extends State<Home> {
     // Generate random nodes
     final colors = RandomColor();
     final nodes = List.generate(100, (index) {
+      final color = colors.randomColor();
       return InfiniteCanvasNode(
         key: UniqueKey(),
         label: 'Node $index',
@@ -53,7 +54,7 @@ class _HomeState extends State<Home> {
           builder: (context) {
             return CustomPaint(
               painter: InlineCustomPainter(
-                brush: Paint()..color = colors.randomColor(),
+                brush: Paint()..color = color,
                 builder: (brush, canvas, rect) {
                   // Draw circle
                   canvas.drawCircle(rect.center, rect.width / 2, brush);
