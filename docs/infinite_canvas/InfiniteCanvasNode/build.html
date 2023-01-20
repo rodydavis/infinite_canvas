@@ -131,6 +131,7 @@
             bottom: 0,
             child: GestureDetector(
               onPanUpdate: (details) {
+                if (!controller.mouseDown) return;
                 update(size: size + details.delta);
                 controller.edit(this);
               },
@@ -143,6 +144,7 @@
             bottom: 0,
             child: GestureDetector(
               onPanUpdate: (details) {
+                if (!controller.mouseDown) return;
                 update(
                   size: size + Offset(-details.delta.dx, details.delta.dy),
                   offset: offset + Offset(details.delta.dx, 0),
@@ -158,6 +160,7 @@
             top: 0,
             child: GestureDetector(
               onPanUpdate: (details) {
+                if (!controller.mouseDown) return;
                 update(
                   size: size + Offset(details.delta.dx, -details.delta.dy),
                   offset: offset + Offset(0, details.delta.dy),
@@ -173,6 +176,7 @@
             top: 0,
             child: GestureDetector(
               onPanUpdate: (details) {
+                if (!controller.mouseDown) return;
                 update(
                   size: size + -details.delta,
                   offset: offset + details.delta,
@@ -257,7 +261,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.6+2
+      0.0.6+3
   </span>
 
   

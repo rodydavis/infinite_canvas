@@ -70,7 +70,7 @@
     final nodeKeys = nodes.map((e) =&gt; e.key).toSet();
     final edges = &lt;InfiniteCanvasEdge&gt;[];
     for (final edge in controller.edges) {
-      if (nodeKeys.contains(edge.from) &amp;&amp; nodeKeys.contains(edge.to)) {
+      if (nodeKeys.contains(edge.from) || nodeKeys.contains(edge.to)) {
         edges.add(edge);
       }
     }
@@ -154,7 +154,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.6+2
+      0.0.6+3
   </span>
 
   
