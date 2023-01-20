@@ -220,10 +220,6 @@ class _InfiniteCanvasMenuState extends State<InfiniteCanvasMenu> {
                 },
               );
             },
-            shortcut: const SingleActivator(
-              LogicalKeyboardKey.keyD,
-              // meta: true,
-            ),
           ),
         ],
       ),

@@ -81,7 +81,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.4"
+    version: "0.0.6"
   js:
     dependency: transitive
     description:
@@ -130,14 +130,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
-  resizable_widget:
-    dependency: transitive
+  random_color:
+    dependency: "direct main"
     description:
-      name: resizable_widget
-      sha256: db2919754b93f386b9b3fb15e9f48f6c9d6d41f00a24397629133c99df86606a
+      name: random_color
+      sha256: ec6fffad26e3e1d19e64389e031e9fd324ce1a6cf79bb9a5b050302d6dba37bb
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.6-nullsafety"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -201,4 +201,3 @@ packages:
     version: "2.1.4"
 sdks:
   dart: ">=2.19.0-345.0.dev <4.0.0"
-  flutter: ">=1.17.0"

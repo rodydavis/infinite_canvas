@@ -1,3 +1,13 @@
+## 0.0.6
+
+- Removing meta key for delete
+- Adding [drawVisibleOnly] to allow for drawing only visible nodes and edges
+- Adding [canAddEdges] for when holding control you can link nodes
+
+## 0.0.5
+
+- Adding clip option for node
+
 ## 0.0.4
 
 - Adding menu options

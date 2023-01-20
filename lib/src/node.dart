@@ -12,6 +12,7 @@ class InfiniteCanvasNode {
     this.label,
     this.allowResize = false,
     this.allowMove = true,
+    this.clipBehavior = Clip.none,
   });
 
   final Key key;
@@ -20,6 +21,7 @@ class InfiniteCanvasNode {
   String? label;
   final Widget child;
   final bool allowResize, allowMove;
+  final Clip clipBehavior;
   Rect get rect => offset & size;
   static const double dragHandleSize = 10;
   static const double borderInset = 2;
@@ -85,7 +87,13 @@ class InfiniteCanvasNode {
             ),
           Positioned.fill(
             key: key,
-            child: child,
+            child: clipBehavior != Clip.none
+                ? ClipRect(
+                    clipper: _Clipper(rect),
+                    clipBehavior: clipBehavior,
+                    child: child,
+                  )
+                : child,
           ),
           if (showHandles) ...[
             // bottom right
@@ -165,4 +173,16 @@ class InfiniteCanvasNode {
       ),
     );
   }
+}
+
+class _Clipper extends CustomClipper<Rect> {
+  const _Clipper(this.rect);
+
+  final Rect rect;
+
+  @override
+  Rect getClip(Size size) => rect;
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Rect> oldClipper) => false;
 }

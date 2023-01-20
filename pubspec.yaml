@@ -1,12 +1,13 @@
 name: infinite_canvas
 description: An extensible infinite canvas for Flutter based on InteractiveViewer and CustomMultiChildLayout which allows for widgets to be used as children and be moved or selected.
-version: 0.0.4+1
+version: 0.0.6
 repository: https://github.com/rodydavis/infinite_canvas
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
 
 dependencies:
+  collection: ^1.17.0
   flutter:
     sdk: flutter
   vector_math: ^2.1.4

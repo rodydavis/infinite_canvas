@@ -13,6 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   infinite_canvas:
     path: ..
+  random_color: ^1.0.6-nullsafety
 
 dev_dependencies:
   flutter_test:

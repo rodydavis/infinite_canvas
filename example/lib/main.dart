@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:infinite_canvas/infinite_canvas.dart';
+import 'package:random_color/random_color.dart';
 
 void main() => runApp(const MyApp());
 
@@ -31,131 +34,46 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    final nodes = [
-      InfiniteCanvasNode(
-        label: 'Counter Example',
+    // Generate random nodes
+    final colors = RandomColor();
+    final nodes = List.generate(100, (index) {
+      return InfiniteCanvasNode(
         key: UniqueKey(),
-        offset: Offset.zero,
-        size: const Size(400, 800),
-        child: const CounterExample(),
-      ),
-      InfiniteCanvasNode(
-        label: 'Draggable Example',
-        key: UniqueKey(),
-        offset: const Offset(600, 100),
-        size: const Size(400, 250),
-        child: const DraggableExample(),
-      ),
-      InfiniteCanvasNode(
-        key: UniqueKey(),
-        offset: const Offset(800, 900),
-        size: const Size(400, 800),
-        child: Builder(
-          builder: (context) {
-            return Scaffold(
-              appBar: AppBar(
-                title: const Text('Gradient'),
-              ),
-              body: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.secondary,
-                      Theme.of(context).colorScheme.tertiary,
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
+        label: 'Node $index',
+        offset: Offset(
+          Random().nextDouble() * 5000,
+          Random().nextDouble() * 5000,
         ),
-      ),
-      InfiniteCanvasNode(
-        key: UniqueKey(),
-        label: 'Rectangle',
-        offset: const Offset(400, 300),
         size: const Size(200, 200),
-        allowResize: true,
-        child: Builder(
-          builder: (context) {
-            return CustomPaint(
-              isComplex: true,
-              willChange: true,
-              painter: InlineCustomPainter(
-                brush: Paint(),
-                builder: (brush, canvas, rect) {
-                  // Draw rect
-                  brush.color = Theme.of(context).colorScheme.secondary;
-                  canvas.drawRect(rect, brush);
-                },
-              ),
-            );
-          },
-        ),
-      ),
-      InfiniteCanvasNode(
-        key: UniqueKey(),
-        label: 'Triangle',
-        offset: const Offset(550, 300),
-        size: const Size(200, 200),
-        allowResize: true,
         child: Builder(
           builder: (context) {
             return CustomPaint(
               painter: InlineCustomPainter(
-                brush: Paint(),
-                builder: (brush, canvas, rect) {
-                  // Draw triangle
-                  brush.color =
-                      Theme.of(context).colorScheme.secondaryContainer;
-                  final path = Path();
-                  path.addPolygon([
-                    rect.topCenter,
-                    rect.bottomLeft,
-                    rect.bottomRight,
-                  ], true);
-                  canvas.drawPath(path, brush);
-                },
-              ),
-            );
-          },
-        ),
-      ),
-      InfiniteCanvasNode(
-        key: UniqueKey(),
-        label: 'Circle',
-        offset: const Offset(500, 450),
-        size: const Size(200, 200),
-        allowResize: true,
-        child: Builder(
-          builder: (context) {
-            return CustomPaint(
-              painter: InlineCustomPainter(
-                brush: Paint(),
+                brush: Paint()..color = colors.randomColor(),
                 builder: (brush, canvas, rect) {
                   // Draw circle
-                  brush.color = Theme.of(context).colorScheme.tertiary;
                   canvas.drawCircle(rect.center, rect.width / 2, brush);
                 },
               ),
             );
           },
         ),
-      ),
-    ];
-    controller = InfiniteCanvasController(nodes: nodes, edges: [
-      InfiniteCanvasEdge(
-        from: nodes[2].key,
-        to: nodes[3].key,
-        label: 'Edge 1',
-      ),
-      InfiniteCanvasEdge(
-        from: nodes[2].key,
-        to: nodes[4].key,
-        label: 'Edge 1',
-      ),
-    ]);
+      );
+    });
+    // Generate random edges
+    final edges = <InfiniteCanvasEdge>[];
+    for (var i = 0; i < nodes.length; i++) {
+      final from = nodes[i];
+      final to = nodes[Random().nextInt(nodes.length)];
+      if (from != to) {
+        edges.add(InfiniteCanvasEdge(
+          from: from.key,
+          to: to.key,
+          label: 'Edge $i',
+        ));
+      }
+    }
+    controller = InfiniteCanvasController(nodes: nodes, edges: edges);
   }
 
   @override
@@ -166,6 +84,8 @@ class _HomeState extends State<Home> {
         centerTitle: false,
       ),
       body: InfiniteCanvas(
+        drawVisibleOnly: true,
+        canAddEdges: true,
         controller: controller,
       ),
     );

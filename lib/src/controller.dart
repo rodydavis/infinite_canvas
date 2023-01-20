@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import 'edge.dart';
@@ -8,14 +9,21 @@ import 'node.dart';
 /// A controller for the [InfiniteCanvas].
 class InfiniteCanvasController extends ChangeNotifier {
   InfiniteCanvasController({
-    this.nodes = const [],
-    this.edges = const [],
-  });
+    List<InfiniteCanvasNode> nodes = const [],
+    List<InfiniteCanvasEdge> edges = const [],
+  }) {
+    if (nodes.isNotEmpty) {
+      this.nodes.addAll(nodes);
+    }
+    if (edges.isNotEmpty) {
+      this.edges.addAll(edges);
+    }
+  }
 
   double scale = 1;
   final focusNode = FocusNode();
-  final List<InfiniteCanvasNode> nodes;
-  final List<InfiniteCanvasEdge> edges;
+  final List<InfiniteCanvasNode> nodes = [];
+  final List<InfiniteCanvasEdge> edges = [];
   final Set<Key> _selected = {};
   List<InfiniteCanvasNode> get selection =>
       nodes.where((e) => _selected.contains(e.key)).toList();
@@ -27,6 +35,14 @@ class InfiniteCanvasController extends ChangeNotifier {
   Matrix4 get matrix => transform.value;
   Offset mousePosition = Offset.zero;
   Offset? marqueeStart, marqueeEnd;
+  Key? linkStart;
+
+  Offset? _linkEnd;
+  Offset? get linkEnd => _linkEnd;
+  set linkEnd(Offset? value) {
+    _linkEnd = value;
+    notifyListeners();
+  }
 
   bool _mouseDown = false;
   bool get mouseDown => _mouseDown;
@@ -46,6 +62,13 @@ class InfiniteCanvasController extends ChangeNotifier {
   bool get spacePressed => _spacePressed;
   set spacePressed(bool value) {
     _spacePressed = value;
+    notifyListeners();
+  }
+
+  bool _controlPressed = false;
+  bool get controlPressed => _controlPressed;
+  set controlPressed(bool value) {
+    _controlPressed = value;
     notifyListeners();
   }
 
@@ -114,6 +137,21 @@ class InfiniteCanvasController extends ChangeNotifier {
     } else {
       deselectAll(hover);
     }
+  }
+
+  InfiniteCanvasNode? getNode(Key? key) {
+    if (key == null) return null;
+    return nodes.firstWhereOrNull((e) => e.key == key);
+  }
+
+  void addLink(Key from, Key to, [String? label]) {
+    final edge = InfiniteCanvasEdge(
+      from: from,
+      to: to,
+      label: label,
+    );
+    edges.add(edge);
+    notifyListeners();
   }
 
   void moveSelection(Offset position) {
@@ -243,6 +281,10 @@ class InfiniteCanvasController extends ChangeNotifier {
       if (index == -1) continue;
       nodes.removeAt(index);
     }
+    // Delete related connections
+    edges.removeWhere(
+      (e) => selection.contains(e.from) || selection.contains(e.to),
+    );
     notifyListeners();
   }
 
@@ -275,4 +317,18 @@ class InfiniteCanvasController extends ChangeNotifier {
   void panDown() => pan(const Offset(0, 10));
   void panLeft() => pan(const Offset(-10, 0));
   void panRight() => pan(const Offset(10, 0));
+
+  Offset getOffset() {
+    final matrix = transform.value.clone();
+    matrix.invert();
+    final result = matrix.getTranslation();
+    return Offset(result.x, result.y);
+  }
+
+  Rect getRect(BoxConstraints constraints) {
+    final offset = getOffset();
+    final scale = matrix.getMaxScaleOnAxis();
+    final size = constraints.biggest;
+    return offset & size / scale;
+  }
 }

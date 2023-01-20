@@ -4,10 +4,12 @@ import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 import 'controller.dart';
 import 'delegate.dart';
+import 'edge.dart';
 import 'edge_renderer.dart';
 import 'grid_background.dart';
 import 'marquee.dart';
 import 'menu.dart';
+import 'node.dart';
 
 /// A Widget that renders a canvas that can be panned and zoomed.
 class InfiniteCanvas extends StatefulWidget {
@@ -20,6 +22,8 @@ class InfiniteCanvas extends StatefulWidget {
     this.menuVisible = true,
     this.menus = const <MenuEntry>[],
     this.backgroundBuilder,
+    this.drawVisibleOnly = false,
+    this.canAddEdges = false,
   });
 
   final InfiniteCanvasController controller;
@@ -27,6 +31,8 @@ class InfiniteCanvas extends StatefulWidget {
   final double minScale, maxScale;
   final bool menuVisible;
   final List<MenuEntry> menus;
+  final bool drawVisibleOnly;
+  final bool canAddEdges;
   final Widget Function(BuildContext, Rect)? backgroundBuilder;
 
   @override
@@ -93,6 +99,35 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
     );
   }
 
+  List<InfiniteCanvasNode> getNodes(BoxConstraints constraints) {
+    if (widget.drawVisibleOnly) {
+      final nodes = <InfiniteCanvasNode>[];
+      final viewport = controller.getRect(constraints);
+      for (final node in controller.nodes) {
+        if (node.rect.overlaps(viewport)) {
+          nodes.add(node);
+        }
+      }
+      return nodes;
+    }
+    return controller.nodes;
+  }
+
+  List<InfiniteCanvasEdge> getEdges(BoxConstraints constraints) {
+    if (widget.drawVisibleOnly) {
+      final nodes = getNodes(constraints);
+      final nodeKeys = nodes.map((e) => e.key).toSet();
+      final edges = <InfiniteCanvasEdge>[];
+      for (final edge in controller.edges) {
+        if (nodeKeys.contains(edge.from) && nodeKeys.contains(edge.to)) {
+          edges.add(edge);
+        }
+      }
+      return edges;
+    }
+    return controller.edges;
+  }
+
   @override
   Widget build(BuildContext context) {
     return InfiniteCanvasMenu(
@@ -107,6 +142,10 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                 event.logicalKey == LogicalKeyboardKey.shiftRight) {
               controller.shiftPressed = true;
             }
+            if (event.logicalKey == LogicalKeyboardKey.controlLeft ||
+                event.logicalKey == LogicalKeyboardKey.controlRight) {
+              controller.controlPressed = true;
+            }
             if (event.logicalKey == LogicalKeyboardKey.space) {
               controller.spacePressed = true;
             }
@@ -116,8 +155,20 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                 event.logicalKey == LogicalKeyboardKey.shiftRight) {
               controller.shiftPressed = false;
             }
+            if (event.logicalKey == LogicalKeyboardKey.controlLeft ||
+                event.logicalKey == LogicalKeyboardKey.controlRight) {
+              controller.controlPressed = false;
+              controller.linkStart = null;
+              controller.linkEnd = null;
+            }
             if (event.logicalKey == LogicalKeyboardKey.space) {
               controller.spacePressed = false;
+            }
+            if (event.logicalKey == LogicalKeyboardKey.delete ||
+                event.logicalKey == LogicalKeyboardKey.backspace) {
+              if (controller.focusNode.hasFocus) {
+                controller.deleteSelection();
+              }
             }
           }
         },
@@ -125,9 +176,17 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
           onPointerDown: (details) {
             controller.mouseDown = true;
             controller.checkSelection(details.localPosition);
-            if (controller.selection.isEmpty && !controller.spacePressed) {
-              controller.marqueeStart = details.localPosition;
-              controller.marqueeEnd = details.localPosition;
+            if (controller.selection.isEmpty) {
+              if (!controller.spacePressed) {
+                controller.marqueeStart = details.localPosition;
+                controller.marqueeEnd = details.localPosition;
+              }
+            } else {
+              if (controller.controlPressed && widget.canAddEdges) {
+                final selected = controller.selection.last;
+                controller.linkStart = selected.key;
+                controller.linkEnd = null;
+              }
             }
           },
           onPointerUp: (details) {
@@ -136,8 +195,17 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                 controller.marqueeEnd != null) {
               controller.checkMarqueeSelection();
             }
+            if (controller.linkStart != null && controller.linkEnd != null) {
+              controller.checkSelection(controller.linkEnd!);
+              if (controller.selection.isNotEmpty) {
+                final selected = controller.selection.last;
+                controller.addLink(controller.linkStart!, selected.key);
+              }
+            }
             controller.marqueeStart = null;
             controller.marqueeEnd = null;
+            controller.linkStart = null;
+            controller.linkEnd = null;
           },
           onPointerCancel: (details) {
             controller.mouseDown = false;
@@ -152,10 +220,13 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                 controller.marqueeEnd != null) {
               controller.checkMarqueeSelection(true);
             }
+            if (controller.linkStart != null) {
+              controller.linkEnd = details.localPosition;
+              controller.checkSelection(controller.linkEnd!, true);
+            }
           },
           child: LayoutBuilder(
             builder: (context, constraints) => InteractiveViewer.builder(
-              // trackpadScrollCausesScale: true,
               transformationController: controller.transform,
               panEnabled: controller.canvasMoveEnabled,
               scaleEnabled: controller.canvasMoveEnabled,
@@ -167,6 +238,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                   controller.scale = details.scale;
                 } else if (controller.spacePressed) {
                   controller.pan(details.focalPointDelta);
+                } else if (controller.controlPressed) {
                 } else {
                   controller.moveSelection(details.focalPoint);
                 }
@@ -176,6 +248,8 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
               maxScale: widget.maxScale,
               boundaryMargin: const EdgeInsets.all(double.infinity),
               builder: (context, quad) {
+                final nodes = getNodes(constraints);
+                final edges = getEdges(constraints);
                 return SizedBox.fromSize(
                   size: controller.getMaxSize().size,
                   child: Stack(
@@ -187,12 +261,16 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                       Positioned.fill(
                         child: InfiniteCanvasEdgeRenderer(
                           controller: controller,
+                          edges: edges,
+                          linkStart:
+                              controller.getNode(controller.linkStart)?.offset,
+                          linkEnd: controller.linkEnd,
                         ),
                       ),
                       Positioned.fill(
                         child: CustomMultiChildLayout(
-                          delegate: InfiniteCanvasNodesDelegate(controller),
-                          children: controller.nodes
+                          delegate: InfiniteCanvasNodesDelegate(nodes),
+                          children: nodes
                               .map((e) => LayoutId(
                                     key: e.key,
                                     id: e,
@@ -202,13 +280,14 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                         ),
                       ),
                       if (controller.marqueeStart != null &&
-                          controller.marqueeEnd != null)
+                          controller.marqueeEnd != null) ...[
                         Positioned.fill(
                           child: Marquee(
                             start: controller.toLocal(controller.marqueeStart!),
                             end: controller.toLocal(controller.marqueeEnd!),
                           ),
                         ),
+                      ],
                     ],
                   ),
                 );
