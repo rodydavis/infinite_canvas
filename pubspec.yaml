@@ -1,6 +1,6 @@
 name: infinite_canvas
 description: An extensible infinite canvas for Flutter based on InteractiveViewer and CustomMultiChildLayout which allows for widgets to be used as children and be moved or selected.
-version: 0.0.4
+version: 0.0.4+1
 repository: https://github.com/rodydavis/infinite_canvas
 
 environment:
@@ -18,7 +18,11 @@ flutter:
 
 screenshots:
   - description: "Example of multiple nodes on the canvas"
-    path: screenshots/1.png
+    path: screenshots/overview.png
+  - description: "Drag handles for a selected node (if enabled)"
+    path: screenshots/drag.png
+  - description: "Example of menus that show for a selected node"
+    path: screenshots/menu.png
 
 scripts:
   example:
