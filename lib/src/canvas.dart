@@ -262,8 +262,10 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                         child: InfiniteCanvasEdgeRenderer(
                           controller: controller,
                           edges: edges,
-                          linkStart:
-                              controller.getNode(controller.linkStart)?.offset,
+                          linkStart: controller
+                              .getNode(controller.linkStart)
+                              ?.rect
+                              .center,
                           linkEnd: controller.linkEnd,
                         ),
                       ),
