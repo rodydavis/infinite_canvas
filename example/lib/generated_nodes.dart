@@ -21,6 +21,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
     final colors = RandomColor();
     final nodes = List.generate(100, (index) {
       final color = colors.randomColor();
+      final size = Random().nextDouble() * 200 + 100;
       return InfiniteCanvasNode(
         key: UniqueKey(),
         label: 'Node $index',
@@ -29,10 +30,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
           Random().nextDouble() * 5000,
           Random().nextDouble() * 5000,
         ),
-        size: Size(
-          Random().nextDouble() * 200 + 100,
-          Random().nextDouble() * 200 + 100,
-        ),
+        size: Size.square(size),
         child: Builder(
           builder: (context) {
             return CustomPaint(
@@ -40,7 +38,9 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
                 brush: Paint()..color = color,
                 builder: (brush, canvas, rect) {
                   // Draw circle
-                  canvas.drawCircle(rect.center, rect.width / 2, brush);
+                  final diameter = min(rect.width, rect.height);
+                  final radius = diameter / 2;
+                  canvas.drawCircle(rect.center, radius, brush);
                 },
               ),
             );
@@ -99,8 +99,9 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
                             brush: Paint()..color = color,
                             builder: (brush, canvas, rect) {
                               // Draw circle
-                              canvas.drawCircle(
-                                  rect.center, rect.width / 2, brush);
+                              final diameter = min(rect.width, rect.height);
+                              final radius = diameter / 2;
+                              canvas.drawCircle(rect.center, radius, brush);
                             },
                           ),
                         );

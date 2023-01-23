@@ -51,6 +51,21 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
     super.dispose();
   }
 
+  @override
+  void didUpdateWidget(covariant InfiniteCanvas oldWidget) {
+    if (oldWidget.controller != controller) {
+      oldWidget.controller.removeListener(onUpdate);
+      controller.addListener(onUpdate);
+    }
+    if (oldWidget.menus != widget.menus ||
+        oldWidget.menuVisible != widget.menuVisible ||
+        oldWidget.canAddEdges != widget.canAddEdges ||
+        oldWidget.drawVisibleOnly != widget.drawVisibleOnly) {
+      if (mounted) setState(() {});
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   void onUpdate() {
     if (mounted) setState(() {});
   }

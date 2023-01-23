@@ -48,6 +48,9 @@ class _InfiniteCanvasMenuState extends State<InfiniteCanvasMenu> {
     if (oldWidget.visible != widget.visible) {
       if (mounted) setState(() {});
     }
+    if (oldWidget.menus != widget.menus) {
+      if (mounted) setState(() {});
+    }
     super.didUpdateWidget(oldWidget);
   }
 
