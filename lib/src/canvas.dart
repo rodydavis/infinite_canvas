@@ -17,8 +17,6 @@ class InfiniteCanvas extends StatefulWidget {
     super.key,
     required this.controller,
     this.gridSize = const Size.square(50),
-    this.minScale = 0.4,
-    this.maxScale = 4,
     this.menuVisible = true,
     this.menus = const <MenuEntry>[],
     this.backgroundBuilder,
@@ -28,7 +26,6 @@ class InfiniteCanvas extends StatefulWidget {
 
   final InfiniteCanvasController controller;
   final Size gridSize;
-  final double minScale, maxScale;
   final bool menuVisible;
   final List<MenuEntry> menus;
   final bool drawVisibleOnly;
@@ -252,8 +249,8 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                 }
                 controller.mousePosition = details.focalPoint;
               },
-              minScale: widget.minScale,
-              maxScale: widget.maxScale,
+              minScale: controller.minScale,
+              maxScale: controller.maxScale,
               boundaryMargin: const EdgeInsets.all(double.infinity),
               builder: (context, quad) {
                 final nodes = getNodes(constraints);

@@ -20,7 +20,8 @@ class InfiniteCanvasController extends ChangeNotifier {
     }
   }
 
-  double scale = 1;
+  double minScale = 0.4;
+  double maxScale = 4;
   final focusNode = FocusNode();
   final List<InfiniteCanvasNode> nodes = [];
   final List<InfiniteCanvasEdge> edges = [];
@@ -40,6 +41,7 @@ class InfiniteCanvasController extends ChangeNotifier {
   Offset? _linkEnd;
   Offset? get linkEnd => _linkEnd;
   set linkEnd(Offset? value) {
+    if (value == _linkEnd) return;
     _linkEnd = value;
     notifyListeners();
   }
@@ -47,6 +49,7 @@ class InfiniteCanvasController extends ChangeNotifier {
   bool _mouseDown = false;
   bool get mouseDown => _mouseDown;
   set mouseDown(bool value) {
+    if (value == _mouseDown) return;
     _mouseDown = value;
     notifyListeners();
   }
@@ -54,6 +57,7 @@ class InfiniteCanvasController extends ChangeNotifier {
   bool _shiftPressed = false;
   bool get shiftPressed => _shiftPressed;
   set shiftPressed(bool value) {
+    if (value == _shiftPressed) return;
     _shiftPressed = value;
     notifyListeners();
   }
@@ -61,6 +65,7 @@ class InfiniteCanvasController extends ChangeNotifier {
   bool _spacePressed = false;
   bool get spacePressed => _spacePressed;
   set spacePressed(bool value) {
+    if (value == _spacePressed) return;
     _spacePressed = value;
     notifyListeners();
   }
@@ -68,6 +73,7 @@ class InfiniteCanvasController extends ChangeNotifier {
   bool _controlPressed = false;
   bool get controlPressed => _controlPressed;
   set controlPressed(bool value) {
+    if (value == _controlPressed) return;
     _controlPressed = value;
     notifyListeners();
   }
@@ -75,8 +81,23 @@ class InfiniteCanvasController extends ChangeNotifier {
   bool _metaPressed = false;
   bool get metaPressed => _metaPressed;
   set metaPressed(bool value) {
+    if (value == _metaPressed) return;
     _metaPressed = value;
     notifyListeners();
+  }
+
+  double _scale = 1;
+  double get scale => _scale;
+  set scale(double value) {
+    if (value == _scale) return;
+    _scale = value;
+    notifyListeners();
+  }
+
+  double getScale() {
+    final matrix = transform.value;
+    final scaleX = matrix.getMaxScaleOnAxis();
+    return scaleX;
   }
 
   Rect getMaxSize() {
@@ -308,6 +329,7 @@ class InfiniteCanvasController extends ChangeNotifier {
     matrix.scale(delta, delta);
     matrix.translate(-local.dx, -local.dy);
     transform.value = matrix;
+    notifyListeners();
   }
 
   void zoomIn() => zoom(1.1);
@@ -318,6 +340,7 @@ class InfiniteCanvasController extends ChangeNotifier {
     final matrix = transform.value.clone();
     matrix.translate(delta.dx, delta.dy);
     transform.value = matrix;
+    notifyListeners();
   }
 
   void panUp() => pan(const Offset(0, -10));

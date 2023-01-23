@@ -75,6 +75,109 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
         drawVisibleOnly: true,
         canAddEdges: true,
         controller: controller,
+        menus: [
+          MenuEntry(
+            label: 'Create',
+            menuChildren: [
+              MenuEntry(
+                label: 'Circle',
+                onPressed: () {
+                  final color = RandomColor().randomColor();
+                  final node = InfiniteCanvasNode(
+                    key: UniqueKey(),
+                    label: 'Node ${controller.nodes.length}',
+                    allowResize: true,
+                    offset: controller.mousePosition,
+                    size: Size(
+                      Random().nextDouble() * 200 + 100,
+                      Random().nextDouble() * 200 + 100,
+                    ),
+                    child: Builder(
+                      builder: (context) {
+                        return CustomPaint(
+                          painter: InlineCustomPainter(
+                            brush: Paint()..color = color,
+                            builder: (brush, canvas, rect) {
+                              // Draw circle
+                              canvas.drawCircle(
+                                  rect.center, rect.width / 2, brush);
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                  controller.add(node);
+                },
+              ),
+              MenuEntry(
+                label: 'Triangle',
+                onPressed: () {
+                  final color = RandomColor().randomColor();
+                  final node = InfiniteCanvasNode(
+                    key: UniqueKey(),
+                    label: 'Node ${controller.nodes.length}',
+                    allowResize: true,
+                    offset: controller.mousePosition,
+                    size: Size(
+                      Random().nextDouble() * 200 + 100,
+                      Random().nextDouble() * 200 + 100,
+                    ),
+                    child: Builder(
+                      builder: (context) {
+                        return CustomPaint(
+                          painter: InlineCustomPainter(
+                            brush: Paint()..color = color,
+                            builder: (brush, canvas, rect) {
+                              // Draw triangle
+                              final path = Path()
+                                ..moveTo(rect.left, rect.bottom)
+                                ..lineTo(rect.right, rect.bottom)
+                                ..lineTo(rect.center.dx, rect.top)
+                                ..close();
+                              canvas.drawPath(path, brush);
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                  controller.add(node);
+                },
+              ),
+              MenuEntry(
+                label: 'Rectangle',
+                onPressed: () {
+                  final color = RandomColor().randomColor();
+                  final node = InfiniteCanvasNode(
+                    key: UniqueKey(),
+                    label: 'Node ${controller.nodes.length}',
+                    allowResize: true,
+                    offset: controller.mousePosition,
+                    size: Size(
+                      Random().nextDouble() * 200 + 100,
+                      Random().nextDouble() * 200 + 100,
+                    ),
+                    child: Builder(
+                      builder: (context) {
+                        return CustomPaint(
+                          painter: InlineCustomPainter(
+                            brush: Paint()..color = color,
+                            builder: (brush, canvas, rect) {
+                              // Draw rectangle
+                              canvas.drawRect(rect, brush);
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                  controller.add(node);
+                },
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
