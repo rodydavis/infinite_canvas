@@ -70,7 +70,7 @@
 example:</p>
 <ul>
 <li>After calling <a href="../../infinite_canvas/InfiniteCanvasState/initState.html">initState</a>.</li>
-<li>After calling <a href="https://api.flutter.dev/flutter/widgets/State/didUpdateWidget.html">didUpdateWidget</a>.</li>
+<li>After calling <a href="../../infinite_canvas/InfiniteCanvasState/didUpdateWidget.html">didUpdateWidget</a>.</li>
 <li>After receiving a call to <a href="https://api.flutter.dev/flutter/widgets/State/setState.html">setState</a>.</li>
 <li>After a dependency of this <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object changes (e.g., an
 <a href="https://api.flutter.dev/flutter/widgets/InheritedWidget-class.html">InheritedWidget</a> referenced by the previous <a href="../../infinite_canvas/InfiniteCanvasState/build.html">build</a> changes).</li>
@@ -295,8 +295,8 @@ Widget build(BuildContext context) {
               }
               controller.mousePosition = details.focalPoint;
             },
-            minScale: widget.minScale,
-            maxScale: widget.maxScale,
+            minScale: controller.minScale,
+            maxScale: controller.maxScale,
             boundaryMargin: const EdgeInsets.all(double.infinity),
             builder: (context, quad) {
               final nodes = getNodes(constraints);
@@ -396,7 +396,7 @@ Widget build(BuildContext context) {
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/deactivate.html">deactivate</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/debugFillProperties.html">debugFillProperties</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/didChangeDependencies.html">didChangeDependencies</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/didUpdateWidget.html">didUpdateWidget</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasState/didUpdateWidget.html">didUpdateWidget</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState/dispose.html">dispose</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState/getEdges.html">getEdges</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState/getNodes.html">getNodes</a></li>

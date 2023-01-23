@@ -74,10 +74,10 @@ or on the widget used to configure this object (i.e., <a href="https://api.flutt
 change state, for example a <a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier-class.html">ChangeNotifier</a> or <a href="https://api.flutter.dev/flutter/dart-async/Stream-class.html">Stream</a>, or some
 other object to which one can subscribe to receive notifications, then
 be sure to subscribe and unsubscribe properly in <a href="../../infinite_canvas/InfiniteCanvasState/initState.html">initState</a>,
-<a href="https://api.flutter.dev/flutter/widgets/State/didUpdateWidget.html">didUpdateWidget</a>, and <a href="../../infinite_canvas/InfiniteCanvasState/dispose.html">dispose</a>:</p>
+<a href="../../infinite_canvas/InfiniteCanvasState/didUpdateWidget.html">didUpdateWidget</a>, and <a href="../../infinite_canvas/InfiniteCanvasState/dispose.html">dispose</a>:</p>
 <ul>
 <li>In <a href="../../infinite_canvas/InfiniteCanvasState/initState.html">initState</a>, subscribe to the object.</li>
-<li>In <a href="https://api.flutter.dev/flutter/widgets/State/didUpdateWidget.html">didUpdateWidget</a> unsubscribe from the old object and subscribe
+<li>In <a href="../../infinite_canvas/InfiniteCanvasState/didUpdateWidget.html">didUpdateWidget</a> unsubscribe from the old object and subscribe
 to the new one if the updated widget configuration requires
 replacing the object.</li>
 <li>In <a href="../../infinite_canvas/InfiniteCanvasState/dispose.html">dispose</a>, unsubscribe from the object.</li>
@@ -145,7 +145,7 @@ void initState() {
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/deactivate.html">deactivate</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/debugFillProperties.html">debugFillProperties</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/didChangeDependencies.html">didChangeDependencies</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/didUpdateWidget.html">didUpdateWidget</a></li>
+    <li><a href="../../infinite_canvas/InfiniteCanvasState/didUpdateWidget.html">didUpdateWidget</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState/dispose.html">dispose</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState/getEdges.html">getEdges</a></li>
     <li><a href="../../infinite_canvas/InfiniteCanvasState/getNodes.html">getNodes</a></li>
