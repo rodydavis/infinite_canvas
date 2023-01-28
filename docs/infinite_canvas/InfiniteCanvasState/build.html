@@ -333,7 +333,10 @@ Widget build(BuildContext context) {
                             .map((e) =&gt; LayoutId(
                                   key: e.key,
                                   id: e,
-                                  child: e.build(context, controller),
+                                  child: NodeRenderer(
+                                    node: e,
+                                    controller: controller,
+                                  ),
                                 ))
                             .toList(),
                       ),
@@ -433,7 +436,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.7
+      0.0.7+1
   </span>
 
   
