@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../../" data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">infinite_canvas</a></li>
     <li><a href="../../infinite_canvas/infinite_canvas-library.html">infinite_canvas</a></li>
@@ -37,10 +37,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -48,12 +54,13 @@
     <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
-    <section class="multi-line-signature">const
+    <section class="multi-line-signature">
+      const
       <span class="name ">InfiniteCanvas</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-key">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span>, </span></li>
 <li><span class="parameter" id="-param-controller"><span>required</span> <span class="type-annotation"><a href="../../infinite_canvas/InfiniteCanvasController-class.html">InfiniteCanvasController</a></span> <span class="parameter-name">controller</span>, </span></li>
 <li><span class="parameter" id="-param-gridSize"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Size-class.html">Size</a></span> <span class="parameter-name">gridSize</span> = <span class="default-value">const Size.square(50)</span>, </span></li>
 <li><span class="parameter" id="-param-menuVisible"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">menuVisible</span> = <span class="default-value">true</span>, </span></li>
-<li><span class="parameter" id="-param-menus"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../infinite_canvas/MenuEntry-class.html">MenuEntry</a></span>&gt;</span></span> <span class="parameter-name">menus</span> = <span class="default-value">const &lt;MenuEntry&gt;[]</span>, </span></li>
+<li><span class="parameter" id="-param-menus"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../infinite_canvas/MenuEntry-class.html">MenuEntry</a></span>&gt;</span></span> <span class="parameter-name">menus</span> = <span class="default-value">const []</span>, </span></li>
 <li><span class="parameter" id="-param-backgroundBuilder"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span> <span class="parameter-name">backgroundBuilder</span>(<ol class="parameter-list"><li><span class="parameter" id="param-"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span>, </span></li>
 <li><span class="parameter" id="param-"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Rect-class.html">Rect</a></span></span></li>
 </ol>
@@ -74,7 +81,7 @@
   required this.controller,
   this.gridSize = const Size.square(50),
   this.menuVisible = true,
-  this.menus = const &lt;MenuEntry&gt;[],
+  this.menus = const [],
   this.backgroundBuilder,
   this.drawVisibleOnly = false,
   this.canAddEdges = false,
@@ -106,34 +113,34 @@
           <li><a href="../../infinite_canvas/InfiniteCanvas/InfiniteCanvas.html">InfiniteCanvas</a></li>
 
 
-    <li class="section-title">
-      <a href="../../infinite_canvas/InfiniteCanvas-class.html#instance-properties">Properties</a>
-    </li>
-    <li><a href="../../infinite_canvas/InfiniteCanvas/backgroundBuilder.html">backgroundBuilder</a></li>
-    <li><a href="../../infinite_canvas/InfiniteCanvas/canAddEdges.html">canAddEdges</a></li>
-    <li><a href="../../infinite_canvas/InfiniteCanvas/controller.html">controller</a></li>
-    <li><a href="../../infinite_canvas/InfiniteCanvas/drawVisibleOnly.html">drawVisibleOnly</a></li>
-    <li><a href="../../infinite_canvas/InfiniteCanvas/gridSize.html">gridSize</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
-    <li><a href="../../infinite_canvas/InfiniteCanvas/menus.html">menus</a></li>
-    <li><a href="../../infinite_canvas/InfiniteCanvas/menuVisible.html">menuVisible</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+        <li class="section-title">
+          <a href="../../infinite_canvas/InfiniteCanvas-class.html#instance-properties">Properties</a>
+        </li>
+          <li><a href="../../infinite_canvas/InfiniteCanvas/backgroundBuilder.html">backgroundBuilder</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvas/canAddEdges.html">canAddEdges</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvas/controller.html">controller</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvas/drawVisibleOnly.html">drawVisibleOnly</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvas/gridSize.html">gridSize</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvas/menus.html">menus</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvas/menuVisible.html">menuVisible</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
-    <li class="section-title"><a href="../../infinite_canvas/InfiniteCanvas-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/StatefulWidget/createElement.html">createElement</a></li>
-    <li><a href="../../infinite_canvas/InfiniteCanvas/createState.html">createState</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/debugDescribeChildren.html">debugDescribeChildren</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/debugFillProperties.html">debugFillProperties</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toDiagnosticsNode.html">toDiagnosticsNode</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/Diagnosticable/toString.html">toString</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringDeep.html">toStringDeep</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringShallow.html">toStringShallow</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/toStringShort.html">toStringShort</a></li>
+        <li class="section-title"><a href="../../infinite_canvas/InfiniteCanvas-class.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/StatefulWidget/createElement.html">createElement</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvas/createState.html">createState</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/debugDescribeChildren.html">debugDescribeChildren</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/debugFillProperties.html">debugFillProperties</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toDiagnosticsNode.html">toDiagnosticsNode</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/Diagnosticable/toString.html">toString</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringDeep.html">toStringDeep</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringShallow.html">toStringShallow</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/toStringShort.html">toStringShort</a></li>
 
-    <li class="section-title inherited"><a href="../../infinite_canvas/InfiniteCanvas-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../../infinite_canvas/InfiniteCanvas-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/operator_equals.html">operator ==</a></li>
 
 
 
@@ -150,7 +157,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.6+6
+      0.0.7
   </span>
 
   

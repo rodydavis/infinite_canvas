@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">infinite_canvas</a></li>
     <li class="self-crumb">infinite_canvas library</li>
@@ -35,12 +35,19 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
 
-
   <div id="dartdoc-main-content" class="main-content">
+    
       <div>
 <h1><span class="kind-library">infinite_canvas</span> library 
     <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
@@ -57,6 +64,40 @@
       <h2>Classes</h2>
 
       <dl>
+        <dt id="BidirectedGraph">
+  <span class="name "><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/BidirectedGraph-class.html">BidirectedGraph</a><span class="signature">&lt;<wbr><span class="type-parameter">T extends <a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Graph with bidirected edges represented by a directed graph
+with symmetric edges.
+</dd>
+
+        <dt id="DirectedGraph">
+  <span class="name "><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/DirectedGraph-class.html">DirectedGraph</a><span class="signature">&lt;<wbr><span class="type-parameter">T extends <a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Generic directed graph storing vertices of type <code>T</code>.
+</dd>
+
+        <dt id="Graph">
+  <span class="name "><a href="../infinite_canvas/Graph-class.html">Graph</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+        <dt id="GraphCrawler">
+  <span class="name "><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/GraphCrawler-class.html">GraphCrawler</a><span class="signature">&lt;<wbr><span class="type-parameter">T extends <a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Utility class for crawling a graph defined by <a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/GraphCrawler/edges.html">edges</a> and
+retrieving paths and walks.
+</dd>
+
         <dt id="InfiniteCanvas">
   <span class="name "><a href="../infinite_canvas/InfiniteCanvas-class.html">InfiniteCanvas</a></span> 
 
@@ -79,14 +120,6 @@
 </dt>
 <dd>
   An edge in the <a href="../infinite_canvas/InfiniteCanvas-class.html">InfiniteCanvas</a>.
-</dd>
-
-        <dt id="InfiniteCanvasMenu">
-  <span class="name "><a href="../infinite_canvas/InfiniteCanvasMenu-class.html">InfiniteCanvasMenu</a></span> 
-
-</dt>
-<dd>
-  A widget that displays a menu for the <a href="../infinite_canvas/InfiniteCanvas-class.html">InfiniteCanvas</a>.
 </dd>
 
         <dt id="InfiniteCanvasNode">
@@ -113,15 +146,123 @@
   
 </dd>
 
+        <dt id="Menus">
+  <span class="name "><a href="../infinite_canvas/Menus-class.html">Menus</a></span> 
+
+</dt>
+<dd>
+  A widget that displays a menu for the <a href="../infinite_canvas/InfiniteCanvas-class.html">InfiniteCanvas</a>.
+</dd>
+
+        <dt id="WeightedDirectedGraph">
+  <span class="name "><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/WeightedDirectedGraph-class.html">WeightedDirectedGraph</a><span class="signature">&lt;<wbr><span class="type-parameter">T extends <a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span>, <span class="type-parameter">W extends <a href="https://api.flutter.dev/flutter/dart-core/Comparable-class.html">Comparable</a></span>&gt;</span></span> 
+
+</dt>
+<dd>
+  A directed graph with vertices of type <code>T</code> and a weight of type
+<code>W</code> associated with each directed edges.
+</dd>
+
+      </dl>
+    </section>
+
+
+    <section class="summary offset-anchor" id="extensions">
+      <h2>Extensions</h2>
+
+      <dl>
+        <dt id="GraphUtils">
+    <span class="name "><a href="../infinite_canvas/GraphUtils.html">GraphUtils</a></span> 
+
+</dt>
+<dd>
+    
+</dd>
+
+
+        <dt id="SortMap">
+    <span class="name "><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/SortMap.html">SortMap</a></span> 
+
+</dt>
+<dd>
+    Extension providing the methods <code>sortByKey</code>
+and <code>sortByValue</code> for
+sorting a <code>Map&lt;K extends Object, V extends Object&gt;</code> in place.
+</dd>
+
+
+        <dt id="SortSet">
+    <span class="name "><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/SortSet.html">SortSet</a></span> 
+
+</dt>
+<dd>
+    Extension providing the method <code>sort</code> for
+sorting a <code>Set&lt;T extends Object&gt;</code> in place.
+</dd>
+
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="constants">
+      <h2>Constants</h2>
+
+      <dl class="properties">
+        <dt id="largeInt" class="constant">
+    <span class="name "><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/largeInt-constant.html">largeInt</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd>
+  Constant holding the largest (smi) int.
+  
+
+    <div>
+      <span class="signature"><code>1073741823</code></span>
+    </div>
+</dd>
+
       </dl>
     </section>
 
 
 
 
+    <section class="summary offset-anchor" id="typedefs">
+      <h2>Typedefs</h2>
 
+      <dl>
+          
+  <dt id="Edges" class="callable">
+    <span class="name"><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/Edges.html">Edges</a></span>&lt;<wbr><span class="type-parameter">T extends <a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span>&gt;<span class="signature">
+      <span class="returntype parameter">= <a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span> Function<span class="signature">(<span class="parameter" id="param-vertex"><span class="type-annotation">T</span> <span class="parameter-name">vertex</span></span>)</span></span>
+    </span>
+    
 
+  </dt>
+  <dd>
+    Function returning an <code>Iterable&lt;T&gt;</code> representing edge vertices.
+    
 
+  </dd>
+
+          
+  <dt id="Summation" class="callable">
+    <span class="name"><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/Summation.html">Summation</a></span>&lt;<wbr><span class="type-parameter">W</span>&gt;<span class="signature">
+      <span class="returntype parameter">= W Function<span class="signature">(<span class="parameter" id="param-left"><span class="type-annotation">W</span> <span class="parameter-name">left</span>, </span><span class="parameter" id="param-right"><span class="type-annotation">W</span> <span class="parameter-name">right</span></span>)</span></span>
+    </span>
+    
+
+  </dt>
+  <dd>
+    Function used to sum edge weights.
+    
+
+  </dd>
+
+      </dl>
+    </section>
 
 
   </div> <!-- /.main-content -->
@@ -150,21 +291,35 @@
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
     <h5>infinite_canvas library</h5>
     <ol>
-  <li class="section-title"><a href="../infinite_canvas/infinite_canvas-library.html#classes">Classes</a></li>
-  <li><a href="../infinite_canvas/InfiniteCanvas-class.html">InfiniteCanvas</a></li>
-  <li><a href="../infinite_canvas/InfiniteCanvasController-class.html">InfiniteCanvasController</a></li>
-  <li><a href="../infinite_canvas/InfiniteCanvasEdge-class.html">InfiniteCanvasEdge</a></li>
-  <li><a href="../infinite_canvas/InfiniteCanvasMenu-class.html">InfiniteCanvasMenu</a></li>
-  <li><a href="../infinite_canvas/InfiniteCanvasNode-class.html">InfiniteCanvasNode</a></li>
-  <li><a href="../infinite_canvas/InfiniteCanvasState-class.html">InfiniteCanvasState</a></li>
-  <li><a href="../infinite_canvas/MenuEntry-class.html">MenuEntry</a></li>
+      <li class="section-title"><a href="../infinite_canvas/infinite_canvas-library.html#classes">Classes</a></li>
+        <li><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/BidirectedGraph-class.html">BidirectedGraph</a></li>
+        <li><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/DirectedGraph-class.html">DirectedGraph</a></li>
+        <li><a href="../infinite_canvas/Graph-class.html">Graph</a></li>
+        <li><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/GraphCrawler-class.html">GraphCrawler</a></li>
+        <li><a href="../infinite_canvas/InfiniteCanvas-class.html">InfiniteCanvas</a></li>
+        <li><a href="../infinite_canvas/InfiniteCanvasController-class.html">InfiniteCanvasController</a></li>
+        <li><a href="../infinite_canvas/InfiniteCanvasEdge-class.html">InfiniteCanvasEdge</a></li>
+        <li><a href="../infinite_canvas/InfiniteCanvasNode-class.html">InfiniteCanvasNode</a></li>
+        <li><a href="../infinite_canvas/InfiniteCanvasState-class.html">InfiniteCanvasState</a></li>
+        <li><a href="../infinite_canvas/MenuEntry-class.html">MenuEntry</a></li>
+        <li><a href="../infinite_canvas/Menus-class.html">Menus</a></li>
+        <li><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/WeightedDirectedGraph-class.html">WeightedDirectedGraph</a></li>
+
+      <li class="section-title"><a href="../infinite_canvas/infinite_canvas-library.html#extensions">Extensions</a></li>
+        <li><a href="../infinite_canvas/GraphUtils.html">GraphUtils</a></li>
+        <li><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/SortMap.html">SortMap</a></li>
+        <li><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/SortSet.html">SortSet</a></li>
+
+
+      <li class="section-title"><a href="../infinite_canvas/infinite_canvas-library.html#constants">Constants</a></li>
+        <li><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/largeInt-constant.html">largeInt</a></li>
 
 
 
 
-
-
-
+      <li class="section-title"><a href="../infinite_canvas/infinite_canvas-library.html#typedefs">Typedefs</a></li>
+        <li><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/Edges.html">Edges</a></li>
+        <li><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/Summation.html">Summation</a></li>
 
 </ol>
 
@@ -175,7 +330,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.6+6
+      0.0.7
   </span>
 
   

@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../../" data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">infinite_canvas</a></li>
     <li><a href="../../infinite_canvas/infinite_canvas-library.html">infinite_canvas</a></li>
@@ -37,10 +37,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -48,7 +54,8 @@
     <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
-    <section class="multi-line-signature">const
+    <section class="multi-line-signature">
+      const
       <span class="name ">MenuEntry</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-label">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">label</span>, </span></li>
 <li><span class="parameter" id="-param-shortcut"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/MenuSerializableShortcut-mixin.html">MenuSerializableShortcut</a>?</span> <span class="parameter-name">shortcut</span>, </span></li>
 <li><span class="parameter" id="-param-onPressed"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/VoidCallback.html">VoidCallback</a>?</span> <span class="parameter-name">onPressed</span>, </span></li>
@@ -62,9 +69,12 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">const MenuEntry(
-    {required this.label, this.shortcut, this.onPressed, this.menuChildren})
-    : assert(menuChildren == null || onPressed == null,
+  <pre class="language-dart"><code class="language-dart">const MenuEntry({
+  required this.label,
+  this.shortcut,
+  this.onPressed,
+  this.menuChildren,
+}) : assert(menuChildren == null || onPressed == null,
           &#39;onPressed is ignored if menuChildren are provided&#39;);</code></pre>
 </section>
 
@@ -93,22 +103,24 @@
           <li><a href="../../infinite_canvas/MenuEntry/MenuEntry.html">MenuEntry</a></li>
 
 
-    <li class="section-title">
-      <a href="../../infinite_canvas/MenuEntry-class.html#instance-properties">Properties</a>
-    </li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li><a href="../../infinite_canvas/MenuEntry/label.html">label</a></li>
-    <li><a href="../../infinite_canvas/MenuEntry/menuChildren.html">menuChildren</a></li>
-    <li><a href="../../infinite_canvas/MenuEntry/onPressed.html">onPressed</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li><a href="../../infinite_canvas/MenuEntry/shortcut.html">shortcut</a></li>
+        <li class="section-title">
+          <a href="../../infinite_canvas/MenuEntry-class.html#instance-properties">Properties</a>
+        </li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li><a href="../../infinite_canvas/MenuEntry/label.html">label</a></li>
+          <li><a href="../../infinite_canvas/MenuEntry/menuChildren.html">menuChildren</a></li>
+          <li><a href="../../infinite_canvas/MenuEntry/onPressed.html">onPressed</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li><a href="../../infinite_canvas/MenuEntry/shortcut.html">shortcut</a></li>
 
-    <li class="section-title inherited"><a href="../../infinite_canvas/MenuEntry-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+        <li class="section-title"><a href="../../infinite_canvas/MenuEntry-class.html#instance-methods">Methods</a></li>
+          <li><a href="../../infinite_canvas/MenuEntry/merge.html">merge</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li><a href="../../infinite_canvas/MenuEntry/rename.html">rename</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../../infinite_canvas/MenuEntry-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../../infinite_canvas/MenuEntry-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -128,7 +140,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.6+6
+      0.0.7
   </span>
 
   
