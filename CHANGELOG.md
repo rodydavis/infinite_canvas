@@ -1,3 +1,8 @@
+## 0.0.7
+
+- Adding ability to merge menus
+- Adding [DirectedGraph] builder
+
 ## 0.0.6
 
 - Removing meta key for delete

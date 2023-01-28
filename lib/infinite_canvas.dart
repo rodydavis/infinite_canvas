@@ -6,3 +6,4 @@ export 'src/canvas.dart';
 export 'src/node.dart';
 export 'src/edge.dart';
 export 'src/menu.dart';
+export 'src/graph.dart';

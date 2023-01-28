@@ -22,8 +22,8 @@ class _WebViewsState extends State<WebViews> {
   }
 
   InfiniteCanvasNode createNode() {
-    final Key key = UniqueKey();
-    final Key webKey = UniqueKey();
+    final LocalKey key = UniqueKey();
+    final LocalKey webKey = UniqueKey();
     return InfiniteCanvasNode(
       key: key,
       size: const Size(800, 800),

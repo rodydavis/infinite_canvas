@@ -121,6 +121,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  directed_graph:
+    dependency: transitive
+    description:
+      name: directed_graph
+      sha256: f062f8fd610353500b52ede4940189bfedc4f038753707dc92eca012bf8951b4
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.7"
   easy_web_view:
     dependency: "direct main"
     description:
@@ -129,6 +137,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.6.0"
+  exception_templates:
+    dependency: transitive
+    description:
+      name: exception_templates
+      sha256: e9303fd16ecdb845a14b397cb93476f807dd2b4706f5ee44f708dbc95c256c33
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.4"
   fake_async:
     dependency: transitive
     description:
@@ -288,6 +304,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.2+5"
+  graphs:
+    dependency: transitive
+    description:
+      name: graphs
+      sha256: f9e130f3259f52d26f0cfc0e964513796dafed572fa52e45d2f8d6ca14db39b2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   html:
     dependency: transitive
     description:
@@ -326,7 +350,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.6+6"
+    version: "0.0.7"
   js:
     dependency: transitive
     description:
@@ -359,6 +383,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.7"
+  lazy_memo:
+    dependency: transitive
+    description:
+      name: lazy_memo
+      sha256: e48c8acb0081b485771139fc3431e3ab55830064e1fe0f8c691d093cdccc64a3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.2"
   lints:
     dependency: transitive
     description:
@@ -583,6 +615,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
+  quote_buffer:
+    dependency: transitive
+    description:
+      name: quote_buffer
+      sha256: "1b4b175b7b2c8074901d81d6ca55f1e8fd4fc40d104c55b5c382b8912f92b2fd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.3"
   random_color:
     dependency: "direct main"
     description:
@@ -672,10 +712,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: c9282698e2982b6c3817037554e52f99d4daba493e8028f8112a83d68ccd0b12
+      sha256: "6182294da5abf431177fccc1ee02401f6df30f766bc6130a0852c6b6d7ee6b2d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.17"
+    version: "0.4.18"
   typed_data:
     dependency: transitive
     description:

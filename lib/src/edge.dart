@@ -8,7 +8,7 @@ class InfiniteCanvasEdge {
     this.label,
   });
 
-  final Key from;
-  final Key to;
+  final LocalKey from;
+  final LocalKey to;
   final String? label;
 }

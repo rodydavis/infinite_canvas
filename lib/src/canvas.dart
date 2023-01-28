@@ -18,7 +18,7 @@ class InfiniteCanvas extends StatefulWidget {
     required this.controller,
     this.gridSize = const Size.square(50),
     this.menuVisible = true,
-    this.menus = const <MenuEntry>[],
+    this.menus = const [],
     this.backgroundBuilder,
     this.drawVisibleOnly = false,
     this.canAddEdges = false,
@@ -142,7 +142,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
 
   @override
   Widget build(BuildContext context) {
-    return InfiniteCanvasMenu(
+    return Menus(
       controller: widget.controller,
       visible: widget.menuVisible,
       menus: widget.menus,

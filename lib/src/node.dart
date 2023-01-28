@@ -13,9 +13,12 @@ class InfiniteCanvasNode {
     this.allowResize = false,
     this.allowMove = true,
     this.clipBehavior = Clip.none,
+    Object? data,
   });
 
-  final Key key;
+  String get id => key.toString();
+
+  final LocalKey key;
   late Size size;
   late Offset offset;
   String? label;

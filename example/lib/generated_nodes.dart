@@ -178,6 +178,62 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
               ),
             ],
           ),
+          MenuEntry(
+            label: 'Info',
+            menuChildren: [
+              MenuEntry(
+                label: 'Cycle',
+                onPressed: () {
+                  final fd = controller.getDirectedGraph();
+                  final messenger = ScaffoldMessenger.of(context);
+                  final result = fd.cycle;
+                  messenger.showSnackBar(
+                    SnackBar(
+                      content: Text(
+                          'Cycle found: ${result.map((e) => e.key.toString()).join(', ')}'),
+                    ),
+                  );
+                },
+              ),
+              MenuEntry(
+                label: 'In Degree',
+                onPressed: () {
+                  final fd = controller.getDirectedGraph();
+                  final result = fd.inDegreeMap;
+                  // Show dismissible dialog
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('In Degree'),
+                        content: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              for (final entry in result.entries.toList()
+                                ..sort(
+                                  (a, b) => b.value.compareTo(a.value),
+                                ))
+                                Text(
+                                  '${entry.key.id}: ${entry.value}',
+                                  style: const TextStyle(fontSize: 12),
+                                ),
+                            ],
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text('Close'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ],
       ),
     );

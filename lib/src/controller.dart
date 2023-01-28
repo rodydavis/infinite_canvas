@@ -4,10 +4,11 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import 'edge.dart';
+import 'graph.dart';
 import 'node.dart';
 
 /// A controller for the [InfiniteCanvas].
-class InfiniteCanvasController extends ChangeNotifier {
+class InfiniteCanvasController extends ChangeNotifier implements Graph {
   InfiniteCanvasController({
     List<InfiniteCanvasNode> nodes = const [],
     List<InfiniteCanvasEdge> edges = const [],
@@ -23,8 +24,13 @@ class InfiniteCanvasController extends ChangeNotifier {
   double minScale = 0.4;
   double maxScale = 4;
   final focusNode = FocusNode();
+
+  @override
   final List<InfiniteCanvasNode> nodes = [];
+
+  @override
   final List<InfiniteCanvasEdge> edges = [];
+
   final Set<Key> _selected = {};
   List<InfiniteCanvasNode> get selection =>
       nodes.where((e) => _selected.contains(e.key)).toList();
@@ -36,7 +42,7 @@ class InfiniteCanvasController extends ChangeNotifier {
   Matrix4 get matrix => transform.value;
   Offset mousePosition = Offset.zero;
   Offset? marqueeStart, marqueeEnd;
-  Key? linkStart;
+  LocalKey? linkStart;
 
   Offset? _linkEnd;
   Offset? get linkEnd => _linkEnd;
@@ -113,8 +119,8 @@ class InfiniteCanvasController extends ChangeNotifier {
     return rect;
   }
 
-  bool isSelected(Key key) => _selected.contains(key);
-  bool isHovered(Key key) => _hovered.contains(key);
+  bool isSelected(LocalKey key) => _selected.contains(key);
+  bool isHovered(LocalKey key) => _hovered.contains(key);
 
   bool get hasSelection => _selected.isNotEmpty;
 
@@ -167,12 +173,12 @@ class InfiniteCanvasController extends ChangeNotifier {
     }
   }
 
-  InfiniteCanvasNode? getNode(Key? key) {
+  InfiniteCanvasNode? getNode(LocalKey? key) {
     if (key == null) return null;
     return nodes.firstWhereOrNull((e) => e.key == key);
   }
 
-  void addLink(Key from, Key to, [String? label]) {
+  void addLink(LocalKey from, LocalKey to, [String? label]) {
     final edge = InfiniteCanvasEdge(
       from: from,
       to: to,
