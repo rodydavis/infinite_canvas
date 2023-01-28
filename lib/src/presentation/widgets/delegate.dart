@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'node.dart';
-import 'controller.dart';
+import '../../domain/model/node.dart';
 
 /// A [CustomMultiChildLayout] delegate that renders the nodes in the [InfiniteCanvas].
 class InfiniteCanvasNodesDelegate extends MultiChildLayoutDelegate {

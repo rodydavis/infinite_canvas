@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 
-import 'controller.dart';
-import 'delegate.dart';
-import 'edge.dart';
-import 'edge_renderer.dart';
-import 'grid_background.dart';
-import 'marquee.dart';
-import 'menu.dart';
-import 'node.dart';
+import '../widgets/delegate.dart';
+import '../../domain/model/node.dart';
+import '../../domain/model/edge.dart';
+import '../widgets/edge_renderer.dart';
+import '../state/controller.dart';
+import '../widgets/grid_background.dart';
+import '../widgets/marquee.dart';
+import '../../domain/model/menu_entry.dart';
+import '../widgets/menus.dart';
+import '../widgets/node_renderer.dart';
 
-/// A Widget that renders a canvas that can be panned and zoomed.
+/// A Widget that renders a canvas that can be
+/// panned and zoomed.
+///
+/// This can not be shrink wrapped, so it should be used
+/// as a full screen / expanded widget.
 class InfiniteCanvas extends StatefulWidget {
   const InfiniteCanvas({
     super.key,
@@ -296,7 +302,10 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                               .map((e) => LayoutId(
                                     key: e.key,
                                     id: e,
-                                    child: e.build(context, controller),
+                                    child: NodeRenderer(
+                                      node: e,
+                                      controller: controller,
+                                    ),
                                   ))
                               .toList(),
                         ),

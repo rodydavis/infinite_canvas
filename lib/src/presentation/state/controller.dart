@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-import 'edge.dart';
-import 'graph.dart';
-import 'node.dart';
+import '../../domain/model/edge.dart';
+import '../../domain/model/graph.dart';
+import '../../domain/model/node.dart';
 
 /// A controller for the [InfiniteCanvas].
 class InfiniteCanvasController extends ChangeNotifier implements Graph {

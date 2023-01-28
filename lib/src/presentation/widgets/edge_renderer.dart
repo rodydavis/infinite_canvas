@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'controller.dart';
-import 'edge.dart';
+import '../../domain/model/edge.dart';
+import '../state/controller.dart';
 import 'inline_painter.dart';
 
 /// A widget that renders all the edges in the [InfiniteCanvas].

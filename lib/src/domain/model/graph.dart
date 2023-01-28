@@ -2,8 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:directed_graph/directed_graph.dart';
 export 'package:directed_graph/directed_graph.dart';
 
-import 'edge.dart';
 import 'node.dart';
+import 'edge.dart';
 
 class Graph {
   const Graph(this.nodes, this.edges);
