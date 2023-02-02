@@ -53,7 +53,7 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   bool _formatterHasChanged = false;
   Function(InfiniteCanvasNode)? _formatter;
   set formatter(Function(InfiniteCanvasNode) value) {
-    _formatterHasChanged = _formatter == value;
+    _formatterHasChanged = _formatter != value;
 
     if (_formatterHasChanged == false) return;
 
