@@ -213,6 +213,9 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
       if (index == -1) continue;
       final current = nodes[index];
       current.update(offset: current.offset + delta);
+      if (_formatter != null) {
+        _formatter!(current);
+      }
     }
     mousePosition = position;
     notifyListeners();
@@ -257,6 +260,9 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   }
 
   void add(InfiniteCanvasNode child) {
+    if (_formatter != null) {
+      _formatter!(child);
+    }
     nodes.add(child);
     notifyListeners();
   }
