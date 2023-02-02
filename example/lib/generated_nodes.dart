@@ -50,7 +50,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
     });
     // Generate random edges
     final edges = <InfiniteCanvasEdge>[];
-    for (var i = 0; i < nodes.length; i++) {
+    for (int i = 0; i < nodes.length; i++) {
       final from = nodes[i];
       final to = nodes[Random().nextInt(nodes.length)];
       if (from != to) {

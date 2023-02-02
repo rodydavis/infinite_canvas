@@ -44,6 +44,24 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   Offset? marqueeStart, marqueeEnd;
   LocalKey? linkStart;
 
+  void _format() {
+    for (InfiniteCanvasNode node in nodes) {
+      _formatter!(node);
+    }
+  }
+
+  bool _formatterHasChanged = false;
+  Function(InfiniteCanvasNode)? _formatter;
+  set formatter(Function(InfiniteCanvasNode) value) {
+    _formatterHasChanged = _formatter == value;
+
+    if (_formatterHasChanged == false) return;
+
+    _formatter = value;
+    _format();
+    notifyListeners();
+  }
+
   Offset? _linkEnd;
   Offset? get linkEnd => _linkEnd;
   set linkEnd(Offset? value) {
@@ -366,9 +384,5 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
     final scale = matrix.getMaxScaleOnAxis();
     final size = constraints.biggest;
     return offset & size / scale;
-  }
-
-  void format() {
-    // TODO: Layout graph like a force-directed, tree, flowchart or grid
   }
 }
