@@ -41,6 +41,7 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   late final transform = TransformationController();
   Matrix4 get matrix => transform.value;
   Offset mousePosition = Offset.zero;
+  Offset? mouseDragStart;
   Offset? marqueeStart, marqueeEnd;
   LocalKey? linkStart;
 
@@ -207,7 +208,9 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   }
 
   void moveSelection(Offset position) {
-    final delta = toLocal(position) - toLocal(mousePosition);
+    final delta = mouseDragStart != null
+        ? toLocal(position) - toLocal(mouseDragStart!)
+        : toLocal(position);
     for (final key in _selected) {
       final index = nodes.indexWhere((e) => e.key == key);
       if (index == -1) continue;
@@ -217,7 +220,6 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
         _formatter!(current);
       }
     }
-    mousePosition = position;
     notifyListeners();
   }
 

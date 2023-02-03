@@ -258,6 +258,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
               scaleEnabled: controller.canvasMoveEnabled,
               onInteractionStart: (details) {
                 controller.mousePosition = details.focalPoint;
+                controller.mouseDragStart = controller.mousePosition;
               },
               onInteractionUpdate: (details) {
                 if (!controller.mouseDown) {
@@ -270,6 +271,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                 }
                 controller.mousePosition = details.focalPoint;
               },
+              onInteractionEnd: (_) => controller.mouseDragStart = null,
               minScale: controller.minScale,
               maxScale: controller.maxScale,
               boundaryMargin: const EdgeInsets.all(double.infinity),
