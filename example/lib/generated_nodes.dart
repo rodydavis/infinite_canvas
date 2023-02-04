@@ -13,6 +13,7 @@ class GeneratedNodes extends StatefulWidget {
 
 class _GeneratedNodesState extends State<GeneratedNodes> {
   late InfiniteCanvasController controller;
+  final gridSize = const Size.square(50);
 
   @override
   void initState() {
@@ -62,6 +63,13 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
       }
     }
     controller = InfiniteCanvasController(nodes: nodes, edges: edges);
+    controller.formatter = (node) {
+      // snap to grid
+      node.offset = Offset(
+        (node.offset.dx / gridSize.width).roundToDouble() * gridSize.width,
+        (node.offset.dy / gridSize.height).roundToDouble() * gridSize.height,
+      );
+    };
   }
 
   @override
@@ -75,6 +83,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
         drawVisibleOnly: true,
         canAddEdges: true,
         controller: controller,
+        gridSize: gridSize,
         menus: [
           MenuEntry(
             label: 'Create',
