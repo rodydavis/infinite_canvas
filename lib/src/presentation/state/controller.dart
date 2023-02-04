@@ -7,6 +7,8 @@ import '../../domain/model/edge.dart';
 import '../../domain/model/graph.dart';
 import '../../domain/model/node.dart';
 
+typedef NodeFormatter = void Function(InfiniteCanvasNode);
+
 /// A controller for the [InfiniteCanvas].
 class InfiniteCanvasController extends ChangeNotifier implements Graph {
   InfiniteCanvasController({
@@ -24,6 +26,7 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   double minScale = 0.4;
   double maxScale = 4;
   final focusNode = FocusNode();
+  Size? viewport;
 
   @override
   final List<InfiniteCanvasNode> nodes = [];
@@ -72,8 +75,8 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   }
 
   bool _formatterHasChanged = false;
-  Function(InfiniteCanvasNode)? _formatter;
-  set formatter(Function(InfiniteCanvasNode) value) {
+  NodeFormatter? _formatter;
+  set formatter(NodeFormatter value) {
     _formatterHasChanged = _formatter != value;
 
     if (_formatterHasChanged == false) return;
