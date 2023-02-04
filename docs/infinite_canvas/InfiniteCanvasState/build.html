@@ -283,78 +283,85 @@ Widget build(BuildContext context) {
           }
         },
         child: LayoutBuilder(
-          builder: (context, constraints) =&gt; InteractiveViewer.builder(
-            transformationController: controller.transform,
-            panEnabled: controller.canvasMoveEnabled,
-            scaleEnabled: controller.canvasMoveEnabled,
-            onInteractionStart: (details) {
-              controller.mousePosition = details.focalPoint;
-            },
-            onInteractionUpdate: (details) {
-              if (!controller.mouseDown) {
-                controller.scale = details.scale;
-              } else if (controller.spacePressed) {
-                controller.pan(details.focalPointDelta);
-              } else if (controller.controlPressed) {
-              } else {
-                controller.moveSelection(details.focalPoint);
-              }
-              controller.mousePosition = details.focalPoint;
-            },
-            minScale: controller.minScale,
-            maxScale: controller.maxScale,
-            boundaryMargin: const EdgeInsets.all(double.infinity),
-            builder: (context, quad) {
-              final nodes = getNodes(constraints);
-              final edges = getEdges(constraints);
-              return SizedBox.fromSize(
-                size: controller.getMaxSize().size,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned.fill(
-                      child: buildBackground(context, quad),
-                    ),
-                    Positioned.fill(
-                      child: InfiniteCanvasEdgeRenderer(
-                        controller: controller,
-                        edges: edges,
-                        linkStart: controller
-                            .getNode(controller.linkStart)
-                            ?.rect
-                            .center,
-                        linkEnd: controller.linkEnd,
-                      ),
-                    ),
-                    Positioned.fill(
-                      child: CustomMultiChildLayout(
-                        delegate: InfiniteCanvasNodesDelegate(nodes),
-                        children: nodes
-                            .map((e) =&gt; LayoutId(
-                                  key: e.key,
-                                  id: e,
-                                  child: NodeRenderer(
-                                    node: e,
-                                    controller: controller,
-                                  ),
-                                ))
-                            .toList(),
-                      ),
-                    ),
-                    if (controller.marqueeStart != null &amp;&amp;
-                        controller.marqueeEnd != null) ...[
+          builder: (context, constraints) {
+            controller.viewport = constraints.biggest;
+            return InteractiveViewer.builder(
+              transformationController: controller.transform,
+              panEnabled: controller.canvasMoveEnabled,
+              scaleEnabled: controller.canvasMoveEnabled,
+              onInteractionStart: (details) {
+                controller.mousePosition = details.focalPoint;
+                controller.mouseDragStart = controller.mousePosition;
+              },
+              onInteractionUpdate: (details) {
+                if (!controller.mouseDown) {
+                  controller.scale = details.scale;
+                } else if (controller.spacePressed) {
+                  controller.pan(details.focalPointDelta);
+                } else if (controller.controlPressed) {
+                } else {
+                  controller.moveSelection(details.focalPoint);
+                }
+                controller.mousePosition = details.focalPoint;
+              },
+              onInteractionEnd: (_) =&gt; controller.mouseDragStart = null,
+              minScale: controller.minScale,
+              maxScale: controller.maxScale,
+              boundaryMargin: const EdgeInsets.all(double.infinity),
+              builder: (context, quad) {
+                final nodes = getNodes(constraints);
+                final edges = getEdges(constraints);
+                return SizedBox.fromSize(
+                  size: controller.getMaxSize().size,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
                       Positioned.fill(
-                        child: Marquee(
-                          start: controller.toLocal(controller.marqueeStart!),
-                          end: controller.toLocal(controller.marqueeEnd!),
+                        child: buildBackground(context, quad),
+                      ),
+                      Positioned.fill(
+                        child: InfiniteCanvasEdgeRenderer(
+                          controller: controller,
+                          edges: edges,
+                          linkStart: controller
+                              .getNode(controller.linkStart)
+                              ?.rect
+                              .center,
+                          linkEnd: controller.linkEnd,
+                          straightLines: widget.edgesUseStraightLines,
                         ),
                       ),
+                      Positioned.fill(
+                        child: CustomMultiChildLayout(
+                          delegate: InfiniteCanvasNodesDelegate(nodes),
+                          children: nodes
+                              .map((e) =&gt; LayoutId(
+                                    key: e.key,
+                                    id: e,
+                                    child: NodeRenderer(
+                                      node: e,
+                                      controller: controller,
+                                    ),
+                                  ))
+                              .toList(),
+                        ),
+                      ),
+                      if (controller.marqueeStart != null &amp;&amp;
+                          controller.marqueeEnd != null) ...[
+                        Positioned.fill(
+                          child: Marquee(
+                            start:
+                                controller.toLocal(controller.marqueeStart!),
+                            end: controller.toLocal(controller.marqueeEnd!),
+                          ),
+                        ),
+                      ],
                     ],
-                  ],
-                ),
-              );
-            },
-          ),
+                  ),
+                );
+              },
+            );
+          },
         ),
       ),
     ),

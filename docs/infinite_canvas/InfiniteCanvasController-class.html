@@ -155,6 +155,17 @@
 
 </dd>
 
+        <dt id="formatter" class="property">
+  <span class="name"><a href="../infinite_canvas/InfiniteCanvasController/formatter.html">formatter</a></span>
+  <span class="signature">&#8592; <a href="../infinite_canvas/NodeFormatter.html">NodeFormatter</a></span> 
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">write-only</span></div>
+
+</dd>
+
         <dt id="hashCode" class="property inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> 
@@ -298,6 +309,17 @@
 
 </dd>
 
+        <dt id="mouseDragStart" class="property">
+  <span class="name"><a href="../infinite_canvas/InfiniteCanvasController/mouseDragStart.html">mouseDragStart</a></span>
+  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-ui/Offset-class.html">Offset</a>?</span> 
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">read / write</span></div>
+
+</dd>
+
         <dt id="mousePosition" class="property">
   <span class="name"><a href="../infinite_canvas/InfiniteCanvasController/mousePosition.html">mousePosition</a></span>
   <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-ui/Offset-class.html">Offset</a></span> 
@@ -383,6 +405,17 @@
 <dd>
   
   <div class="features"><span class="feature">late</span><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="viewport" class="property">
+  <span class="name"><a href="../infinite_canvas/InfiniteCanvasController/viewport.html">viewport</a></span>
+  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-ui/Size-class.html">Size</a>?</span> 
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">read / write</span></div>
 
 </dd>
 
@@ -529,19 +562,6 @@ object is not in a usable state and should be discarded (calls to
 
         <dt id="edit" class="callable">
   <span class="name"><a href="../infinite_canvas/InfiniteCanvasController/edit.html">edit</a></span><span class="signature">(<wbr><span class="parameter" id="edit-param-child"><span class="type-annotation"><a href="../infinite_canvas/InfiniteCanvasNode-class.html">InfiniteCanvasNode</a></span> <span class="parameter-name">child</span></span>)
-    <span class="returntype parameter">&#8594; void</span>
-  </span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="format" class="callable">
-  <span class="name"><a href="../infinite_canvas/InfiniteCanvasController/format.html">format</a></span><span class="signature">(<wbr>)
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -1004,6 +1024,7 @@ notified when the object changes.
 
       <li class="section-title"><a href="../infinite_canvas/infinite_canvas-library.html#typedefs">Typedefs</a></li>
         <li><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/Edges.html">Edges</a></li>
+        <li><a href="../infinite_canvas/NodeFormatter.html">NodeFormatter</a></li>
         <li><a href="https://pub.dev/documentation/directed_graph/0.3.7/directed_graph/Summation.html">Summation</a></li>
 
 </ol>
@@ -1024,6 +1045,7 @@ notified when the object changes.
           <li><a href="../infinite_canvas/InfiniteCanvasController/controlPressed.html">controlPressed</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/edges.html">edges</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/focusNode.html">focusNode</a></li>
+          <li><a href="../infinite_canvas/InfiniteCanvasController/formatter.html">formatter</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/hasListeners.html">hasListeners</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/hasSelection.html">hasSelection</a></li>
@@ -1037,6 +1059,7 @@ notified when the object changes.
           <li><a href="../infinite_canvas/InfiniteCanvasController/metaPressed.html">metaPressed</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/minScale.html">minScale</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/mouseDown.html">mouseDown</a></li>
+          <li><a href="../infinite_canvas/InfiniteCanvasController/mouseDragStart.html">mouseDragStart</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/mousePosition.html">mousePosition</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/nodes.html">nodes</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
@@ -1045,6 +1068,7 @@ notified when the object changes.
           <li><a href="../infinite_canvas/InfiniteCanvasController/shiftPressed.html">shiftPressed</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/spacePressed.html">spacePressed</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/transform.html">transform</a></li>
+          <li><a href="../infinite_canvas/InfiniteCanvasController/viewport.html">viewport</a></li>
 
         <li class="section-title"><a href="../infinite_canvas/InfiniteCanvasController-class.html#instance-methods">Methods</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/add.html">add</a></li>
@@ -1058,7 +1082,6 @@ notified when the object changes.
           <li><a href="../infinite_canvas/InfiniteCanvasController/deselectAll.html">deselectAll</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/dispose.html">dispose</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/edit.html">edit</a></li>
-          <li><a href="../infinite_canvas/InfiniteCanvasController/format.html">format</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/getMaxSize.html">getMaxSize</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/getNode.html">getNode</a></li>
           <li><a href="../infinite_canvas/InfiniteCanvasController/getOffset.html">getOffset</a></li>
