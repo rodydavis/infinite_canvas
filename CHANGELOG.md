@@ -1,3 +1,7 @@
+## 0.0.8
+
+- Adding optional grid snapping (Thanks @InstrinsicAutomations 🎉)
+
 ## 0.0.7
 
 - Adding ability to merge menus
