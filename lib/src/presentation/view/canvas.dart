@@ -19,16 +19,16 @@ import '../widgets/node_renderer.dart';
 /// This can not be shrink wrapped, so it should be used
 /// as a full screen / expanded widget.
 class InfiniteCanvas extends StatefulWidget {
-  const InfiniteCanvas({
-    super.key,
-    required this.controller,
-    this.gridSize = const Size.square(50),
-    this.menuVisible = true,
-    this.menus = const [],
-    this.backgroundBuilder,
-    this.drawVisibleOnly = false,
-    this.canAddEdges = false,
-  });
+  const InfiniteCanvas(
+      {super.key,
+      required this.controller,
+      this.gridSize = const Size.square(50),
+      this.menuVisible = true,
+      this.menus = const [],
+      this.backgroundBuilder,
+      this.drawVisibleOnly = false,
+      this.canAddEdges = false,
+      this.edgesUseStraightLines = false});
 
   final InfiniteCanvasController controller;
   final Size gridSize;
@@ -36,6 +36,7 @@ class InfiniteCanvas extends StatefulWidget {
   final List<MenuEntry> menus;
   final bool drawVisibleOnly;
   final bool canAddEdges;
+  final bool edgesUseStraightLines;
   final Widget Function(BuildContext, Rect)? backgroundBuilder;
 
   @override
@@ -258,6 +259,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
               scaleEnabled: controller.canvasMoveEnabled,
               onInteractionStart: (details) {
                 controller.mousePosition = details.focalPoint;
+                controller.mouseDragStart = controller.mousePosition;
               },
               onInteractionUpdate: (details) {
                 if (!controller.mouseDown) {
@@ -270,6 +272,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                 }
                 controller.mousePosition = details.focalPoint;
               },
+              onInteractionEnd: (_) => controller.mouseDragStart = null,
               minScale: controller.minScale,
               maxScale: controller.maxScale,
               boundaryMargin: const EdgeInsets.all(double.infinity),
@@ -293,6 +296,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                               ?.rect
                               .center,
                           linkEnd: controller.linkEnd,
+                          straightLines: widget.edgesUseStraightLines,
                         ),
                       ),
                       Positioned.fill(

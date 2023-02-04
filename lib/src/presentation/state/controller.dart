@@ -38,11 +38,50 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   List<InfiniteCanvasNode> get hovered =>
       nodes.where((e) => _hovered.contains(e.key)).toList();
 
+  void _cacheSelectedOrigins() {
+    // cache selected node origins
+    _selectedOrigins.clear();
+    for (final key in _selected) {
+      final index = nodes.indexWhere((e) => e.key == key);
+      if (index == -1) continue;
+      final current = nodes[index];
+      _selectedOrigins[key] = current.offset;
+    }
+  }
+
+  void _cacheSelectedOrigin(Key key) {
+    final index = nodes.indexWhere((e) => e.key == key);
+    if (index == -1) return;
+    final current = nodes[index];
+    _selectedOrigins[key] = current.offset;
+  }
+
+  final Map<Key, Offset> _selectedOrigins = {};
+
   late final transform = TransformationController();
   Matrix4 get matrix => transform.value;
   Offset mousePosition = Offset.zero;
+  Offset? mouseDragStart;
   Offset? marqueeStart, marqueeEnd;
   LocalKey? linkStart;
+
+  void _formatAll() {
+    for (InfiniteCanvasNode node in nodes) {
+      _formatter!(node);
+    }
+  }
+
+  bool _formatterHasChanged = false;
+  Function(InfiniteCanvasNode)? _formatter;
+  set formatter(Function(InfiniteCanvasNode) value) {
+    _formatterHasChanged = _formatter != value;
+
+    if (_formatterHasChanged == false) return;
+
+    _formatter = value;
+    _formatAll();
+    notifyListeners();
+  }
 
   Offset? _linkEnd;
   Offset? get linkEnd => _linkEnd;
@@ -189,14 +228,19 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   }
 
   void moveSelection(Offset position) {
-    final delta = toLocal(position) - toLocal(mousePosition);
+    final delta = mouseDragStart != null
+        ? toLocal(position) - toLocal(mouseDragStart!)
+        : toLocal(position);
     for (final key in _selected) {
       final index = nodes.indexWhere((e) => e.key == key);
       if (index == -1) continue;
       final current = nodes[index];
-      current.update(offset: current.offset + delta);
+      final origin = _selectedOrigins[key];
+      current.update(offset: origin! + delta);
+      if (_formatter != null) {
+        _formatter!(current);
+      }
     }
-    mousePosition = position;
     notifyListeners();
   }
 
@@ -205,7 +249,9 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
       _hovered.add(key);
     } else {
       _selected.add(key);
+      _cacheSelectedOrigin(key);
     }
+
     notifyListeners();
   }
 
@@ -216,6 +262,7 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
     } else {
       _selected.clear();
       _selected.addAll(keys);
+      _cacheSelectedOrigins();
     }
     notifyListeners();
   }
@@ -225,6 +272,7 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
       _hovered.remove(key);
     } else {
       _selected.remove(key);
+      _selectedOrigins.remove(key);
     }
     notifyListeners();
   }
@@ -234,11 +282,15 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
       _hovered.clear();
     } else {
       _selected.clear();
+      _selectedOrigins.clear();
     }
     notifyListeners();
   }
 
   void add(InfiniteCanvasNode child) {
+    if (_formatter != null) {
+      _formatter!(child);
+    }
     nodes.add(child);
     notifyListeners();
   }
@@ -253,6 +305,8 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
 
   void remove(Key key) {
     nodes.removeWhere((e) => e.key == key);
+    _selected.remove(key);
+    _selectedOrigins.remove(key);
     notifyListeners();
   }
 
@@ -314,6 +368,7 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
       final index = nodes.indexWhere((e) => e.key == key);
       if (index == -1) continue;
       nodes.removeAt(index);
+      _selectedOrigins.remove(key);
     }
     // Delete related connections
     edges.removeWhere(
@@ -325,6 +380,7 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   void selectAll() {
     _selected.clear();
     _selected.addAll(nodes.map((e) => e.key).toList());
+    _cacheSelectedOrigins();
     notifyListeners();
   }
 
@@ -366,9 +422,5 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
     final scale = matrix.getMaxScaleOnAxis();
     final size = constraints.biggest;
     return offset & size / scale;
-  }
-
-  void format() {
-    // TODO: Layout graph like a force-directed, tree, flowchart or grid
   }
 }

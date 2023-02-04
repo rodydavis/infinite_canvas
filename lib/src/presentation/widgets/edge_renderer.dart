@@ -6,17 +6,18 @@ import 'inline_painter.dart';
 
 /// A widget that renders all the edges in the [InfiniteCanvas].
 class InfiniteCanvasEdgeRenderer extends StatelessWidget {
-  const InfiniteCanvasEdgeRenderer({
-    super.key,
-    required this.controller,
-    required this.edges,
-    this.linkStart,
-    this.linkEnd,
-  });
+  const InfiniteCanvasEdgeRenderer(
+      {super.key,
+      required this.controller,
+      required this.edges,
+      this.linkStart,
+      this.linkEnd,
+      this.straightLines = false});
 
   final InfiniteCanvasController controller;
   final List<InfiniteCanvasEdge> edges;
   final Offset? linkStart, linkEnd;
+  final bool straightLines;
 
   @override
   Widget build(BuildContext context) {
@@ -73,17 +74,22 @@ class InfiniteCanvasEdgeRenderer extends StatelessWidget {
     String? label,
   }) {
     final colors = Theme.of(context).colorScheme;
-    // Draw bezier curve from fromRect.center to toRect.center
+    // Draw line from fromRect.center to toRect.center
     final path = Path();
     path.moveTo(fromOffset.dx, fromOffset.dy);
-    path.cubicTo(
-      fromOffset.dx,
-      fromOffset.dy,
-      fromOffset.dx,
-      toOffset.dy,
-      toOffset.dx,
-      toOffset.dy,
-    );
+
+    if (straightLines) {
+      path.moveTo(toOffset.dx, toOffset.dy);
+    } else {
+      path.cubicTo(
+        fromOffset.dx,
+        fromOffset.dy,
+        fromOffset.dx,
+        toOffset.dy,
+        toOffset.dx,
+        toOffset.dy,
+      );
+    }
     canvas.drawPath(path, brush);
     if (label != null) {
       final textPainter = TextPainter(
@@ -102,12 +108,12 @@ class InfiniteCanvasEdgeRenderer extends StatelessWidget {
         ),
         textDirection: TextDirection.ltr,
       )..layout();
-      // Render label on bezier curve
+      // Render label on line
       Offset textOffset = Offset(
         (fromOffset.dx + toOffset.dx) / 2,
         (fromOffset.dy + toOffset.dy) / 2,
       );
-      // Center on curve
+      // Center on curve, if used
       final pathMetrics = path.computeMetrics();
       final pathMetric = pathMetrics.first;
       final pathLength = pathMetric.length;
