@@ -62,7 +62,7 @@
 <section class="multi-line-signature">
   
   <span class="returntype">void</span>
-  <span class="name ">formatter=</span><span class="signature">(<wbr><span class="parameter" id="formatter=-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>(<span class="parameter" id="param-"><span class="type-annotation"><a href="../../infinite_canvas/InfiniteCanvasNode-class.html">InfiniteCanvasNode</a></span></span>)</span>)</span>
+  <span class="name ">formatter=</span><span class="signature">(<wbr><span class="parameter" id="formatter=-param-value"><span class="type-annotation"><a href="../../infinite_canvas/NodeFormatter.html">NodeFormatter</a></span> <span class="parameter-name">value</span></span>)</span>
   
 
 </section>
@@ -72,7 +72,7 @@
 
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">set formatter(Function(InfiniteCanvasNode) value) {
+  <pre class="language-dart"><code class="language-dart">set formatter(NodeFormatter value) {
   _formatterHasChanged = _formatter != value;
 
   if (_formatterHasChanged == false) return;
@@ -139,6 +139,7 @@
           <li><a href="../../infinite_canvas/InfiniteCanvasController/shiftPressed.html">shiftPressed</a></li>
           <li><a href="../../infinite_canvas/InfiniteCanvasController/spacePressed.html">spacePressed</a></li>
           <li><a href="../../infinite_canvas/InfiniteCanvasController/transform.html">transform</a></li>
+          <li><a href="../../infinite_canvas/InfiniteCanvasController/viewport.html">viewport</a></li>
 
         <li class="section-title"><a href="../../infinite_canvas/InfiniteCanvasController-class.html#instance-methods">Methods</a></li>
           <li><a href="../../infinite_canvas/InfiniteCanvasController/add.html">add</a></li>
@@ -200,7 +201,7 @@
 <footer>
   <span class="no-break">
     infinite_canvas
-      0.0.7+1
+      0.0.8
   </span>
 
   
