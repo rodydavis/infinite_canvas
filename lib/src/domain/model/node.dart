@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// A node in the [InfiniteCanvas].
-class InfiniteCanvasNode {
+class InfiniteCanvasNode<T> {
   InfiniteCanvasNode({
     required this.key,
     required this.size,
@@ -11,7 +11,7 @@ class InfiniteCanvasNode {
     this.allowResize = false,
     this.allowMove = true,
     this.clipBehavior = Clip.none,
-    Object? data,
+    this.value,
   });
 
   String get id => key.toString();
@@ -20,6 +20,7 @@ class InfiniteCanvasNode {
   late Size size;
   late Offset offset;
   String? label;
+  T? value;
   final Widget child;
   final bool allowResize, allowMove;
   final Clip clipBehavior;

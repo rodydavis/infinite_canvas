@@ -1,3 +1,7 @@
+## 0.0.9
+
+- Adding [value] to [InfiniteCanvasNode] with generic type
+
 ## 0.0.8
 
 - Adding optional grid snapping (Thanks @InstrinsicAutomations 🎉)
