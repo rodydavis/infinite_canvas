@@ -17,6 +17,9 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   }) {
     if (nodes.isNotEmpty) {
       this.nodes.addAll(nodes);
+      for (final node in nodes) {
+        node.addListener(notifyListeners);
+      }
     }
     if (edges.isNotEmpty) {
       this.edges.addAll(edges);
@@ -70,17 +73,15 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
 
   void _formatAll() {
     for (InfiniteCanvasNode node in nodes) {
-      _formatter!(node);
+      _formatter?.call(node);
     }
   }
 
   bool _formatterHasChanged = false;
   NodeFormatter? _formatter;
-  set formatter(NodeFormatter value) {
+  set formatter(NodeFormatter? value) {
     _formatterHasChanged = _formatter != value;
-
     if (_formatterHasChanged == false) return;
-
     _formatter = value;
     _formatAll();
     notifyListeners();
@@ -295,6 +296,7 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
       _formatter!(child);
     }
     nodes.add(child);
+    child.addListener(notifyListeners);
     notifyListeners();
   }
 
@@ -302,6 +304,7 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
     if (_selected.length == 1) {
       final idx = nodes.indexWhere((e) => e.key == _selected.first);
       nodes[idx] = child;
+      child.addListener(notifyListeners);
       notifyListeners();
     }
   }

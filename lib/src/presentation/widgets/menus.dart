@@ -15,7 +15,7 @@ class Menus extends StatefulWidget {
     this.renameLabel,
     this.visible = true,
   });
-  
+
   final List<MenuEntry> menus;
   final InfiniteCanvasController controller;
   final String Function(String)? renameLabel;
@@ -107,6 +107,10 @@ class _MenusState extends State<Menus> {
           label: 'Reset',
           onPressed: widget.controller.zoomReset,
         ),
+        // Add extra menu entries here
+        for (final menu
+            in widget.menus.where((element) => element.label == 'View'))
+          ...menu.menuChildren ?? [],
       ],
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'generated_nodes.dart';
+import 'editor/editor.dart';
 
 void main() => runApp(const MyApp());
 
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const GeneratedNodes(),
+      home: const Editor(),
       theme: ThemeData.light(useMaterial3: true),
       darkTheme: ThemeData.dark(useMaterial3: true),
       themeMode: ThemeMode.system,

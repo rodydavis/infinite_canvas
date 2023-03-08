@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// A node in the [InfiniteCanvas].
-class InfiniteCanvasNode {
+class InfiniteCanvasNode<T> extends ChangeNotifier {
   InfiniteCanvasNode({
     required this.key,
     required this.size,
@@ -11,8 +12,8 @@ class InfiniteCanvasNode {
     this.allowResize = false,
     this.allowMove = true,
     this.clipBehavior = Clip.none,
-    Object? data,
-  });
+    T? value,
+  }) : notifier = ValueNotifier(value);
 
   String get id => key.toString();
 
@@ -20,6 +21,9 @@ class InfiniteCanvasNode {
   late Size size;
   late Offset offset;
   String? label;
+  late final ValueListenable<T?> notifier;
+  T? get value => notifier.value;
+  set value(T? value) => (notifier as ValueNotifier).value = value;
   final Widget child;
   final bool allowResize, allowMove;
   final Clip clipBehavior;
