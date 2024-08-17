@@ -19,7 +19,7 @@ class DragHandle extends StatefulWidget {
     required this.alignment,
     this.size = 10,
     required this.gridSize,
-    this.snapToGrid = false,
+    this.snapToGrid = true,
     this.minimumNodeSize = const Size(InfiniteCanvasNode.dragHandleSize * 2, InfiniteCanvasNode.dragHandleSize * 2),
   });
 
@@ -37,6 +37,7 @@ class _DragHandleState extends State<DragHandle> {
   late final Size minimumNodeSize;
 
   late Rect initialBounds;
+  late Rect minimumSizeBounds;
   late Offset draggingOffset;
 
   @override
@@ -57,6 +58,11 @@ class _DragHandleState extends State<DragHandle> {
     return Listener(
         onPointerDown: (details) {
           initialBounds = Rect.fromLTWH(node.offset.dx, node.offset.dy, node.size.width, node.size.height);
+          minimumSizeBounds = Rect.fromLTRB(
+              initialBounds.right - minimumNodeSize.width,
+              initialBounds.bottom - minimumNodeSize.height,
+              initialBounds.left + minimumNodeSize.width,
+              initialBounds.top + minimumNodeSize.height);
           draggingOffset = Offset.zero;
         },
         onPointerUp: (details) {
@@ -72,15 +78,20 @@ class _DragHandleState extends State<DragHandle> {
           Rect newBounds = initialBounds;
 
           if (al.isLeft) {
-            final maxLeft = initialBounds.right - minimumNodeSize.width;
-            newBounds = Rect.fromLTRB(
-                min(maxLeft, newBounds.left + draggingOffset.dx), newBounds.top, newBounds.right, newBounds.bottom);
+            newBounds = Rect.fromLTRB(min(minimumSizeBounds.left, newBounds.left + draggingOffset.dx), newBounds.top,
+                newBounds.right, newBounds.bottom);
           }
           if (al.isTop) {
-            final maxTop = initialBounds.bottom - minimumNodeSize.height;
-            newBounds = Rect.fromLTRB(
-                newBounds.left, min(maxTop, newBounds.top + draggingOffset.dy), newBounds.right, newBounds.bottom);
+            newBounds = Rect.fromLTRB(newBounds.left, min(minimumSizeBounds.top, newBounds.top + draggingOffset.dy),
+                newBounds.right, newBounds.bottom);
           }
+
+          if (snapToGrid && (al.isLeft || al.isTop)) {
+            final snappedLeft = _adjustEdgeToGrid(newBounds.left, gridSize.width, maximum: minimumSizeBounds.left);
+            final snappedTop = _adjustEdgeToGrid(newBounds.top, gridSize.height, maximum: minimumSizeBounds.top);
+            newBounds = Rect.fromLTRB(snappedLeft, snappedTop, newBounds.right, newBounds.bottom);
+          }
+
           if (al.isRight) {
             newBounds = Rect.fromLTWH(newBounds.left, newBounds.top,
                 max(minimumNodeSize.width, newBounds.width + draggingOffset.dx), newBounds.height);
@@ -90,27 +101,14 @@ class _DragHandleState extends State<DragHandle> {
                 max(minimumNodeSize.height, newBounds.height + draggingOffset.dy));
           }
 
-          // if (!snapToGrid) {
-          //   // node.update(size: newSize, offset: newTopLeftCorner);
-          // } else {
-          //   // print(draggingOffset);
-          //   final newTopLeftCorner = Offset(
-          //       al.isLeft ? _adjustOffsetXToGrid(initialNodeOffset.dx + draggingOffset.dx) : initialNodeOffset.dx,
-          //       al.isTop ? _adjustOffsetYToGrid(initialNodeOffset.dy + draggingOffset.dy) : initialNodeOffset.dy);
-          //   final newBottomRightCorner = Offset(
-          //       al.isRight
-          //           ? _adjustOffsetXToGrid(newTopLeftCorner.dx + initialNodeSize.width + draggingOffset.dx)
-          //           : node.offset.dx + node.size.width,
-          //       al.isBottom
-          //           ? _adjustOffsetYToGrid(newTopLeftCorner.dy + initialNodeSize.height + draggingOffset.dy)
-          //           : node.offset.dy + node.size.height);
-          //   final newSize =
-          //       Size(newBottomRightCorner.dx - newTopLeftCorner.dx, newBottomRightCorner.dy - newTopLeftCorner.dy);
+          if (snapToGrid && (al.isRight || al.isBottom)) {
+            final snappedRight = _adjustEdgeToGrid(newBounds.right, gridSize.width, minimum: minimumSizeBounds.right);
+            final snappedBottom =
+                _adjustEdgeToGrid(newBounds.bottom, gridSize.height, minimum: minimumSizeBounds.bottom);
+            newBounds = Rect.fromLTRB(newBounds.left, newBounds.top, snappedRight, snappedBottom);
+          }
 
-          // print(newBottomRightCorner);
-          // print(newSize);
           node.update(size: newBounds.size, offset: newBounds.topLeft, setCurrentlyResizing: true);
-
           controller.edit(node);
         },
         child: Container(
@@ -126,12 +124,15 @@ class _DragHandleState extends State<DragHandle> {
         ));
   }
 
-  Offset _adjustOffsetToGrid(Offset rawOffset) {
-    return Offset(_adjustEdgeToGrid(rawOffset.dx, gridSize.width), _adjustEdgeToGrid(rawOffset.dy, gridSize.height));
-  }
-
-  double _adjustEdgeToGrid(double rawOffsetEdge, double gridEdge) {
-    return (rawOffsetEdge / gridEdge).roundToDouble() * gridEdge;
+  double _adjustEdgeToGrid(double rawOffsetEdge, double gridEdge, {double? minimum, double? maximum}) {
+    double snappedBound = (rawOffsetEdge / gridEdge).roundToDouble() * gridEdge;
+    if (minimum != null && snappedBound < minimum) {
+      return minimum;
+    }
+    if (maximum != null && snappedBound > maximum) {
+      return maximum;
+    }
+    return snappedBound;
   }
 }
 
