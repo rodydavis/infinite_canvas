@@ -270,7 +270,8 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                     controller.pan(details.focalPointDelta);
                   } else if (controller.controlPressed) {
                   } else {
-                    controller.moveSelection(details.focalPoint);
+                    controller.moveSelection(details.focalPoint,
+                        gridSize: widget.gridSize);
                   }
                   controller.mousePosition = details.focalPoint;
                 },

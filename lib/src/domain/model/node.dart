@@ -30,14 +30,28 @@ class InfiniteCanvasNode<T> {
   static const double dragHandleSize = 10;
   static const double borderInset = 2;
 
-  void update({Size? size, Offset? offset, String? label, bool? setCurrentlyResizing}) {
+  void update(
+      {Size? size,
+      Offset? offset,
+      String? label,
+      bool? setCurrentlyResizing,
+      bool? snapMovementToGrid,
+      Size? gridSize}) {
     if (setCurrentlyResizing != null) {
       currentlyResizing = setCurrentlyResizing;
     }
-    if (offset != null &&
-        (setCurrentlyResizing == true || (setCurrentlyResizing == null && allowMove && !currentlyResizing))) {
+
+    if (offset != null && setCurrentlyResizing == true) {
       this.offset = offset;
+    } else if (offset != null &&
+        setCurrentlyResizing == null &&
+        allowMove &&
+        !currentlyResizing) {
+      this.offset = snapMovementToGrid == true && gridSize != null
+          ? _adjustOffsetToGrid(offset, gridSize)
+          : offset;
     }
+
     if (size != null && resizeMode.isEnabled) {
       if (size.width < dragHandleSize * 2) {
         size = Size(dragHandleSize * 2, size.height);
@@ -49,6 +63,13 @@ class InfiniteCanvasNode<T> {
     }
     if (label != null) this.label = label;
   }
+
+  Offset _adjustOffsetToGrid(Offset rawOffset, Size gridSize) {
+    return Offset(
+      (rawOffset.dx / gridSize.width).roundToDouble() * gridSize.width,
+      (rawOffset.dy / gridSize.height).roundToDouble() * gridSize.height,
+    );
+  }
 }
 
 enum ResizeMode {
@@ -58,6 +79,8 @@ enum ResizeMode {
   cornersAndEdges;
 
   bool get isEnabled => this != ResizeMode.disabled;
-  bool get containsCornerHandles => this == ResizeMode.corners || this == ResizeMode.cornersAndEdges;
-  bool get containsEdgeHandles => this == ResizeMode.edges || this == ResizeMode.cornersAndEdges;
+  bool get containsCornerHandles =>
+      this == ResizeMode.corners || this == ResizeMode.cornersAndEdges;
+  bool get containsEdgeHandles =>
+      this == ResizeMode.edges || this == ResizeMode.cornersAndEdges;
 }
