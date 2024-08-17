@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:infinite_canvas/infinite_canvas.dart';
 
@@ -8,6 +10,7 @@ class DragHandle extends StatefulWidget {
   final double size;
   final Size gridSize;
   final bool snapToGrid;
+  final Size minimumNodeSize;
 
   const DragHandle({
     super.key,
@@ -17,6 +20,7 @@ class DragHandle extends StatefulWidget {
     this.size = 10,
     required this.gridSize,
     this.snapToGrid = false,
+    this.minimumNodeSize = const Size(InfiniteCanvasNode.dragHandleSize * 2, InfiniteCanvasNode.dragHandleSize * 2),
   });
 
   @override
@@ -30,9 +34,9 @@ class _DragHandleState extends State<DragHandle> {
   late final double size;
   late final Size gridSize;
   late final bool snapToGrid;
+  late final Size minimumNodeSize;
 
-  late Offset initialNodeOffset;
-  late Size initialNodeSize;
+  late Rect initialBounds;
   late Offset draggingOffset;
 
   @override
@@ -44,6 +48,7 @@ class _DragHandleState extends State<DragHandle> {
     size = widget.size;
     gridSize = widget.gridSize;
     snapToGrid = widget.snapToGrid;
+    minimumNodeSize = widget.minimumNodeSize;
   }
 
   @override
@@ -51,8 +56,7 @@ class _DragHandleState extends State<DragHandle> {
     final colors = Theme.of(context).colorScheme;
     return Listener(
         onPointerDown: (details) {
-          initialNodeOffset = node.offset;
-          initialNodeSize = node.size;
+          initialBounds = Rect.fromLTWH(node.offset.dx, node.offset.dy, node.size.width, node.size.height);
           draggingOffset = Offset.zero;
         },
         onPointerUp: (details) {
@@ -65,22 +69,25 @@ class _DragHandleState extends State<DragHandle> {
           if (!widget.controller.mouseDown) return;
 
           draggingOffset = draggingOffset + details.delta;
-          Offset newTopLeftCorner = initialNodeOffset;
-          Size newSize = initialNodeSize;
+          Rect newBounds = initialBounds;
 
           if (al.isLeft) {
-            newTopLeftCorner = newTopLeftCorner.translate(draggingOffset.dx, 0);
-            newSize = Size(initialNodeOffset.dx + newSize.width - newTopLeftCorner.dx, newSize.height);
+            final maxLeft = initialBounds.right - minimumNodeSize.width;
+            newBounds = Rect.fromLTRB(
+                min(maxLeft, newBounds.left + draggingOffset.dx), newBounds.top, newBounds.right, newBounds.bottom);
           }
           if (al.isTop) {
-            newTopLeftCorner = newTopLeftCorner.translate(0, draggingOffset.dy);
-            newSize = Size(newSize.width, initialNodeOffset.dy + newSize.height - newTopLeftCorner.dy);
+            final maxTop = initialBounds.bottom - minimumNodeSize.height;
+            newBounds = Rect.fromLTRB(
+                newBounds.left, min(maxTop, newBounds.top + draggingOffset.dy), newBounds.right, newBounds.bottom);
           }
           if (al.isRight) {
-            newSize = Size(newSize.width + draggingOffset.dx, newSize.height);
+            newBounds = Rect.fromLTWH(newBounds.left, newBounds.top,
+                max(minimumNodeSize.width, newBounds.width + draggingOffset.dx), newBounds.height);
           }
           if (al.isBottom) {
-            newSize = Size(newSize.width, newSize.height + draggingOffset.dy);
+            newBounds = Rect.fromLTWH(newBounds.left, newBounds.top, newBounds.width,
+                max(minimumNodeSize.height, newBounds.height + draggingOffset.dy));
           }
 
           // if (!snapToGrid) {
@@ -102,7 +109,7 @@ class _DragHandleState extends State<DragHandle> {
 
           // print(newBottomRightCorner);
           // print(newSize);
-          node.update(size: newSize, offset: newTopLeftCorner, setCurrentlyResizing: true);
+          node.update(size: newBounds.size, offset: newBounds.topLeft, setCurrentlyResizing: true);
 
           controller.edit(node);
         },
@@ -119,12 +126,12 @@ class _DragHandleState extends State<DragHandle> {
         ));
   }
 
-  double _adjustOffsetXToGrid(double rawOffset) {
-    return (rawOffset / gridSize.width).roundToDouble() * gridSize.width;
+  Offset _adjustOffsetToGrid(Offset rawOffset) {
+    return Offset(_adjustEdgeToGrid(rawOffset.dx, gridSize.width), _adjustEdgeToGrid(rawOffset.dy, gridSize.height));
   }
 
-  double _adjustOffsetYToGrid(double rawOffset) {
-    return (rawOffset / gridSize.height).roundToDouble() * gridSize.height;
+  double _adjustEdgeToGrid(double rawOffsetEdge, double gridEdge) {
+    return (rawOffsetEdge / gridEdge).roundToDouble() * gridEdge;
   }
 }
 
