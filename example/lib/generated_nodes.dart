@@ -26,7 +26,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
       return InfiniteCanvasNode(
         key: UniqueKey(),
         label: 'Node $index',
-        allowResize: true,
+        resizeMode: ResizeMode.cornersAndEdges,
         offset: Offset(
           Random().nextDouble() * 5000,
           Random().nextDouble() * 5000,
@@ -95,7 +95,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
                   final node = InfiniteCanvasNode(
                     key: UniqueKey(),
                     label: 'Node ${controller.nodes.length}',
-                    allowResize: true,
+                    resizeMode: ResizeMode.cornersAndEdges,
                     offset: controller.mousePosition,
                     size: Size(
                       Random().nextDouble() * 200 + 100,
@@ -127,7 +127,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
                   final node = InfiniteCanvasNode(
                     key: UniqueKey(),
                     label: 'Node ${controller.nodes.length}',
-                    allowResize: true,
+                    resizeMode: ResizeMode.cornersAndEdges,
                     offset: controller.mousePosition,
                     size: Size(
                       Random().nextDouble() * 200 + 100,
@@ -162,7 +162,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
                   final node = InfiniteCanvasNode(
                     key: UniqueKey(),
                     label: 'Node ${controller.nodes.length}',
-                    allowResize: true,
+                    resizeMode: ResizeMode.cornersAndEdges,
                     offset: controller.mousePosition,
                     size: Size(
                       Random().nextDouble() * 200 + 100,
@@ -198,8 +198,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
                   final result = fd.cycle;
                   messenger.showSnackBar(
                     SnackBar(
-                      content: Text(
-                          'Cycle found: ${result.map((e) => e.key.toString()).join(', ')}'),
+                      content: Text('Cycle found: ${result.map((e) => e.key.toString()).join(', ')}'),
                     ),
                   );
                 },

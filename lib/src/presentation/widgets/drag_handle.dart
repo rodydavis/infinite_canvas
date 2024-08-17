@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class DragHandel extends StatelessWidget {
-  const DragHandel({
+class DragHandle extends StatelessWidget {
+  const DragHandle({
     super.key,
     this.size = 10,
   });
