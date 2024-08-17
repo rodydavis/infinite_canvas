@@ -63,13 +63,17 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
       }
     }
     controller = InfiniteCanvasController(nodes: nodes, edges: edges);
-    controller.formatter = (node) {
-      // snap to grid
-      node.offset = Offset(
-        (node.offset.dx / gridSize.width).roundToDouble() * gridSize.width,
-        (node.offset.dy / gridSize.height).roundToDouble() * gridSize.height,
-      );
-    };
+    // controller.formatter = (node) {
+    //   // snap to grid
+    //   node.offset = Offset(
+    //     (node.offset.dx / gridSize.width).roundToDouble() * gridSize.width,
+    //     (node.offset.dy / gridSize.height).roundToDouble() * gridSize.height,
+    //   );
+    //   node.size = Size(
+    //     (node.size.width / gridSize.width).roundToDouble() * gridSize.width,
+    //     (node.size.height / gridSize.height).roundToDouble() * gridSize.height,
+    //   );
+    // };
   }
 
   @override

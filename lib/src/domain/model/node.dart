@@ -23,18 +23,21 @@ class InfiniteCanvasNode<T> {
   T? value;
   final Widget child;
   final ResizeMode resizeMode;
+  bool currentlyResizing = false;
   final bool allowMove;
   final Clip clipBehavior;
   Rect get rect => offset & size;
   static const double dragHandleSize = 10;
   static const double borderInset = 2;
 
-  void update({
-    Size? size,
-    Offset? offset,
-    String? label,
-  }) {
-    if (offset != null && allowMove) this.offset = offset;
+  void update({Size? size, Offset? offset, String? label, bool? setCurrentlyResizing}) {
+    if (setCurrentlyResizing != null) {
+      currentlyResizing = setCurrentlyResizing;
+    }
+    if (offset != null &&
+        (setCurrentlyResizing == true || (setCurrentlyResizing == null && allowMove && !currentlyResizing))) {
+      this.offset = offset;
+    }
     if (size != null && resizeMode.isEnabled) {
       if (size.width < dragHandleSize * 2) {
         size = Size(dragHandleSize * 2, size.height);

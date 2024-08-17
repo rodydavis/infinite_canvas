@@ -87,36 +87,28 @@ class NodeRenderer extends StatelessWidget {
     );
   }
 
+  static const gridSize = Size.square(50);
+
   Positioned _buildDragHandle(Alignment alignment) {
-    final isLeft = alignment.x < 0;
-    final isRight = alignment.x > 0;
-    final isTop = alignment.y < 0;
-    final isBottom = alignment.y > 0;
-    final isHorizontalCenter = alignment.x == 0;
-    final isVerticalCenter = alignment.y == 0;
+    final dragHandleAlignment = DragHandleAlignment(alignment);
     return Positioned(
-      left: isLeft
-          ? 0
-          : isHorizontalCenter
-              ? node.size.width / 2
-              : null,
-      right: isRight ? 0 : null,
-      top: isTop
-          ? 0
-          : isVerticalCenter
-              ? node.size.height / 2
-              : null,
-      bottom: isBottom ? 0 : null,
-      child: GestureDetector(
-        onPanUpdate: (details) {
-          if (!controller.mouseDown) return;
-          node.update(
-              size: node.size + details.delta.scale(alignment.x.sign, alignment.y.sign),
-              offset: node.offset + Offset(isLeft ? details.delta.dx : 0, isTop ? details.delta.dy : 0));
-          controller.edit(node);
-        },
-        child: const DragHandle(),
-      ),
-    );
+        left: dragHandleAlignment.isLeft
+            ? 0
+            : dragHandleAlignment.isHorizontalCenter
+                ? node.size.width / 2
+                : null,
+        right: dragHandleAlignment.isRight ? 0 : null,
+        top: dragHandleAlignment.isTop
+            ? 0
+            : dragHandleAlignment.isVerticalCenter
+                ? node.size.height / 2
+                : null,
+        bottom: dragHandleAlignment.isBottom ? 0 : null,
+        child: DragHandle(
+          controller: controller,
+          node: node,
+          alignment: dragHandleAlignment,
+          gridSize: gridSize,
+        ));
   }
 }

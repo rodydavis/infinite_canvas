@@ -35,11 +35,9 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   final List<InfiniteCanvasEdge> edges = [];
 
   final Set<Key> _selected = {};
-  List<InfiniteCanvasNode> get selection =>
-      nodes.where((e) => _selected.contains(e.key)).toList();
+  List<InfiniteCanvasNode> get selection => nodes.where((e) => _selected.contains(e.key)).toList();
   final Set<Key> _hovered = {};
-  List<InfiniteCanvasNode> get hovered =>
-      nodes.where((e) => _hovered.contains(e.key)).toList();
+  List<InfiniteCanvasNode> get hovered => nodes.where((e) => _hovered.contains(e.key)).toList();
 
   void _cacheSelectedOrigins() {
     // cache selected node origins
@@ -231,9 +229,7 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
   }
 
   void moveSelection(Offset position) {
-    final delta = mouseDragStart != null
-        ? toLocal(position) - toLocal(mouseDragStart!)
-        : toLocal(position);
+    final delta = mouseDragStart != null ? toLocal(position) - toLocal(mouseDragStart!) : toLocal(position);
     for (final key in _selected) {
       final index = nodes.indexWhere((e) => e.key == key);
       if (index == -1) continue;
@@ -302,6 +298,9 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
     if (_selected.length == 1) {
       final idx = nodes.indexWhere((e) => e.key == _selected.first);
       nodes[idx] = child;
+      if (_formatter != null) {
+        _formatter!(child);
+      }
       notifyListeners();
     }
   }
