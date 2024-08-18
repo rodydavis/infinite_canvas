@@ -21,8 +21,10 @@ class NodeRenderer extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final fonts = Theme.of(context).textTheme;
-    final showCornerHandles = node.resizeMode.containsCornerHandles && controller.isSelected(node.key);
-    final showEdgeHandles = node.resizeMode.containsEdgeHandles && controller.isSelected(node.key);
+    final showCornerHandles = node.resizeMode.containsCornerHandles &&
+        controller.isSelected(node.key);
+    final showEdgeHandles =
+        node.resizeMode.containsEdgeHandles && controller.isSelected(node.key);
     return SizedBox.fromSize(
       size: node.size,
       child: Stack(clipBehavior: Clip.none, children: [
@@ -54,7 +56,9 @@ class NodeRenderer extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: controller.isSelected(node.key) ? colors.primary : colors.outline,
+                    color: controller.isSelected(node.key)
+                        ? colors.primary
+                        : colors.outline,
                     width: 1,
                   ),
                 ),
@@ -109,7 +113,7 @@ class NodeRenderer extends StatelessWidget {
           node: node,
           alignment: dragHandleAlignment,
           gridSize: gridSize,
-          snapToGrid: controller.snapResizeToGrid,
+          initialSnapToGrid: controller.snapResizeToGrid,
         ));
   }
 }
