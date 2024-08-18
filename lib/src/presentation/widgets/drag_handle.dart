@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:infinite_canvas/infinite_canvas.dart';
+import 'package:infinite_canvas/src/presentation/utils/helpers.dart';
 
 class DragHandle extends StatefulWidget {
   final InfiniteCanvasController controller;
@@ -99,10 +100,9 @@ class _DragHandleState extends State<DragHandle> {
           }
 
           if (snapToGrid && (al.isLeft || al.isTop)) {
-            final snappedLeft = _adjustEdgeToGrid(
-                newBounds.left, gridSize.width,
+            final snappedLeft = adjustEdgeToGrid(newBounds.left, gridSize.width,
                 maximum: minimumSizeBounds.left);
-            final snappedTop = _adjustEdgeToGrid(newBounds.top, gridSize.height,
+            final snappedTop = adjustEdgeToGrid(newBounds.top, gridSize.height,
                 maximum: minimumSizeBounds.top);
             newBounds = Rect.fromLTRB(
                 snappedLeft, snappedTop, newBounds.right, newBounds.bottom);
@@ -125,10 +125,10 @@ class _DragHandleState extends State<DragHandle> {
           }
 
           if (snapToGrid && (al.isRight || al.isBottom)) {
-            final snappedRight = _adjustEdgeToGrid(
+            final snappedRight = adjustEdgeToGrid(
                 newBounds.right, gridSize.width,
                 minimum: minimumSizeBounds.right);
-            final snappedBottom = _adjustEdgeToGrid(
+            final snappedBottom = adjustEdgeToGrid(
                 newBounds.bottom, gridSize.height,
                 minimum: minimumSizeBounds.bottom);
             newBounds = Rect.fromLTRB(
@@ -152,18 +152,6 @@ class _DragHandleState extends State<DragHandle> {
             ),
           ),
         ));
-  }
-
-  double _adjustEdgeToGrid(double rawOffsetEdge, double gridEdge,
-      {double? minimum, double? maximum}) {
-    double snappedBound = (rawOffsetEdge / gridEdge).roundToDouble() * gridEdge;
-    if (minimum != null && snappedBound < minimum) {
-      return minimum;
-    }
-    if (maximum != null && snappedBound > maximum) {
-      return maximum;
-    }
-    return snappedBound;
   }
 }
 

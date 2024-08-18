@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infinite_canvas/src/presentation/utils/helpers.dart';
 
 /// A node in the [InfiniteCanvas].
 class InfiniteCanvasNode<T> {
@@ -47,9 +48,15 @@ class InfiniteCanvasNode<T> {
         setCurrentlyResizing == null &&
         allowMove &&
         !currentlyResizing) {
-      this.offset = snapMovementToGrid == true && gridSize != null
-          ? _adjustOffsetToGrid(offset, gridSize)
-          : offset;
+      if (snapMovementToGrid == true && gridSize != null) {
+        final snappedX = _getClosestSnapPosition(
+            offset.dx, size?.width ?? this.size.width, gridSize.width);
+        final snappedY = _getClosestSnapPosition(
+            offset.dy, size?.height ?? this.size.height, gridSize.height);
+        this.offset = Offset(snappedX, snappedY);
+      } else {
+        this.offset = offset;
+      }
     }
 
     if (size != null && resizeMode.isEnabled) {
@@ -64,11 +71,18 @@ class InfiniteCanvasNode<T> {
     if (label != null) this.label = label;
   }
 
-  Offset _adjustOffsetToGrid(Offset rawOffset, Size gridSize) {
-    return Offset(
-      (rawOffset.dx / gridSize.width).roundToDouble() * gridSize.width,
-      (rawOffset.dy / gridSize.height).roundToDouble() * gridSize.height,
-    );
+  double _getClosestSnapPosition(
+      double rawEdge, double nodeLength, double gridEdge) {
+    final snapAtStartPos = adjustEdgeToGrid(rawEdge, gridEdge);
+    final snapAtStartDelta = (snapAtStartPos - rawEdge).abs();
+    final snapAtEndPos =
+        adjustEdgeToGrid(rawEdge + nodeLength, gridEdge) - nodeLength;
+    final snapAtEndDelta = (snapAtEndPos - rawEdge).abs();
+
+    if (snapAtEndDelta < snapAtStartDelta) {
+      return snapAtEndPos;
+    }
+    return snapAtStartPos;
   }
 }
 
