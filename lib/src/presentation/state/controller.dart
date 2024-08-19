@@ -11,16 +11,19 @@ typedef NodeFormatter = void Function(InfiniteCanvasNode);
 
 /// A controller for the [InfiniteCanvas].
 class InfiniteCanvasController extends ChangeNotifier implements Graph {
-  InfiniteCanvasController({
-    List<InfiniteCanvasNode> nodes = const [],
-    List<InfiniteCanvasEdge> edges = const [],
-  }) {
+  InfiniteCanvasController(
+      {List<InfiniteCanvasNode> nodes = const [],
+      List<InfiniteCanvasEdge> edges = const [],
+      bool snapMovementToGrid = false,
+      bool snapResizeToGrid = false}) {
     if (nodes.isNotEmpty) {
       this.nodes.addAll(nodes);
     }
     if (edges.isNotEmpty) {
       this.edges.addAll(edges);
     }
+    _snapMovementToGrid = snapMovementToGrid;
+    _snapResizeToGrid = snapResizeToGrid;
   }
 
   double minScale = 0.4;
@@ -33,6 +36,14 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
 
   @override
   final List<InfiniteCanvasEdge> edges = [];
+
+  late bool _snapMovementToGrid;
+  bool get snapMovementToGrid => _snapMovementToGrid;
+  set snapMovementToGrid(newValue) => _snapMovementToGrid = newValue;
+
+  late bool _snapResizeToGrid;
+  bool get snapResizeToGrid => _snapResizeToGrid;
+  set snapResizeToGrid(newValue) => _snapResizeToGrid = newValue;
 
   final Set<Key> _selected = {};
   List<InfiniteCanvasNode> get selection =>
@@ -230,7 +241,7 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
     notifyListeners();
   }
 
-  void moveSelection(Offset position) {
+  void moveSelection(Offset position, {Size? gridSize}) {
     final delta = mouseDragStart != null
         ? toLocal(position) - toLocal(mouseDragStart!)
         : toLocal(position);
@@ -239,7 +250,10 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
       if (index == -1) continue;
       final current = nodes[index];
       final origin = _selectedOrigins[key];
-      current.update(offset: origin! + delta);
+      current.update(
+          offset: origin! + delta,
+          snapMovementToGrid: snapMovementToGrid,
+          gridSize: gridSize);
       if (_formatter != null) {
         _formatter!(current);
       }
@@ -302,6 +316,9 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
     if (_selected.length == 1) {
       final idx = nodes.indexWhere((e) => e.key == _selected.first);
       nodes[idx] = child;
+      if (_formatter != null) {
+        _formatter!(child);
+      }
       notifyListeners();
     }
   }
@@ -425,5 +442,12 @@ class InfiniteCanvasController extends ChangeNotifier implements Graph {
     final scale = matrix.getMaxScaleOnAxis();
     final size = constraints.biggest;
     return offset & size / scale;
+  }
+
+  void toggleSnapToGrid() {
+    final newSnapValue = !snapMovementToGrid;
+    snapMovementToGrid = newSnapValue;
+    snapResizeToGrid = newSnapValue;
+    notifyListeners();
   }
 }

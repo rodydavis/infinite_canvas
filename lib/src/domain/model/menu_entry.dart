@@ -5,6 +5,7 @@ class MenuEntry {
   const MenuEntry({
     required this.label,
     this.shortcut,
+    this.isActivated,
     this.onPressed,
     this.menuChildren,
   }) : assert(menuChildren == null || onPressed == null,
@@ -12,6 +13,7 @@ class MenuEntry {
   final String label;
 
   final MenuSerializableShortcut? shortcut;
+  final bool Function()? isActivated;
   final VoidCallback? onPressed;
   final List<MenuEntry>? menuChildren;
 
@@ -55,6 +57,10 @@ class MenuEntry {
       } else {
         return MenuItemButton(
           shortcut: selection.shortcut,
+          trailingIcon:
+              selection.isActivated != null && selection.isActivated!()
+                  ? const Icon(Icons.check)
+                  : SizedBox.fromSize(size: const Size(22, 0)),
           onPressed: selection.onPressed,
           child: Text(selection.label),
         );

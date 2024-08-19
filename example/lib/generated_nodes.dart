@@ -26,7 +26,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
       return InfiniteCanvasNode(
         key: UniqueKey(),
         label: 'Node $index',
-        allowResize: true,
+        resizeMode: ResizeMode.cornersAndEdges,
         offset: Offset(
           Random().nextDouble() * 5000,
           Random().nextDouble() * 5000,
@@ -62,14 +62,11 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
         ));
       }
     }
-    controller = InfiniteCanvasController(nodes: nodes, edges: edges);
-    controller.formatter = (node) {
-      // snap to grid
-      node.offset = Offset(
-        (node.offset.dx / gridSize.width).roundToDouble() * gridSize.width,
-        (node.offset.dy / gridSize.height).roundToDouble() * gridSize.height,
-      );
-    };
+    controller = InfiniteCanvasController(
+        nodes: nodes,
+        edges: edges,
+        snapMovementToGrid: true,
+        snapResizeToGrid: true);
   }
 
   @override
@@ -95,7 +92,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
                   final node = InfiniteCanvasNode(
                     key: UniqueKey(),
                     label: 'Node ${controller.nodes.length}',
-                    allowResize: true,
+                    resizeMode: ResizeMode.cornersAndEdges,
                     offset: controller.mousePosition,
                     size: Size(
                       Random().nextDouble() * 200 + 100,
@@ -127,7 +124,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
                   final node = InfiniteCanvasNode(
                     key: UniqueKey(),
                     label: 'Node ${controller.nodes.length}',
-                    allowResize: true,
+                    resizeMode: ResizeMode.cornersAndEdges,
                     offset: controller.mousePosition,
                     size: Size(
                       Random().nextDouble() * 200 + 100,
@@ -162,7 +159,7 @@ class _GeneratedNodesState extends State<GeneratedNodes> {
                   final node = InfiniteCanvasNode(
                     key: UniqueKey(),
                     label: 'Node ${controller.nodes.length}',
-                    allowResize: true,
+                    resizeMode: ResizeMode.cornersAndEdges,
                     offset: controller.mousePosition,
                     size: Size(
                       Random().nextDouble() * 200 + 100,

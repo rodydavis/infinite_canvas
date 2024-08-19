@@ -15,7 +15,7 @@ class Menus extends StatefulWidget {
     this.renameLabel,
     this.visible = true,
   });
-  
+
   final List<MenuEntry> menus;
   final InfiniteCanvasController controller;
   final String Function(String)? renameLabel;
@@ -213,6 +213,20 @@ class _MenusState extends State<Menus> {
     );
   }
 
+  MenuEntry buildSettings(BuildContext context) {
+    return MenuEntry(
+      label: 'Settings',
+      menuChildren: [
+        MenuEntry(
+          label: 'Snap To Grid',
+          isActivated: () => widget.controller.snapMovementToGrid,
+          onPressed: widget.controller.toggleSnapToGrid,
+          shortcut: const SingleActivator(LogicalKeyboardKey.keyG, meta: true),
+        )
+      ],
+    );
+  }
+
   List<MenuEntry> merge(BuildContext context) {
     final menus = <MenuEntry>[];
     menus.addAll(widget.menus);
@@ -233,6 +247,16 @@ class _MenusState extends State<Menus> {
       final value = menus[idx];
       final children = value.menuChildren ?? [];
       final merged = buildEdit(context).merge(children);
+      menus.removeAt(idx);
+      menus.insert(idx, merged);
+    }
+    if (!menus.map((e) => e.label).contains('Settings')) {
+      menus.add(buildSettings(context));
+    } else {
+      final idx = menus.indexWhere((e) => e.label == 'Settings');
+      final value = menus[idx];
+      final children = value.menuChildren ?? [];
+      final merged = buildSettings(context).merge(children);
       menus.removeAt(idx);
       menus.insert(idx, merged);
     }
