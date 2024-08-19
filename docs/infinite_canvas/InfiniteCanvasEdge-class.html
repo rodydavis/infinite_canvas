@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -29,28 +29,34 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">infinite_canvas</a></li>
-    <li><a href="../infinite_canvas/infinite_canvas-library.html">infinite_canvas</a></li>
+    <li><a href="../infinite_canvas/infinite_canvas-library.html">infinite_canvas.dart</a></li>
     <li class="self-crumb">InfiniteCanvasEdge class</li>
   </ol>
   <div class="self-name">InfiniteCanvasEdge</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button">
+  <div class="toggle" id="theme-button" title="Toggle brightness">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
-      <span class="material-symbols-outlined">
-        brightness_4
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
       </span>
     </label>
   </div>
 </header>
 <main>
 
-  <div id="dartdoc-main-content" class="main-content">
-      <div>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="infinite_canvas&#47;infinite_canvas-library-sidebar.html"
+    data-below-sidebar="infinite_canvas&#47;InfiniteCanvasEdge-class-sidebar.html">
+    <div>
 <h1><span class="kind-class">InfiniteCanvasEdge</span> class 
-    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
  
 </h1></div>
 
@@ -67,7 +73,7 @@
 
     <dl class="constructor-summary-list">
         <dt id="InfiniteCanvasEdge" class="callable">
-          <span class="name"><a href="../infinite_canvas/InfiniteCanvasEdge/InfiniteCanvasEdge.html">InfiniteCanvasEdge</a></span><span class="signature">(<span class="parameter" id="-param-from">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/LocalKey-class.html">LocalKey</a></span> <span class="parameter-name">from</span>, </span><span class="parameter" id="-param-to"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/LocalKey-class.html">LocalKey</a></span> <span class="parameter-name">to</span>, </span><span class="parameter" id="-param-label"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">label</span>}</span>)</span>
+          <span class="name"><a href="../infinite_canvas/InfiniteCanvasEdge/InfiniteCanvasEdge.html">InfiniteCanvasEdge</a></span><span class="signature">({<span class="parameter" id="-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/LocalKey-class.html">LocalKey</a></span> <span class="parameter-name">from</span>, </span><span class="parameter" id="-param-to"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/LocalKey-class.html">LocalKey</a></span> <span class="parameter-name">to</span>, </span><span class="parameter" id="-param-label"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">label</span></span>})</span>
         </dt>
         <dd>
           
@@ -75,14 +81,16 @@
         </dd>
     </dl>
   </section>
-
-    <section class="summary offset-anchor" id="instance-properties">
-      <h2>Properties</h2>
-
-      <dl class="properties">
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-properties">
+    <h2>Properties</h2>
+    <dl class="properties">
         <dt id="from" class="property">
   <span class="name"><a href="../infinite_canvas/InfiniteCanvasEdge/from.html">from</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/foundation/LocalKey-class.html">LocalKey</a></span> 
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/foundation/LocalKey-class.html">LocalKey</a></span>
+  
 
 </dt>
 <dd>
@@ -93,18 +101,20 @@
 
         <dt id="hashCode" class="property inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> 
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
+  
 
 </dt>
 <dd class="inherited">
   The hash code for this object.
-  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="label" class="property">
   <span class="name"><a href="../infinite_canvas/InfiniteCanvasEdge/label.html">label</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> 
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span>
+  
 
 </dt>
 <dd>
@@ -115,18 +125,20 @@
 
         <dt id="runtimeType" class="property inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a></span> 
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a></span>
+  
 
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="to" class="property">
   <span class="name"><a href="../infinite_canvas/InfiniteCanvasEdge/to.html">to</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/foundation/LocalKey-class.html">LocalKey</a></span> 
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/foundation/LocalKey-class.html">LocalKey</a></span>
+  
 
 </dt>
 <dd>
@@ -135,9 +147,8 @@
 
 </dd>
 
-      </dl>
-    </section>
-
+    </dl>
+  </section>
     
   <section
       class="summary offset-anchor inherited"
@@ -201,83 +212,25 @@
   </div> <!-- /.main-content -->
 
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <header id="header-search-sidebar" class="hidden-l">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../index.html">infinite_canvas</a></li>
-  <li><a href="../infinite_canvas/infinite_canvas-library.html">infinite_canvas</a></li>
-  <li class="self-crumb">InfiniteCanvasEdge class</li>
+    <li><a href="../index.html">infinite_canvas</a></li>
+    <li><a href="../infinite_canvas/infinite_canvas-library.html">infinite_canvas</a></li>
+    <li class="self-crumb">InfiniteCanvasEdge class</li>
 </ol>
 
 
     <h5>infinite_canvas library</h5>
-    <ol>
-      <li class="section-title"><a href="../infinite_canvas/infinite_canvas-library.html#classes">Classes</a></li>
-        <li><a href="https://pub.dev/documentation/directed_graph/0.3.8/directed_graph/BidirectedGraph-class.html">BidirectedGraph</a></li>
-        <li><a href="https://pub.dev/documentation/directed_graph/0.3.8/directed_graph/DirectedGraph-class.html">DirectedGraph</a></li>
-        <li><a href="../infinite_canvas/Graph-class.html">Graph</a></li>
-        <li><a href="https://pub.dev/documentation/directed_graph/0.3.8/directed_graph/GraphCrawler-class.html">GraphCrawler</a></li>
-        <li><a href="../infinite_canvas/InfiniteCanvas-class.html">InfiniteCanvas</a></li>
-        <li><a href="../infinite_canvas/InfiniteCanvasController-class.html">InfiniteCanvasController</a></li>
-        <li><a href="../infinite_canvas/InfiniteCanvasEdge-class.html">InfiniteCanvasEdge</a></li>
-        <li><a href="../infinite_canvas/InfiniteCanvasNode-class.html">InfiniteCanvasNode</a></li>
-        <li><a href="../infinite_canvas/InfiniteCanvasState-class.html">InfiniteCanvasState</a></li>
-        <li><a href="../infinite_canvas/MenuEntry-class.html">MenuEntry</a></li>
-        <li><a href="https://pub.dev/documentation/directed_graph/0.3.8/directed_graph/WeightedDirectedGraph-class.html">WeightedDirectedGraph</a></li>
-
-      <li class="section-title"><a href="../infinite_canvas/infinite_canvas-library.html#extensions">Extensions</a></li>
-        <li><a href="../infinite_canvas/GraphUtils.html">GraphUtils</a></li>
-        <li><a href="https://pub.dev/documentation/directed_graph/0.3.8/directed_graph/SortMap.html">SortMap</a></li>
-        <li><a href="https://pub.dev/documentation/directed_graph/0.3.8/directed_graph/SortSet.html">SortSet</a></li>
-
-
-      <li class="section-title"><a href="../infinite_canvas/infinite_canvas-library.html#constants">Constants</a></li>
-        <li><a href="https://pub.dev/documentation/directed_graph/0.3.8/directed_graph/largeInt-constant.html">largeInt</a></li>
-
-
-
-
-      <li class="section-title"><a href="../infinite_canvas/infinite_canvas-library.html#typedefs">Typedefs</a></li>
-        <li><a href="https://pub.dev/documentation/directed_graph/0.3.8/directed_graph/Edges.html">Edges</a></li>
-        <li><a href="../infinite_canvas/NodeFormatter.html">NodeFormatter</a></li>
-        <li><a href="https://pub.dev/documentation/directed_graph/0.3.8/directed_graph/Summation.html">Summation</a></li>
-
-</ol>
-
+    <div id="dartdoc-sidebar-left-content"></div>
   </div>
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-    <ol>
-
-        <li class="section-title"><a href="../infinite_canvas/InfiniteCanvasEdge-class.html#constructors">Constructors</a></li>
-          <li><a href="../infinite_canvas/InfiniteCanvasEdge/InfiniteCanvasEdge.html">InfiniteCanvasEdge</a></li>
-
-
-        <li class="section-title">
-          <a href="../infinite_canvas/InfiniteCanvasEdge-class.html#instance-properties">Properties</a>
-        </li>
-          <li><a href="../infinite_canvas/InfiniteCanvasEdge/from.html">from</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-          <li><a href="../infinite_canvas/InfiniteCanvasEdge/label.html">label</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-          <li><a href="../infinite_canvas/InfiniteCanvasEdge/to.html">to</a></li>
-
-        <li class="section-title inherited"><a href="../infinite_canvas/InfiniteCanvasEdge-class.html#instance-methods">Methods</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
-
-        <li class="section-title inherited"><a href="../infinite_canvas/InfiniteCanvasEdge-class.html#operators">Operators</a></li>
-          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
-
-
-
-
-</ol>
-
   </div><!--/.sidebar-offcanvas-->
 
 </main>
