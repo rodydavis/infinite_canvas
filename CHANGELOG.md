@@ -1,3 +1,13 @@
+## 0.0.10
+
+- Added DragHandlers for edges to resize a node in only one dimension @schaetz
+- Added "resizeMode" attribute to Nodes to configure the amount of drag handlers @schaetz
+- Made movement and resizing of nodes smoother by replacing GestureDetector by Listener widget @schaetz
+- Implemented snapping to grid on resize @schaetz
+- Implemented snapping to grid on movement within the Node class without the need for a formatter, also snapping at the right or bottom edges (depending on proximity) @schaetz
+- Added "snapMovementToGrid" and "snapResizeToGrid" attributes to Controller to make snapping configurable individually for both actions @schaetz
+- Added "Settings" menu item with "Snap To Grid" option @schaetz
+
 ## 0.0.9
 
 - Adding [value] to [InfiniteCanvasNode] with generic type
