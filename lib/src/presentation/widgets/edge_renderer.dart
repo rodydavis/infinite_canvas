@@ -79,7 +79,7 @@ class InfiniteCanvasEdgeRenderer extends StatelessWidget {
     path.moveTo(fromOffset.dx, fromOffset.dy);
 
     if (straightLines) {
-      path.moveTo(toOffset.dx, toOffset.dy);
+      path.lineTo(toOffset.dx, toOffset.dy);
     } else {
       path.cubicTo(
         fromOffset.dx,
